@@ -1,0 +1,19 @@
+modLoader="javafml"
+loaderVersion="[39,)"
+license="MIT"
+issueTrackerURL="https://github.com/EccentricVamp/eccentric-tome/issues"
+[[mods]]
+modId="tome"
+version="${file.jarVersion}"
+displayName="Eccentric Tome"
+credits="Fuck Oracle"
+authors="EccentricVamp"
+description='''
+Why is this required?
+'''
+[[dependencies.tome]]
+modId="forge"
+mandatory=true
+versionRange="[39.1.0,)"
+ordering="NONE"
+side="BOTH"
