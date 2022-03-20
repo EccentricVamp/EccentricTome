@@ -26,8 +26,6 @@ public class TransformMessage {
     public static void handle(final TransformMessage message, final Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
             var player = context.get().getSender();
-            if (player == null) return;
-
             var stack = player.getMainHandItem();
             var hand = InteractionHand.MAIN_HAND;
 

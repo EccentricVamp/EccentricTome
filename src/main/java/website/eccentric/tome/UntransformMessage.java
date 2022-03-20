@@ -21,9 +21,7 @@ public class UntransformMessage {
     @SuppressWarnings("resource")
     public static void handle(final UntransformMessage message, final Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
-            var player = context.get().getSender();
-            if (player == null) return;
-            
+            var player = context.get().getSender();            
             var stack = player.getMainHandItem();
             var hand = InteractionHand.MAIN_HAND;
 
