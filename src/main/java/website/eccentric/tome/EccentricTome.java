@@ -23,8 +23,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-@Mod(Tome.MOD_ID)
-public class Tome {
+@Mod(EccentricTome.MOD_ID)
+public class EccentricTome {
 
 	public static final String MOD_ID = "tome";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
@@ -33,12 +33,11 @@ public class Tome {
     public static final DeferredRegister<RecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MOD_ID);
 
     public static final RegistryObject<RecipeSerializer<?>> ATTACHMENT = RECIPES.register("attachment", () -> new SimpleRecipeSerializer<>(AttachmentRecipe::new));
-
     public static final RegistryObject<Item> TOME = ITEMS.register("tome", TomeItem::new);
 
     public static SimpleChannel CHANNEL;
 
-	public Tome() {
+	public EccentricTome() {
         var bus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ITEMS.register(bus);

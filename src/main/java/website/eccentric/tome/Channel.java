@@ -6,8 +6,8 @@ import net.minecraftforge.network.simple.SimpleChannel;
 
 public class Channel {
 
-    public static final ResourceLocation name = new ResourceLocation(Tome.MOD_ID, "general");
-    public static final String version = new ResourceLocation(Tome.MOD_ID, "1").toString();
+    public static final ResourceLocation name = new ResourceLocation(EccentricTome.MOD_ID, "general");
+    public static final String version = new ResourceLocation(EccentricTome.MOD_ID, "1").toString();
 
     public static SimpleChannel register() {
         final var channel = NetworkRegistry.ChannelBuilder.named(name)

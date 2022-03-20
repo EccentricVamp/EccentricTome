@@ -115,7 +115,7 @@ public class TomeItem extends Item {
 			tag.getCompound("tag").remove(TomeItem.TAG_DATA);
         }
 
-		if (!mod.equalsIgnoreCase(GetMod.MINECRAFT) && !mod.equalsIgnoreCase(Tome.MOD_ID)){
+		if (!mod.equalsIgnoreCase(GetMod.MINECRAFT) && !mod.equalsIgnoreCase(EccentricTome.MOD_ID)){
             data.put(mod, tag);
         }
 
