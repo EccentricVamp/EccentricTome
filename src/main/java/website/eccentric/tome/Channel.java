@@ -16,8 +16,8 @@ public class Channel {
             .networkProtocolVersion(() -> version)
             .simpleChannel();
         
-        channel.registerMessage(1, TransformMessage.class, TransformMessage::encode, TransformMessage::decode, TransformMessage::handle);
-        channel.registerMessage(2, UntransformMessage.class, UntransformMessage::encode, UntransformMessage::decode, UntransformMessage::handle);
+        channel.registerMessage(1, ConvertMessage.class, ConvertMessage::encode, ConvertMessage::decode, ConvertMessage::handle);
+        channel.registerMessage(2, RevertMessage.class, RevertMessage::encode, RevertMessage::decode, RevertMessage::handle);
 
         return channel;
     }

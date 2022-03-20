@@ -7,19 +7,19 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
 import net.minecraftforge.network.NetworkEvent;
 
-public class UntransformMessage {
+public class RevertMessage {
 
-    public static UntransformMessage decode(final FriendlyByteBuf buffer) {
+    public static RevertMessage decode(final FriendlyByteBuf buffer) {
         buffer.readByte();
-        return new UntransformMessage();
+        return new RevertMessage();
     }
 
-    public static void encode(final UntransformMessage message, final FriendlyByteBuf buffer) {
+    public static void encode(final RevertMessage message, final FriendlyByteBuf buffer) {
         buffer.writeByte(0);
     }
     
     @SuppressWarnings("resource")
-    public static void handle(final UntransformMessage message, final Supplier<NetworkEvent.Context> context) {
+    public static void handle(final RevertMessage message, final Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
             var player = context.get().getSender();            
             var stack = player.getMainHandItem();

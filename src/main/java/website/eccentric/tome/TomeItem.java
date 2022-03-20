@@ -29,7 +29,7 @@ public class TomeItem extends Item {
     public static final String TAG_DATA = "eccentrictome:data";
     public static final String TAG_MOD = "eccentrictome:mod";
     public static final String TAG_NAME = "eccentrictome:name";
-    public static final String TAG_TRANSFORMED = "eccentrictome:is_transformed";
+    public static final String TAG_CONVERTED = "eccentrictome:is_converted";
 
     public TomeItem() {
         super(new Properties().stacksTo(1).tab(CreativeModeTab.TAB_TOOLS));
@@ -102,7 +102,7 @@ public class TomeItem extends Item {
 
 		if (stack.getItem() instanceof TomeItem) return true;
 
-		return stack.hasTag() && stack.getTag().getBoolean(TAG_TRANSFORMED);
+		return stack.hasTag() && stack.getTag().getBoolean(TAG_CONVERTED);
 	}    
 
     public static ItemStack convert(ItemStack stack, String mod) {
@@ -117,7 +117,7 @@ public class TomeItem extends Item {
 		tag.put(TAG_DATA, data);
         tag.putString(TAG_MOD, mod);
         tag.putString(TAG_NAME, convertedName);
-		tag.putBoolean(TAG_TRANSFORMED, true);
+		tag.putBoolean(TAG_CONVERTED, true);
 
         var hoverName = new TextComponent(convertedName).setStyle(Style.EMPTY.applyFormats(ChatFormatting.GREEN));
         converted.setHoverName(new TranslatableComponent("eccentrictome.name", hoverName));
@@ -137,7 +137,7 @@ public class TomeItem extends Item {
         tag.remove(TAG_DATA);
         tag.remove(TAG_MOD);
         tag.remove(TAG_NAME);
-        tag.remove(TAG_TRANSFORMED);
+        tag.remove(TAG_CONVERTED);
 
         stack.resetHoverName();
 

@@ -69,7 +69,7 @@ public class EccentricTome {
 	private void onPlayerLeftClick(PlayerInteractEvent.LeftClickEmpty event) {
 		var stack = event.getItemStack();
 		if (TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
-			CHANNEL.sendToServer(new UntransformMessage());
+			CHANNEL.sendToServer(new RevertMessage());
 		}
 	}
 

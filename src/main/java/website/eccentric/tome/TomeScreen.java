@@ -26,7 +26,7 @@ public class TomeScreen extends Screen {
 	@Override
 	public boolean mouseClicked(double x, double y, int button) {
 		if (button == 0 && mod != null) {
-			EccentricTome.CHANNEL.sendToServer(new TransformMessage(mod));
+			EccentricTome.CHANNEL.sendToServer(new ConvertMessage(mod));
 			this.minecraft.setScreen(null);
 			return true;
 		}

@@ -7,23 +7,23 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
 import net.minecraftforge.network.NetworkEvent;
 
-public class TransformMessage {
+public class ConvertMessage {
 
 	public String mod;
 
-	public TransformMessage(String mod) {
+	public ConvertMessage(String mod) {
 		this.mod = mod;
 	}
 
-    public static TransformMessage decode(final FriendlyByteBuf buffer) {
-        return new TransformMessage(new String(buffer.readByteArray(), StandardCharsets.UTF_8));
+    public static ConvertMessage decode(final FriendlyByteBuf buffer) {
+        return new ConvertMessage(new String(buffer.readByteArray(), StandardCharsets.UTF_8));
     }
 
-    public static void encode(final TransformMessage message, final FriendlyByteBuf buffer) {
+    public static void encode(final ConvertMessage message, final FriendlyByteBuf buffer) {
         buffer.writeByteArray(message.mod.getBytes(StandardCharsets.UTF_8));
     }
 
-    public static void handle(final TransformMessage message, final Supplier<NetworkEvent.Context> context) {
+    public static void handle(final ConvertMessage message, final Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
             var player = context.get().getSender();
             var stack = player.getMainHandItem();
