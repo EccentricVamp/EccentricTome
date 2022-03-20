@@ -18,6 +18,8 @@ public class CommonConfiguration {
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> ALIASES;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> EXCLUDE;
 
+    public static final ForgeConfigSpec SPEC;
+
     static {
         BUILDER.comment("Common configuration settings").push("common");
 
@@ -33,16 +35,7 @@ public class CommonConfiguration {
             .defineList(
                 "items",
                 List.of(
-                    "roots:runedtablet",
-                    "opencomputers:tool:4",
-                    "immersiveengineering:tool:3",
-                    "integrateddynamics:on_the_dynamics_of_integration",
-                    "theoneprobe:probenote",
-                    "evilcraft:origins_of_darkness",
-                    "draconicevolution:info_tablet",
-                    "charset:tablet",
-                    "antiqueatlas:antique_atlas",
-                    "occultism:dictionary_of_spirits"
+                    "tconstruct:materials_and_you"
                 ),
                 Validator::isStringResource
             );
@@ -74,7 +67,6 @@ public class CommonConfiguration {
             .defineList(
                 "aliases",
                 List.of(
-                    "nautralpledge=botania",
                     "thermalexpansion=thermalfoundation",
                     "thermaldynamics=thermalfoundation",
                     "thermalcultivation=thermalfoundation",
@@ -82,13 +74,7 @@ public class CommonConfiguration {
                     "rftoolsdim=rftools",
                     "rftoolspower=rftools",
                     "rftoolscontrol=rftools",
-                    "deepresonance=rftools",
-                    "xnet=rftools",
-                    "ae2stuff=appliedenergistics2",
-                    "animus=bloodmagic",
-                    "integrateddynamics=integratedtunnels",
-                    "mekanismgenerators=mekanism",
-                    "mekanismtools=mekanism"
+                    "xnet=rftools"
                 ),
                 Validator::isString
             );
@@ -102,6 +88,8 @@ public class CommonConfiguration {
             );
 
         BUILDER.pop();
+
+        SPEC = BUILDER.build();
     }
 
     public static class Validator {

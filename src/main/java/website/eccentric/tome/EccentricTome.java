@@ -6,7 +6,10 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
@@ -37,6 +40,9 @@ public class EccentricTome {
 
         bus.addListener(this::onCommonSetup);
         bus.addListener(this::onGatherData);
+        bus.addListener(this::onModConfig);
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfiguration.SPEC);
 	}
 
     private void onCommonSetup(final FMLCommonSetupEvent event) {
@@ -46,6 +52,10 @@ public class EccentricTome {
     private void onGatherData(GatherDataEvent event) {
         var generator = event.getGenerator();
         generator.addProvider(new TomeRecipe(generator));
+    }
+
+    private void onModConfig(ModConfigEvent event) {
+        CommonConfiguration.Cache.Refresh();
     }
 
 }
