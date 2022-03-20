@@ -16,6 +16,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -26,10 +27,10 @@ import net.minecraft.world.level.Level;
 
 public class TomeItem extends Item {
 
-    public static final String TAG_TRANSFORM = "eccentric:tome:is_transforming";
-    public static final String TAG_DATA = "eccentric:tome:data";
-    public static final String TAG_NAME = "eccentric:tome:name";
-    public static final String TAG_MOD = "eccentric:tome:mod";
+    public static final String TAG_TRANSFORMING = "eccentrictome:is_transforming";
+    public static final String TAG_DATA = "eccentrictome:data";
+    public static final String TAG_NAME = "eccentrictome:name";
+    public static final String TAG_MOD = "eccentrictome:mod";
 
     public TomeItem() {
         super(new Properties().stacksTo(1).tab(CreativeModeTab.TAB_TOOLS));
@@ -44,8 +45,8 @@ public class TomeItem extends Item {
         var stack = player.getItemInHand(hand);
 
         if (player.isShiftKeyDown()) {
-            var mod = GetMod.fromState(level.getBlockState(position));
-            var newStack = GetMod.shiftStack(stack, mod);
+            var mod = GetMod.from(level.getBlockState(position));
+            var newStack = GetMod.transformedStack(stack, mod);
 
             if (!ItemStack.isSame(newStack, stack)) {
                 player.setItemInHand(hand, newStack);
@@ -86,7 +87,7 @@ public class TomeItem extends Item {
                 name = modStack.getTag().getCompound(TAG_NAME).getString("text");
             }
 
-            var mod = GetMod.fromStack(modStack);
+            var mod = GetMod.from(modStack);
             if (!currentMod.equals(mod)) {
                 tooltip.add(new TextComponent(GetMod.name(mod)).setStyle(Style.EMPTY.applyFormats(ChatFormatting.AQUA)));
             }
@@ -102,11 +103,11 @@ public class TomeItem extends Item {
 
 		if (stack.getItem() instanceof TomeItem) return true;
 
-		return stack.hasTag() && stack.getTag().getBoolean(TAG_TRANSFORM);
+		return stack.hasTag() && stack.getTag().getBoolean(TAG_TRANSFORMING);
 	}    
 
-    public static ItemStack makeMorphedStack(ItemStack stack, String targetMod, CompoundTag data) {
-		var mod = GetMod.fromStack(stack);
+    public static ItemStack transformStack(ItemStack stack, String targetMod, CompoundTag data) {
+		var mod = GetMod.from(stack);
 
 		var tag = new CompoundTag();
 		stack.save(tag);
@@ -139,7 +140,7 @@ public class TomeItem extends Item {
 
 		var stackTag = targetStack.getTag();
 		stackTag.put(TomeItem.TAG_DATA, data);
-		stackTag.putBoolean(TomeItem.TAG_TRANSFORM, true);
+		stackTag.putBoolean(TomeItem.TAG_TRANSFORMING, true);
 
 		if (targetStack.getItem() instanceof TomeItem) {
 			var displayName = new CompoundTag();
@@ -160,5 +161,48 @@ public class TomeItem extends Item {
 		targetStack.setCount(1);
 		return targetStack;
 	}
+
+    public static void Detatch(ItemEntity entity) {
+        var stack = entity.getItem();
+        var level = entity.getCommandSenderWorld();
+
+        var data = stack.getTag().getCompound(TomeItem.TAG_DATA).copy();
+        var mod = stack.getTag().getString(TomeItem.TAG_MOD);
+        if (mod == null) mod = GetMod.from(stack);
+
+        var transformed = TomeItem.transformStack(stack, GetMod.MINECRAFT, data);
+        var transformedData = transformed.getTag().getCompound(TomeItem.TAG_DATA);
+        transformedData.remove(mod);
+
+        if (!level.isClientSide) {
+            var newEntity = new ItemEntity(level, entity.getX(), entity.getY(), entity.getZ(), transformed);
+            level.addFreshEntity(newEntity);
+        }
+
+        var copy = stack.copy();
+        var copyTag = copy.getTag();
+        if (copyTag == null) {
+            copyTag = new CompoundTag();
+            copy.setTag(copyTag);
+        }
+
+        copyTag.remove("display");
+        TextComponent displayName = null;
+        var nameTag = (CompoundTag) copyTag.get(TomeItem.TAG_NAME);
+
+        if (nameTag != null) {
+            displayName = new TextComponent(nameTag.getString("text"));
+        }
+
+        if (displayName != null && !displayName.getString().isEmpty() && displayName != copy.getHoverName()) {
+            copy.setHoverName(displayName);
+        }
+
+        copyTag.remove(TomeItem.TAG_TRANSFORMING);
+        copyTag.remove(TomeItem.TAG_NAME);
+        copyTag.remove(TomeItem.TAG_DATA);
+
+        entity.setItem(copy);
+    }
 
 }

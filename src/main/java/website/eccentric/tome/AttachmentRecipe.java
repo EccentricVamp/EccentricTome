@@ -64,7 +64,7 @@ public class AttachmentRecipe extends CustomRecipe {
         }
 
 		var data = tag.getCompound(TomeItem.TAG_DATA);
-		var mod = GetMod.fromStack(target);
+		var mod = GetMod.from(target);
 
 		if (data.contains(mod)) return ItemStack.EMPTY;
 
@@ -83,7 +83,7 @@ public class AttachmentRecipe extends CustomRecipe {
 	public boolean isTarget(ItemStack stack) {
 		if (stack.isEmpty() || TomeItem.isTome(stack)) return false;
 
-		var mod = GetMod.fromStack(stack);
+		var mod = GetMod.from(stack);
 		if (mod.equals(GetMod.MINECRAFT)) return false;
 
 		if (CommonConfiguration.Cache.ALL_ITEMS) return true;

@@ -93,7 +93,7 @@ public class TomeScreen extends Screen {
 
 		if (!tooltipStack.isEmpty()) {
 			var stackName = tooltipStack.getTag().getCompound(TomeItem.TAG_NAME).getString("text");
-			var stackMod = ChatFormatting.GRAY + GetMod.name(GetMod.fromStack(tooltipStack));
+			var stackMod = ChatFormatting.GRAY + GetMod.name(GetMod.from(tooltipStack));
 			var tooltipList = Arrays.asList(new TextComponent(stackName), new TextComponent(stackMod));
 
 			renderComponentTooltip(matrixStack, tooltipList, mouseX, mouseY, this.font);

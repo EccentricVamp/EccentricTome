@@ -6,6 +6,9 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.item.ItemTossEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -33,16 +36,20 @@ public class EccentricTome {
     public static SimpleChannel CHANNEL;
 
 	public EccentricTome() {
-        var bus = FMLJavaModLoadingContext.get().getModEventBus();
+        var modEvent = FMLJavaModLoadingContext.get().getModEventBus();
 
-        ITEMS.register(bus);
-        RECIPES.register(bus);
+        ITEMS.register(modEvent);
+        RECIPES.register(modEvent);
 
-        bus.addListener(this::onCommonSetup);
-        bus.addListener(this::onGatherData);
-        bus.addListener(this::onModConfig);
+        modEvent.addListener(this::onCommonSetup);
+        modEvent.addListener(this::onGatherData);
+        modEvent.addListener(this::onModConfig);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfiguration.SPEC);
+
+        var minecraftEvent = MinecraftForge.EVENT_BUS;
+        minecraftEvent.addListener(this::onPlayerLeftClick);
+        minecraftEvent.addListener(this::onItemDropped);
 	}
 
     private void onCommonSetup(final FMLCommonSetupEvent event) {
@@ -57,5 +64,23 @@ public class EccentricTome {
     private void onModConfig(ModConfigEvent event) {
         CommonConfiguration.Cache.Refresh();
     }
+
+	private void onPlayerLeftClick(PlayerInteractEvent.LeftClickEmpty event) {
+		var stack = event.getItemStack();
+		if (TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
+			CHANNEL.sendToServer(new UntransformMessage());
+		}
+	}
+
+	private void onItemDropped(ItemTossEvent event) {
+		if (!event.getPlayer().isDiscrete()) return;
+
+		var entity = event.getEntityItem();
+		var stack = entity.getItem();
+
+		if (TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
+            TomeItem.Detatch(entity);
+		}
+	}
 
 }

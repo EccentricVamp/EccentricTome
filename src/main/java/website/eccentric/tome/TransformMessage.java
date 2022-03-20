@@ -39,7 +39,7 @@ public class TransformMessage {
             }
 
             if (hasTome) {
-                var newStack = GetMod.shiftStack(stack, message.mod);
+                var newStack = GetMod.transformedStack(stack, message.mod);
                 player.setItemInHand(hand, newStack);
             }
     

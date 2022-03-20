@@ -19,11 +19,11 @@ public final class GetMod {
         }
 	}
 
-    public static final String fromState(BlockState state) {
+    public static final String from(BlockState state) {
 		return orAlias(state.getBlock().getRegistryName().getNamespace());
 	}
 
-	public static final String fromStack(ItemStack stack) {
+	public static final String from(ItemStack stack) {
 		return orAlias(stack.isEmpty() ? MINECRAFT : stack.getItem().getCreatorModId(stack));
 	}
 
@@ -31,13 +31,13 @@ public final class GetMod {
 		return CommonConfiguration.Cache.ALIASES.getOrDefault(mod, mod);
 	}
 
-    public static final ItemStack shiftStack(ItemStack stack, String mod) {
+    public static final ItemStack transformedStack(ItemStack stack, String mod) {
 		if (!stack.hasTag()) return stack;
         
-		if (mod.equals(GetMod.fromStack(stack))) return stack;
+		if (mod.equals(GetMod.from(stack))) return stack;
 
 		var data = stack.getTag().getCompound(TomeItem.TAG_DATA);
-		return TomeItem.makeMorphedStack(stack, mod, data);
+		return TomeItem.transformStack(stack, mod, data);
     }
 
 	public static String name(String mod) {
