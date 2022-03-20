@@ -86,16 +86,16 @@ public class AttachmentRecipe extends CustomRecipe {
 		var mod = GetMod.fromStack(stack);
 		if (mod.equals(GetMod.MINECRAFT)) return false;
 
-		if (ConfigurationCache.ALL_ITEMS) return true;
+		if (CommonConfiguration.Cache.ALL_ITEMS) return true;
 
-		if (ConfigurationCache.EXCLUDE.contains(mod)) return false;
+		if (CommonConfiguration.Cache.EXCLUDE.contains(mod)) return false;
 
 		var location = stack.getItem().getRegistryName();
 		var locationString = location.toString();
-		if (ConfigurationCache.ITEMS.contains(locationString) || ConfigurationCache.ITEMS.contains(locationString + ":" + stack.getDamageValue())) return true;
+		if (CommonConfiguration.Cache.ITEMS.contains(locationString) || CommonConfiguration.Cache.ITEMS.contains(locationString + ":" + stack.getDamageValue())) return true;
 
 		var path = location.getPath();
-		for (var name : ConfigurationCache.NAMES) {
+		for (var name : CommonConfiguration.Cache.NAMES) {
 			if (path.contains(name)) return true;
         }
 

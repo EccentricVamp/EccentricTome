@@ -28,8 +28,7 @@ public final class GetMod {
 	}
 
 	public static final String orAlias(String mod) {
-
-		return ConfigurationCache.ALIASES.getOrDefault(mod, mod);
+		return CommonConfiguration.Cache.ALIASES.getOrDefault(mod, mod);
 	}
 
     public static final ItemStack shiftStack(ItemStack stack, String mod) {
