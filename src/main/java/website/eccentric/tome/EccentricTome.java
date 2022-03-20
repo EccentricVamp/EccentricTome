@@ -17,7 +17,7 @@ import net.minecraftforge.registries.RegistryObject;
 @Mod(EccentricTome.MOD_ID)
 public class EccentricTome {
 
-	public static final String MOD_ID = "tome";
+	public static final String MOD_ID = "eccentrictome";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
