@@ -16,7 +16,6 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -27,7 +26,6 @@ import net.minecraft.world.level.Level;
 
 public class TomeItem extends Item {
 
-    public static final String TAG_TRANSFORMING = "eccentrictome:is_transforming";
     public static final String TAG_DATA = "eccentrictome:data";
     public static final String TAG_NAME = "eccentrictome:name";
     public static final String TAG_MOD = "eccentrictome:mod";
@@ -46,7 +44,7 @@ public class TomeItem extends Item {
 
         if (player.isShiftKeyDown()) {
             var mod = GetMod.from(level.getBlockState(position));
-            var newStack = GetMod.transformedStack(stack, mod);
+            var newStack = convert(stack, mod);
 
             if (!ItemStack.isSame(newStack, stack)) {
                 player.setItemInHand(hand, newStack);
@@ -103,106 +101,70 @@ public class TomeItem extends Item {
 
 		if (stack.getItem() instanceof TomeItem) return true;
 
-		return stack.hasTag() && stack.getTag().getBoolean(TAG_TRANSFORMING);
+		return stack.hasTag() && stack.getTag().getBoolean(TAG_TRANSFORMED);
 	}    
 
-    public static ItemStack transformStack(ItemStack stack, String targetMod, CompoundTag data) {
-		var mod = GetMod.from(stack);
+    public static ItemStack convert(ItemStack stack, String mod) {
+		var data = stack.getTag().getCompound(TAG_DATA);
 
-		var tag = new CompoundTag();
-		stack.save(tag);
-		tag = tag.copy();
-		if (tag.contains("tag")) {
-			tag.getCompound("tag").remove(TomeItem.TAG_DATA);
-        }
+        var converted = ItemStack.of(data.getCompound(mod));
+        var convertedName = converted.getHoverName().getString();
+		if (!converted.hasTag()) converted.setTag(new CompoundTag());
+        var tag = converted.getTag();
 
-		if (!mod.equalsIgnoreCase(GetMod.MINECRAFT) && !mod.equalsIgnoreCase(EccentricTome.MOD_ID)){
-            data.put(mod, tag);
-        }
+        data.remove(mod);
+		tag.put(TAG_DATA, data);
+        tag.putString(TAG_MOD, mod);
+        tag.putString(TAG_NAME, convertedName);
+		tag.putBoolean(TAG_TRANSFORMED, true);
 
-		ItemStack targetStack;
-		if (targetMod.equals(GetMod.MINECRAFT)) {
-			targetStack = new ItemStack(new TomeItem());
-        }
-		else {
-			var targetTag = data.getCompound(targetMod);
-			data.remove(targetMod);
-
-			targetStack = ItemStack.of(targetTag);
-			if (targetStack.isEmpty()) {
-				targetStack = new ItemStack(new TomeItem());
-            }
-		}
-
-		if (!targetStack.hasTag()) {
-			targetStack.setTag(new CompoundTag());
-        }
-
-		var stackTag = targetStack.getTag();
-		stackTag.put(TomeItem.TAG_DATA, data);
-		stackTag.putBoolean(TomeItem.TAG_TRANSFORMING, true);
-
-		if (targetStack.getItem() instanceof TomeItem) {
-			var displayName = new CompoundTag();
-			displayName.putString("text", targetStack.getHoverName().getString());
-
-			if (stackTag.contains(TomeItem.TAG_NAME)) {
-				displayName = (CompoundTag) stackTag.get(TomeItem.TAG_NAME);
-            }
-			else {
-				stackTag.put(TomeItem.TAG_NAME, displayName);
-            }
-
-			var stackName = new TextComponent(displayName.getString("text")).setStyle(Style.EMPTY.applyFormats(ChatFormatting.GREEN));
-			var component = new TranslatableComponent("tome.name", stackName);
-			targetStack.setHoverName(component);
-		}
-
-		targetStack.setCount(1);
-		return targetStack;
+        var hoverName = new TextComponent(convertedName).setStyle(Style.EMPTY.applyFormats(ChatFormatting.GREEN));
+        converted.setHoverName(new TranslatableComponent("eccentrictome.name", hoverName));
+        
+		return converted;
 	}
 
-    public static void Detatch(ItemEntity entity) {
-        var stack = entity.getItem();
-        var level = entity.getCommandSenderWorld();
+    public static ItemStack revert(ItemStack stack) {
+        var tag = stack.getTag();
+        var data = tag.getCompound(TAG_DATA);
+        
+        var tomeTag = new CompoundTag();
+        tomeTag.put(TAG_DATA, data);
+        var tome = new ItemStack(EccentricTome.TOME.get());
+        tome.setTag(tomeTag);
 
-        var data = stack.getTag().getCompound(TomeItem.TAG_DATA).copy();
-        var mod = stack.getTag().getString(TomeItem.TAG_MOD);
-        if (mod == null) mod = GetMod.from(stack);
+        tag.remove(TAG_DATA);
+        tag.remove(TAG_MOD);
+        tag.remove(TAG_NAME);
+        tag.remove(TAG_TRANSFORMED);
 
-        var transformed = TomeItem.transformStack(stack, GetMod.MINECRAFT, data);
-        var transformedData = transformed.getTag().getCompound(TomeItem.TAG_DATA);
-        transformedData.remove(mod);
+        stack.resetHoverName();
 
-        if (!level.isClientSide) {
-            var newEntity = new ItemEntity(level, entity.getX(), entity.getY(), entity.getZ(), transformed);
-            level.addFreshEntity(newEntity);
-        }
+        return attach(tome, stack);
+    }
 
-        var copy = stack.copy();
-        var copyTag = copy.getTag();
-        if (copyTag == null) {
-            copyTag = new CompoundTag();
-            copy.setTag(copyTag);
-        }
+    public static ItemStack detatch(ItemStack stack) {
+        var mod = stack.getTag().getString(TAG_MOD);
 
-        copyTag.remove("display");
-        TextComponent displayName = null;
-        var nameTag = (CompoundTag) copyTag.get(TomeItem.TAG_NAME);
+        var reverted = revert(stack);
+        var data = reverted.getTag().getCompound(TomeItem.TAG_DATA);
+        data.remove(mod);
+        
+        return reverted;
+    }
 
-        if (nameTag != null) {
-            displayName = new TextComponent(nameTag.getString("text"));
-        }
+    public static ItemStack attach(ItemStack tome, ItemStack attachment) {
+        if (!tome.hasTag()) tome.setTag(new CompoundTag());
+		var tag = tome.getTag();
 
-        if (displayName != null && !displayName.getString().isEmpty() && displayName != copy.getHoverName()) {
-            copy.setHoverName(displayName);
-        }
+		if (!tag.contains(TAG_DATA)) tag.put(TAG_DATA, new CompoundTag());
+		var data = tag.getCompound(TomeItem.TAG_DATA);
 
-        copyTag.remove(TomeItem.TAG_TRANSFORMING);
-        copyTag.remove(TomeItem.TAG_NAME);
-        copyTag.remove(TomeItem.TAG_DATA);
+		var attachmentTag = new CompoundTag();
+		attachment.save(attachmentTag);
+		data.put(GetMod.from(attachment), attachmentTag);
 
-        entity.setItem(copy);
+        return tome;
     }
 
 }

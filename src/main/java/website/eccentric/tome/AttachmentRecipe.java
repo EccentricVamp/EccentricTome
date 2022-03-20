@@ -1,7 +1,6 @@
 package website.eccentric.tome;
 
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
@@ -53,26 +52,7 @@ public class AttachmentRecipe extends CustomRecipe {
 
 		tome = tome.copy();
 
-		var tag = tome.getTag();
-		if (tag == null) {
-			tag = new CompoundTag();
-			tome.setTag(tag);
-		}
-
-		if (!tag.contains(TomeItem.TAG_DATA)) {
-			tag.put(TomeItem.TAG_DATA, new CompoundTag());
-        }
-
-		var data = tag.getCompound(TomeItem.TAG_DATA);
-		var mod = GetMod.from(target);
-
-		if (data.contains(mod)) return ItemStack.EMPTY;
-
-		var modTag = new CompoundTag();
-		target.save(modTag);
-		data.put(mod, modTag);
-
-		return tome;
+		return TomeItem.attach(tome, target);
 	}
 
 	@Override
@@ -108,8 +88,8 @@ public class AttachmentRecipe extends CustomRecipe {
 	}
 
 	@Override
-	public NonNullList<ItemStack> getRemainingItems(CraftingContainer inv) {
-		return NonNullList.withSize(inv.getContainerSize(), ItemStack.EMPTY);
+	public NonNullList<ItemStack> getRemainingItems(CraftingContainer crafting) {
+		return NonNullList.withSize(crafting.getContainerSize(), ItemStack.EMPTY);
 	}
 
 	@Override

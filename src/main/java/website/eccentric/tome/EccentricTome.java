@@ -3,6 +3,7 @@ package website.eccentric.tome;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
@@ -73,13 +74,20 @@ public class EccentricTome {
 	}
 
 	private void onItemDropped(ItemTossEvent event) {
-		if (!event.getPlayer().isDiscrete()) return;
+		if (!event.getPlayer().isShiftKeyDown()) return;
 
 		var entity = event.getEntityItem();
 		var stack = entity.getItem();
+        var level = entity.getCommandSenderWorld();
 
 		if (TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
-            TomeItem.Detatch(entity);
+            var detatchment = TomeItem.detatch(stack);
+
+			if (!level.isClientSide) {
+				level.addFreshEntity(new ItemEntity(level, entity.getX(), entity.getY(), entity.getZ(), detatchment));
+			}
+
+			entity.setItem(stack);
 		}
 	}
 

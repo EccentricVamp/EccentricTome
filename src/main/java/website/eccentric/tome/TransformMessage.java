@@ -39,8 +39,7 @@ public class TransformMessage {
             }
 
             if (hasTome) {
-                var newStack = GetMod.transformedStack(stack, message.mod);
-                player.setItemInHand(hand, newStack);
+                player.setItemInHand(hand, TomeItem.convert(stack, message.mod));
             }
     
             context.get().setPacketHandled(true);

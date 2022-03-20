@@ -31,15 +31,6 @@ public final class GetMod {
 		return CommonConfiguration.Cache.ALIASES.getOrDefault(mod, mod);
 	}
 
-    public static final ItemStack transformedStack(ItemStack stack, String mod) {
-		if (!stack.hasTag()) return stack;
-        
-		if (mod.equals(GetMod.from(stack))) return stack;
-
-		var data = stack.getTag().getCompound(TomeItem.TAG_DATA);
-		return TomeItem.transformStack(stack, mod, data);
-    }
-
 	public static String name(String mod) {
 		return modNames.getOrDefault(mod, mod);
 	}

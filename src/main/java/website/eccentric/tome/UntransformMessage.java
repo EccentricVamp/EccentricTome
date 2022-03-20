@@ -35,8 +35,7 @@ public class UntransformMessage {
             }
 
             if (hasTome) {
-                stack = GetMod.transformedStack(stack, GetMod.MINECRAFT);
-                player.setItemInHand(hand, stack);
+                player.setItemInHand(hand, TomeItem.revert(stack));
                 if (player.level.isClientSide) {
                     Minecraft.getInstance().gameRenderer.itemInHandRenderer.itemUsed(hand);
                 }
