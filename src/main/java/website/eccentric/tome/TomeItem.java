@@ -27,8 +27,9 @@ import net.minecraft.world.level.Level;
 public class TomeItem extends Item {
 
     public static final String TAG_DATA = "eccentrictome:data";
-    public static final String TAG_NAME = "eccentrictome:name";
     public static final String TAG_MOD = "eccentrictome:mod";
+    public static final String TAG_NAME = "eccentrictome:name";
+    public static final String TAG_TRANSFORMED = "eccentrictome:is_transformed";
 
     public TomeItem() {
         super(new Properties().stacksTo(1).tab(CreativeModeTab.TAB_TOOLS));
