@@ -6,11 +6,9 @@ issueTrackerURL="https://github.com/EccentricVamp/eccentric-tome/issues"
 modId="eccentrictome"
 version="${file.jarVersion}"
 displayName="Eccentric Tome"
-credits="Fuck Oracle"
+credits="Vazkii"
 authors="EccentricVamp"
-description='''
-Why is this required?
-'''
+description='''Why is this required?'''
 [[dependencies.eccentrictome]]
 modId="forge"
 mandatory=true
