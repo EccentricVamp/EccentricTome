@@ -9,6 +9,7 @@ import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -35,10 +36,16 @@ public class EccentricTome {
         RECIPES.register(bus);
 
         bus.addListener(this::onCommonSetup);
+        bus.addListener(this::onGatherData);
 	}
 
     private void onCommonSetup(final FMLCommonSetupEvent event) {
         CHANNEL = Channel.register();
+    }
+
+    private void onGatherData(GatherDataEvent event) {
+        var generator = event.getGenerator();
+        generator.addProvider(new TomeRecipe(generator));
     }
 
 }
