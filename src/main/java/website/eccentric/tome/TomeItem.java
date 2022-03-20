@@ -79,21 +79,21 @@ public class TomeItem extends Item {
             if (tag == null) continue;
             
             var modStack = ItemStack.of(tag);
-            if (!modStack.isEmpty()) {
-                var name = modStack.getHoverName().getString();
-                if (modStack.hasTag() && modStack.getTag().contains(TAG_NAME)) {
-                    name = ((CompoundTag) modStack.getTag().get(TAG_NAME)).getString("text");
-                }
-
-                var mod = GetMod.fromStack(modStack);
-                if (!currentMod.equals(mod)) {
-                    tooltip.add(new TextComponent(GetMod.name(mod)).setStyle(Style.EMPTY.applyFormats(ChatFormatting.AQUA)));
-                }
-                
-                tooltip.add(new TextComponent(" \u2520 " + name));
-
-                currentMod = mod;
+            if (modStack.isEmpty()) continue;
+            
+            var name = modStack.getHoverName().getString();
+            if (modStack.hasTag() && modStack.getTag().contains(TAG_NAME)) {
+                name = modStack.getTag().getCompound(TAG_NAME).getString("text");
             }
+
+            var mod = GetMod.fromStack(modStack);
+            if (!currentMod.equals(mod)) {
+                tooltip.add(new TextComponent(GetMod.name(mod)).setStyle(Style.EMPTY.applyFormats(ChatFormatting.AQUA)));
+            }
+            
+            tooltip.add(new TextComponent(" \u2520 " + name));
+
+            currentMod = mod;
         }
 	}
 
