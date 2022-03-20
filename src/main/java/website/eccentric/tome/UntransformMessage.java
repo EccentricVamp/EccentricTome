@@ -27,15 +27,19 @@ public class UntransformMessage {
             var stack = player.getMainHandItem();
             var hand = InteractionHand.MAIN_HAND;
 
-            var hasTome = !stack.isEmpty() && TomeItem.isTome(stack) && stack.getItem() instanceof TomeItem;
+            var hasTome = TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem);
             if (!hasTome) {
                 stack = player.getOffhandItem();
-                hasTome = !stack.isEmpty() && TomeItem.isTome(stack) && stack.getItem() instanceof TomeItem;
+                hasTome = TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem);
                 hand = InteractionHand.OFF_HAND;
             }
 
-            if (hasTome && player.level.isClientSide) {
-                Minecraft.getInstance().gameRenderer.itemInHandRenderer.itemUsed(hand);
+            if (hasTome) {
+                stack = GetMod.transformedStack(stack, GetMod.MINECRAFT);
+                player.setItemInHand(hand, stack);
+                if (player.level.isClientSide) {
+                    Minecraft.getInstance().gameRenderer.itemInHandRenderer.itemUsed(hand);
+                }
             }
 
             context.get().setPacketHandled(true);
