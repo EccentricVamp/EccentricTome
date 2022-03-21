@@ -11,14 +11,14 @@ buildscript {
 apply plugin: 'eclipse'
 apply plugin: 'net.minecraftforge.gradle'
 
-version = "${version_mc}-${mod_version}"
+version = "${minecraft_version}-${mod_version}"
 group = "${mod_group}"
 archivesBaseName = "${mod_id}"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
-    mappings channel: 'official', version: "${version_mc}"
+    mappings channel: 'official', version: "${minecraft_version}"
     runs {
         client {
             workingDirectory project.file('run')
@@ -51,7 +51,7 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${version_mc}-${version_forge}"
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 }
 
 jar {
@@ -61,7 +61,7 @@ jar {
             "Specification-Vendor"    : "${mod_author}",
             "Specification-Version"   : "1",
             "Implementation-Title"    : project.name,
-            "Implementation-Version"  : project.jar.archiveVersion,
+            "Implementation-Version"  : "${mod_version}",
             "Implementation-Vendor"   : "${mod_author}",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
