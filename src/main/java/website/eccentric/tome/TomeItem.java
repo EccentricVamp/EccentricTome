@@ -43,17 +43,19 @@ public class TomeItem extends Item {
         var position = context.getClickedPos();
         var stack = player.getItemInHand(hand);
 
-        if (player.isShiftKeyDown()) {
-            var mod = GetMod.from(level.getBlockState(position));
-            var newStack = convert(stack, mod);
+        if (!player.isShiftKeyDown()) return InteractionResult.PASS;
+        
+        var mod = GetMod.from(level.getBlockState(position));
+        var data = stack.getTag().getCompound(TAG_DATA);
 
-            if (!ItemStack.isSame(newStack, stack)) {
-                player.setItemInHand(hand, newStack);
-                return InteractionResult.SUCCESS;
-            }
-        }
+        if (!data.contains(mod)) return InteractionResult.PASS;
 
-        return InteractionResult.PASS;
+        var newStack = convert(stack, mod);
+
+        if (ItemStack.isSame(newStack, stack)) return InteractionResult.PASS;
+        
+        player.setItemInHand(hand, newStack);
+        return InteractionResult.SUCCESS;
     }
     
     @Override
