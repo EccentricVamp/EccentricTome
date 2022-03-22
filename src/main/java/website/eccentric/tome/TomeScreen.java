@@ -1,7 +1,6 @@
 package website.eccentric.tome;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -13,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 public class TomeScreen extends Screen {
 
     private final ItemStack tome;
-    String mod;
+    private String mod;
 
     protected TomeScreen(ItemStack tome) {
         super(new TextComponent(""));
@@ -39,42 +38,35 @@ public class TomeScreen extends Screen {
 		super.render(poseStack, mouseX, mouseY, ticks);
 
 		var books = Tag.getBooks(tome);
-
-		var bookStacks = new ArrayList<ItemStack>();
-		for (var key : books.getAllKeys()) {
-			bookStacks.add(ItemStack.of(books.getCompound(key)));
-		}
-
 		var window = minecraft.getWindow();
 		var booksPerRow = 6;
-		var rows = bookStacks.size() / booksPerRow + 1;
+		var rows = books.size() / booksPerRow + 1;
 		var iconSize = 20;
 		var startX = window.getGuiScaledWidth() / 2 - booksPerRow * iconSize / 2;
 		var startY = window.getGuiScaledHeight() / 2 - rows * iconSize + 45;
 		var padding = 4;
 		fill(poseStack, startX - padding, startY - padding, startX + iconSize * booksPerRow + padding, startY + iconSize * rows + padding, 0x22000000);
 
-		ItemStack hover = null;
+		this.mod = null;
+		String name = null;
         var index = 0;
-        for (var bookStack : bookStacks) {
+        for (var mod : books.getAllKeys()) {
+			var book = ItemStack.of(books.getCompound(mod));
             var stackX = startX + (index % booksPerRow) * iconSize;
             var stackY = startY + (index / booksPerRow) * iconSize;
 
             if (mouseX > stackX && mouseY > stackY && mouseX <= (stackX + 16) && mouseY <= (stackY + 16)) {
-                hover = bookStack;
+                this.mod = mod;
+				name = book.getHoverName().getString();
             }
 
-			this.minecraft.getItemRenderer().renderAndDecorateItem(bookStack, stackX, stackY);
+			minecraft.getItemRenderer().renderAndDecorateItem(book, stackX, stackY);
         }
 
-		if (hover != null) {
-			mod = Mod.from(hover);
-			var hoverName = hover.getHoverName().getString();
-			var tooltipList = Arrays.asList(new TextComponent(hoverName), new TextComponent(ChatFormatting.GRAY + Mod.name(mod)));
-
-			renderComponentTooltip(poseStack, tooltipList, mouseX, mouseY, font);
+		if (this.mod != null) {
+			var tooltips = List.of(new TextComponent(name), new TextComponent(ChatFormatting.GRAY + Mod.name(this.mod)));
+			renderComponentTooltip(poseStack, tooltips, mouseX, mouseY, font);
 		}
-		else mod = null;
 	}
 
 }
