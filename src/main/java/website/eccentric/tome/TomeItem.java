@@ -1,14 +1,9 @@
 package website.eccentric.tome;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import javax.annotation.Nullable;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
@@ -26,11 +21,6 @@ import net.minecraft.world.level.Level;
 
 public class TomeItem extends Item {
 
-    public static final String TAG_DATA = "eccentrictome:data";
-    public static final String TAG_MOD = "eccentrictome:mod";
-    public static final String TAG_NAME = "eccentrictome:name";
-    public static final String TAG_CONVERTED = "eccentrictome:is_converted";
-
     public TomeItem() {
         super(new Properties().stacksTo(1).tab(CreativeModeTab.TAB_TOOLS));
     }
@@ -42,104 +32,61 @@ public class TomeItem extends Item {
         var level = context.getLevel();
         var position = context.getClickedPos();
         var stack = player.getItemInHand(hand);
-
-        if (!player.isShiftKeyDown()) return InteractionResult.PASS;
-        
         var mod = GetMod.from(level.getBlockState(position));
-        var data = stack.getTag().getCompound(TAG_DATA);
 
-        if (!data.contains(mod)) return InteractionResult.PASS;
-
-        var newStack = convert(stack, mod);
-
-        if (ItemStack.isSame(newStack, stack)) return InteractionResult.PASS;
+        if (!player.isShiftKeyDown() || !Tag.hasData(stack, mod)) return InteractionResult.PASS;
         
-        player.setItemInHand(hand, newStack);
+        player.setItemInHand(hand, convert(stack, mod));
+
         return InteractionResult.SUCCESS;
     }
     
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-		var stack = player.getItemInHand(hand);
-        if (level.isClientSide) Minecraft.getInstance().setScreen(new TomeScreen(stack));
-		return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
+		var tome = player.getItemInHand(hand);
+		if (Tag.getData(tome).isEmpty()) return InteractionResultHolder.fail(tome);
+
+        if (level.isClientSide) {
+            Minecraft.getInstance().setScreen(new TomeScreen(tome));
+        }
+
+		return InteractionResultHolder.sidedSuccess(tome, level.isClientSide);
     }
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag advanced) {
-		if (!stack.hasTag() || !stack.getTag().contains(TAG_DATA)) return;
-
-		var data = stack.getTag().getCompound(TAG_DATA);
-		if (data.getAllKeys().isEmpty()) return;
-
-        var keys = new ArrayList<String>(data.getAllKeys());
-        Collections.sort(keys);
-        var currentMod = "";
-
-        for (var key : keys) {
-            var tag = data.getCompound(key);
-            if (tag == null) continue;
+	public void appendHoverText(ItemStack tome, Level level, List<Component> tooltip, TooltipFlag advanced) {
+		var data = Tag.getData(tome);
+        for (var key : data.getAllKeys()) {
+            var stack = ItemStack.of(data.getCompound(key));            
+            var name = stack.getHoverName().getString();
+            var mod = GetMod.from(stack);
             
-            var modStack = ItemStack.of(tag);
-            if (modStack.isEmpty()) continue;
-            
-            var name = modStack.getHoverName().getString();
-            if (modStack.hasTag() && modStack.getTag().contains(TAG_NAME)) {
-                name = modStack.getTag().getCompound(TAG_NAME).getString("text");
-            }
-
-            var mod = GetMod.from(modStack);
-            if (!currentMod.equals(mod)) {
-                tooltip.add(new TextComponent(GetMod.name(mod)).setStyle(Style.EMPTY.applyFormats(ChatFormatting.AQUA)));
-            }
-            
-            tooltip.add(new TextComponent(" \u2520 " + name));
-
-            currentMod = mod;
+            tooltip.add(new TextComponent(GetMod.name(mod)));
+            tooltip.add(new TextComponent("\t" + name));
         }
 	}
 
 	public static boolean isTome(ItemStack stack) {
 		if (stack.isEmpty()) return false;
-
-		if (stack.getItem() instanceof TomeItem) return true;
-
-		return stack.hasTag() && stack.getTag().getBoolean(TAG_CONVERTED);
+		else if (stack.getItem() instanceof TomeItem) return true;
+        else return Tag.isConverted(stack);
 	}    
 
-    public static ItemStack convert(ItemStack stack, String mod) {
-		var data = stack.getTag().getCompound(TAG_DATA);
+    public static ItemStack convert(ItemStack tome, String mod) {
+        var stack = ItemStack.of(Tag.popData(tome, mod));
+        var name = stack.getHoverName().getString();
+        Tag.copyData(tome, stack);
+        Tag.fill(tome, mod, name, true);
 
-        var converted = ItemStack.of(data.getCompound(mod));
-        var convertedName = converted.getHoverName().getString();
-		if (!converted.hasTag()) converted.setTag(new CompoundTag());
-        var tag = converted.getTag();
-
-        data.remove(mod);
-		tag.put(TAG_DATA, data);
-        tag.putString(TAG_MOD, mod);
-        tag.putString(TAG_NAME, convertedName);
-		tag.putBoolean(TAG_CONVERTED, true);
-
-        var hoverName = new TextComponent(convertedName).setStyle(Style.EMPTY.applyFormats(ChatFormatting.GREEN));
-        converted.setHoverName(new TranslatableComponent("eccentrictome.name", hoverName));
+        setHoverName(tome, name);
         
-		return converted;
+		return stack;
 	}
 
     public static ItemStack revert(ItemStack stack) {
-        var tag = stack.getTag();
-        var data = tag.getCompound(TAG_DATA);
-        
-        var tomeTag = new CompoundTag();
-        tomeTag.put(TAG_DATA, data);
-        var tome = new ItemStack(EccentricTome.TOME.get());
-        tome.setTag(tomeTag);
-
-        tag.remove(TAG_DATA);
-        tag.remove(TAG_MOD);
-        tag.remove(TAG_NAME);
-        tag.remove(TAG_CONVERTED);
+        var tome = createStack();
+        Tag.copyData(stack, tome);
+        Tag.clear(stack);
 
         stack.resetHoverName();
 
@@ -147,27 +94,25 @@ public class TomeItem extends Item {
     }
 
     public static ItemStack detatch(ItemStack stack) {
-        var mod = stack.getTag().getString(TAG_MOD);
-
-        var reverted = revert(stack);
-        var data = reverted.getTag().getCompound(TomeItem.TAG_DATA);
-        data.remove(mod);
+        var mod = Tag.getMod(stack);
+        var tome = revert(stack);
+        Tag.popData(tome, mod);
         
-        return reverted;
+        return tome;
     }
 
     public static ItemStack attach(ItemStack tome, ItemStack attachment) {
-        if (!tome.hasTag()) tome.setTag(new CompoundTag());
-		var tag = tome.getTag();
-
-		if (!tag.contains(TAG_DATA)) tag.put(TAG_DATA, new CompoundTag());
-		var data = tag.getCompound(TomeItem.TAG_DATA);
-
-		var attachmentTag = new CompoundTag();
-		attachment.save(attachmentTag);
-		data.put(GetMod.from(attachment), attachmentTag);
-
+        Tag.addData(tome, attachment);
         return tome;
+    }
+
+    private static ItemStack createStack() {
+        return new ItemStack(EccentricTome.TOME.get());
+    }
+
+    private static void setHoverName(ItemStack stack, String name) {
+        var innerName = new TextComponent(name).setStyle(Style.EMPTY.applyFormats(ChatFormatting.GREEN));
+        stack.setHoverName(new TranslatableComponent("eccentrictome.name", innerName));
     }
 
 }
