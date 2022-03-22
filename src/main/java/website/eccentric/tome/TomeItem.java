@@ -56,10 +56,9 @@ public class TomeItem extends Item {
 	@Override
 	public void appendHoverText(ItemStack tome, Level level, List<Component> tooltip, TooltipFlag advanced) {
 		var books = Tag.getBooks(tome);
-        for (var key : books.getAllKeys()) {
-            var book = ItemStack.of(books.getCompound(key));            
+        for (var mod : books.getAllKeys()) {
+            var book = ItemStack.of(books.getCompound(mod));        
             var name = book.getHoverName().getString();
-            var mod = Mod.from(book);
             
             tooltip.add(new TextComponent(Mod.name(mod)));
             tooltip.add(new TextComponent("\t" + name));
