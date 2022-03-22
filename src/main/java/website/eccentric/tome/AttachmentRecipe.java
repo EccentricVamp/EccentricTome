@@ -63,8 +63,8 @@ public class AttachmentRecipe extends CustomRecipe {
 	public boolean isTarget(ItemStack stack) {
 		if (stack.isEmpty() || TomeItem.isTome(stack)) return false;
 
-		var mod = GetMod.from(stack);
-		if (mod.equals(GetMod.MINECRAFT)) return false;
+		var mod = Mod.from(stack);
+		if (mod.equals(Mod.MINECRAFT)) return false;
 
 		if (CommonConfiguration.Cache.ALL_ITEMS) return true;
 

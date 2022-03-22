@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fml.ModList;
 
-public final class GetMod {
+public final class Mod {
 
 	private static final Map<String, String> modNames = new HashMap<String, String>();
 

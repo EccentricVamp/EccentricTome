@@ -32,7 +32,7 @@ public class TomeItem extends Item {
         var level = context.getLevel();
         var position = context.getClickedPos();
         var stack = player.getItemInHand(hand);
-        var mod = GetMod.from(level.getBlockState(position));
+        var mod = Mod.from(level.getBlockState(position));
 
         if (!player.isShiftKeyDown() || !Tag.hasData(stack, mod)) return InteractionResult.PASS;
         
@@ -59,9 +59,9 @@ public class TomeItem extends Item {
         for (var key : data.getAllKeys()) {
             var stack = ItemStack.of(data.getCompound(key));            
             var name = stack.getHoverName().getString();
-            var mod = GetMod.from(stack);
+            var mod = Mod.from(stack);
             
-            tooltip.add(new TextComponent(GetMod.name(mod)));
+            tooltip.add(new TextComponent(Mod.name(mod)));
             tooltip.add(new TextComponent("\t" + name));
         }
 	}

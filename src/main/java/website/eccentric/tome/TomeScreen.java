@@ -70,9 +70,9 @@ public class TomeScreen extends Screen {
         }
 
 		if (tooltipStack != null) {
-			mod = GetMod.from(tooltipStack);
+			mod = Mod.from(tooltipStack);
 			var hoverName = tooltipStack.getHoverName().getString();
-			var tooltipList = Arrays.asList(new TextComponent(hoverName), new TextComponent(ChatFormatting.GRAY + GetMod.name(mod)));
+			var tooltipList = Arrays.asList(new TextComponent(hoverName), new TextComponent(ChatFormatting.GRAY + Mod.name(mod)));
 
 			renderComponentTooltip(poseStack, tooltipList, mouseX, mouseY, this.font);
 		}

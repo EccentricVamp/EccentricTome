@@ -39,7 +39,7 @@ public class Tag {
         if (!hasData(stack)) setData(stack, new CompoundTag());
         
         var data = getData(stack);
-		data.put(GetMod.from(attachment), attachment.save(new CompoundTag()));
+		data.put(Mod.from(attachment), attachment.save(new CompoundTag()));
     }
 
     public static CompoundTag popData(ItemStack stack, String mod) {
