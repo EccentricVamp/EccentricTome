@@ -8,7 +8,7 @@ public class Tag {
     public static final String BOOKS = "eccentrictome:books";
     public static final String MOD = "eccentrictome:mod";
     public static final String NAME = "eccentrictome:name";
-    public static final String CONVERTED = "eccentrictome:is_converted";
+    public static final String IS_TOME = "eccentrictome:is_tome";
 
     public static boolean hasBooks(ItemStack stack) {
         return stack.hasTag() && stack.getTag().contains(BOOKS);
@@ -58,8 +58,8 @@ public class Tag {
         return stack.getTag().getString(MOD);
     }
 
-    public static boolean isConverted(ItemStack stack) {
-        return stack.hasTag() && stack.getTag().getBoolean(CONVERTED);
+    public static boolean isTome(ItemStack stack) {
+        return stack.hasTag() && stack.getTag().getBoolean(IS_TOME);
     }
 
     public static boolean hasName(ItemStack stack) {
@@ -72,16 +72,16 @@ public class Tag {
         tag.remove(BOOKS);
         tag.remove(MOD);
         tag.remove(NAME);
-        tag.remove(CONVERTED);
+        tag.remove(IS_TOME);
         if (tag.isEmpty()) stack.setTag(null);
     }
 
-    public static void fill(ItemStack stack, String mod, String name, boolean converted) {
+    public static void fill(ItemStack stack, String mod, String name, boolean isTome) {
         var tag = stack.getTag();
 
         tag.putString(Tag.MOD, mod);
         tag.putString(Tag.NAME, name);
-		tag.putBoolean(Tag.CONVERTED, converted);
+		tag.putBoolean(Tag.IS_TOME, isTome);
     }
 
 }

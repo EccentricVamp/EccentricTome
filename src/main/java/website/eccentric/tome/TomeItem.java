@@ -69,7 +69,7 @@ public class TomeItem extends Item {
 	public static boolean isTome(ItemStack stack) {
 		if (stack.isEmpty()) return false;
 		else if (stack.getItem() instanceof TomeItem) return true;
-        else return Tag.isConverted(stack);
+        else return Tag.isTome(stack);
 	}    
 
     public static ItemStack convert(ItemStack tome, String mod) {
