@@ -7,6 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import website.eccentric.tome.CommonConfiguration.Cache;
 
 public class AttachmentRecipe extends CustomRecipe {
 
@@ -66,16 +67,16 @@ public class AttachmentRecipe extends CustomRecipe {
 		var mod = Mod.from(stack);
 		if (mod.equals(Mod.MINECRAFT)) return false;
 
-		if (CommonConfiguration.Cache.ALL_ITEMS) return true;
+		if (Cache.ALL_ITEMS) return true;
 
-		if (CommonConfiguration.Cache.EXCLUDE.contains(mod)) return false;
+		if (Cache.EXCLUDE.contains(mod)) return false;
 
 		var location = stack.getItem().getRegistryName();
 		var locationString = location.toString();
-		if (CommonConfiguration.Cache.ITEMS.contains(locationString) || CommonConfiguration.Cache.ITEMS.contains(locationString + ":" + stack.getDamageValue())) return true;
+		if (Cache.ITEMS.contains(locationString) || Cache.ITEMS.contains(locationString + ":" + stack.getDamageValue())) return true;
 
 		var path = location.getPath();
-		for (var name : CommonConfiguration.Cache.NAMES) {
+		for (var name : Cache.NAMES) {
 			if (path.contains(name)) return true;
         }
 
