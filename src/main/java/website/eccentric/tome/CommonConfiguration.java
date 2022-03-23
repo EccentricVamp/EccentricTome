@@ -10,8 +10,6 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 public class CommonConfiguration {
 
-    private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
-
     public static final ForgeConfigSpec.BooleanValue ALL_ITEMS;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> ITEMS;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> NAMES;
@@ -21,22 +19,19 @@ public class CommonConfiguration {
     public static final ForgeConfigSpec SPEC;
 
     static {
-        BUILDER.comment("Common configuration settings").push("common");
+        var BUILDER = new ForgeConfigSpec.Builder()
+            .comment("Common configuration settings")
+            .push("common");
 
         ALL_ITEMS = BUILDER
             .comment("Allow all items to be added")
-            .define(
-                "allitems",
-                false
-            );
+            .define("allitems", false);
 
         ITEMS = BUILDER
             .comment("Whitelisted items")
             .defineList(
                 "items",
-                List.of(
-                    "tconstruct:materials_and_you"
-                ),
+                List.of("tconstruct:materials_and_you"),
                 Validator::isStringResource
             );
 
@@ -81,11 +76,7 @@ public class CommonConfiguration {
 
         EXCLUDE = BUILDER
             .comment("Blacklisted mods")
-            .defineList(
-                "exclude",
-                Lists.newArrayList(),
-                Validator::isString
-            );
+            .defineList("exclude", Lists.newArrayList(), Validator::isString);
 
         BUILDER.pop();
 
