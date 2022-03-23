@@ -54,7 +54,7 @@ public class EccentricTome {
 	}
 
     private void onCommonSetup(final FMLCommonSetupEvent event) {
-        CHANNEL = Channel.register();
+        CHANNEL = TomeChannel.register();
     }
 
     private void onGatherData(GatherDataEvent event) {
