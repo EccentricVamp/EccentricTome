@@ -21,3 +21,7 @@ Craft the Tome with other books in the crafting grid to combine them
 `Left-Click` on air to revert a book back into the Tome
 
 `Shift` + `Q` while holding the converted tome to eject a book from it
+
+## Credits
+
+Vazikii for the original idea and basic implementation
