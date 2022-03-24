@@ -24,4 +24,4 @@ Craft the Tome with other books in the crafting grid to combine them
 
 ## Credits
 
-Vazikii for the original idea and basic implementation
+Vazkii for the original idea and basic implementation
