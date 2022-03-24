@@ -22,6 +22,10 @@ Craft the Tome with other books in the crafting grid to combine them
 
 `Shift` + `Q` while holding the converted tome to eject a book from it
 
+## Download
+
+You can download the v1.0.0 jar under the releases section on the right. Curseforge is still reviewing the project, so you'll have to manually install it for now.
+
 ## Credits
 
 Vazkii for the original idea and basic implementation
