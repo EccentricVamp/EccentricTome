@@ -30,4 +30,4 @@ Curseforge is still reviewing the project, so you'll have to manually install it
 
 ## Credits
 
-Vazkii for the original idea and basic implementation
+Vazkii for the original idea
