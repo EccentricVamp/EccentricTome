@@ -15,6 +15,9 @@ Craft the Tome with other books in the crafting grid to combine them
 ## Controls
 
 `Right-Click` while holding Tome to open the GUI and select a book to convert it into
+
 `Shift` + `Right-Click` while holding Tome to convert to the book for the block you're looking at
+
 `Left-Click` on air to revert a book back into the Tome
+
 `Shift` + `Q` while holding the converted tome to eject a book from it
