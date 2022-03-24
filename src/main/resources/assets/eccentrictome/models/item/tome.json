@@ -1,6 +1,6 @@
 {
-	"parent": "item/handheld",
-	"textures": { 
-		"layer0": "eccentrictome:item/tome"
-	}
+    "parent": "item/handheld",
+    "textures": { 
+        "layer0": "eccentrictome:item/tome"
+    }
 }

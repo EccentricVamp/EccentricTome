@@ -39,7 +39,7 @@ public class Tag {
         if (!hasBooks(stack)) setBooks(stack, new CompoundTag());
         
         var books = getBooks(stack);
-		books.put(Mod.from(book), book.save(new CompoundTag()));
+        books.put(Mod.from(book), book.save(new CompoundTag()));
     }
 
     public static CompoundTag popBook(ItemStack stack, String mod) {
@@ -81,7 +81,7 @@ public class Tag {
 
         tag.putString(Tag.MOD, mod);
         tag.putString(Tag.NAME, name);
-		tag.putBoolean(Tag.IS_TOME, isTome);
+        tag.putBoolean(Tag.IS_TOME, isTome);
     }
 
 }

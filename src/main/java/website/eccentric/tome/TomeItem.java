@@ -43,19 +43,19 @@ public class TomeItem extends Item {
     
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-		var tome = player.getItemInHand(hand);
-		if (Tag.getBooks(tome).isEmpty()) return InteractionResultHolder.fail(tome);
+        var tome = player.getItemInHand(hand);
+        if (Tag.getBooks(tome).isEmpty()) return InteractionResultHolder.fail(tome);
 
         if (level.isClientSide) {
             Minecraft.getInstance().setScreen(new TomeScreen(tome));
         }
 
-		return InteractionResultHolder.sidedSuccess(tome, level.isClientSide);
+        return InteractionResultHolder.sidedSuccess(tome, level.isClientSide);
     }
 
-	@Override
-	public void appendHoverText(ItemStack tome, Level level, List<Component> tooltip, TooltipFlag advanced) {
-		var books = Tag.getBooks(tome);
+    @Override
+    public void appendHoverText(ItemStack tome, Level level, List<Component> tooltip, TooltipFlag advanced) {
+        var books = Tag.getBooks(tome);
         for (var mod : books.getAllKeys()) {
             var book = ItemStack.of(books.getCompound(mod));        
             var name = book.getHoverName().getString();
@@ -63,13 +63,13 @@ public class TomeItem extends Item {
             tooltip.add(new TextComponent(Mod.name(mod)));
             tooltip.add(new TextComponent("  " + name));
         }
-	}
+    }
 
-	public static boolean isTome(ItemStack stack) {
-		if (stack.isEmpty()) return false;
-		else if (stack.getItem() instanceof TomeItem) return true;
+    public static boolean isTome(ItemStack stack) {
+        if (stack.isEmpty()) return false;
+        else if (stack.getItem() instanceof TomeItem) return true;
         else return Tag.isTome(stack);
-	}    
+    }    
 
     public static ItemStack convert(ItemStack tome, String mod) {
         var book = ItemStack.of(Tag.popBook(tome, mod));
@@ -79,8 +79,8 @@ public class TomeItem extends Item {
 
         setHoverName(book, name);
         
-		return book;
-	}
+        return book;
+    }
 
     public static ItemStack revert(ItemStack book) {
         var tome = createStack();

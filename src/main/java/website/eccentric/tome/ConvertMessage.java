@@ -9,11 +9,11 @@ import net.minecraftforge.network.NetworkEvent;
 
 public class ConvertMessage {
 
-	public String mod;
+    public String mod;
 
-	public ConvertMessage(String mod) {
-		this.mod = mod;
-	}
+    public ConvertMessage(String mod) {
+        this.mod = mod;
+    }
 
     public static ConvertMessage decode(final FriendlyByteBuf buffer) {
         return new ConvertMessage(new String(buffer.readByteArray(), StandardCharsets.UTF_8));

@@ -11,17 +11,17 @@ import website.eccentric.tome.CommonConfiguration.Cache;
 
 public class AttachmentRecipe extends CustomRecipe {
 
-	public AttachmentRecipe(ResourceLocation location) {
-		super(location);
-	}
+    public AttachmentRecipe(ResourceLocation location) {
+        super(location);
+    }
 
-	@Override
-	public boolean matches(CraftingContainer crafting, Level level) {
-		var foundTome = false;
-		var foundTarget = false;
+    @Override
+    public boolean matches(CraftingContainer crafting, Level level) {
+        var foundTome = false;
+        var foundTarget = false;
 
-		for (var i = 0; i < crafting.getContainerSize(); i++) {
-			var stack = crafting.getItem(i);
+        for (var i = 0; i < crafting.getContainerSize(); i++) {
+            var stack = crafting.getItem(i);
             if (stack.isEmpty()) continue;
             
             if (isTarget(stack)) {
@@ -33,69 +33,69 @@ public class AttachmentRecipe extends CustomRecipe {
                 foundTome = true;
             }
             else return false;
-		}
+        }
 
-		return foundTome && foundTarget;
-	}
+        return foundTome && foundTarget;
+    }
 
-	@Override
-	public ItemStack assemble(CraftingContainer crafting) {
-		var tome = ItemStack.EMPTY;
-		var target = ItemStack.EMPTY;
+    @Override
+    public ItemStack assemble(CraftingContainer crafting) {
+        var tome = ItemStack.EMPTY;
+        var target = ItemStack.EMPTY;
 
-		for (var i = 0; i < crafting.getContainerSize(); i++) {
-			var stack = crafting.getItem(i);
+        for (var i = 0; i < crafting.getContainerSize(); i++) {
+            var stack = crafting.getItem(i);
             if (stack.isEmpty()) continue;
             
             if (stack.getItem() instanceof TomeItem) tome = stack;
             else target = stack;
-		}
-
-		tome = tome.copy();
-
-		return TomeItem.attach(tome, target);
-	}
-
-	@Override
-	public boolean canCraftInDimensions(int width, int height) {
-		return width * height >= 2;
-	}
-
-	public boolean isTarget(ItemStack stack) {
-		if (stack.isEmpty() || TomeItem.isTome(stack)) return false;
-
-		var mod = Mod.from(stack);
-		if (mod.equals(Mod.MINECRAFT)) return false;
-
-		if (Cache.ALL_ITEMS) return true;
-
-		if (Cache.EXCLUDE.contains(mod)) return false;
-
-		var location = stack.getItem().getRegistryName();
-		var locationString = location.toString();
-		if (Cache.ITEMS.contains(locationString) || Cache.ITEMS.contains(locationString + ":" + stack.getDamageValue())) return true;
-
-		var path = location.getPath();
-		for (var name : Cache.NAMES) {
-			if (path.contains(name)) return true;
         }
 
-		return false;
-	}
+        tome = tome.copy();
 
-	@Override
-	public ItemStack getResultItem() {
-		return ItemStack.EMPTY;
-	}
+        return TomeItem.attach(tome, target);
+    }
 
-	@Override
-	public NonNullList<ItemStack> getRemainingItems(CraftingContainer crafting) {
-		return NonNullList.withSize(crafting.getContainerSize(), ItemStack.EMPTY);
-	}
+    @Override
+    public boolean canCraftInDimensions(int width, int height) {
+        return width * height >= 2;
+    }
 
-	@Override
-	public RecipeSerializer<?> getSerializer() {
-		return EccentricTome.ATTACHMENT.get();
-	}
+    public boolean isTarget(ItemStack stack) {
+        if (stack.isEmpty() || TomeItem.isTome(stack)) return false;
+
+        var mod = Mod.from(stack);
+        if (mod.equals(Mod.MINECRAFT)) return false;
+
+        if (Cache.ALL_ITEMS) return true;
+
+        if (Cache.EXCLUDE.contains(mod)) return false;
+
+        var location = stack.getItem().getRegistryName();
+        var locationString = location.toString();
+        if (Cache.ITEMS.contains(locationString) || Cache.ITEMS.contains(locationString + ":" + stack.getDamageValue())) return true;
+
+        var path = location.getPath();
+        for (var name : Cache.NAMES) {
+            if (path.contains(name)) return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public ItemStack getResultItem() {
+        return ItemStack.EMPTY;
+    }
+
+    @Override
+    public NonNullList<ItemStack> getRemainingItems(CraftingContainer crafting) {
+        return NonNullList.withSize(crafting.getContainerSize(), ItemStack.EMPTY);
+    }
+
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+        return EccentricTome.ATTACHMENT.get();
+    }
 
 }
