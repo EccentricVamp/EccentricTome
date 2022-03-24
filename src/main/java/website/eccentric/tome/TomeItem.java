@@ -61,7 +61,7 @@ public class TomeItem extends Item {
             var name = book.getHoverName().getString();
             
             tooltip.add(new TextComponent(Mod.name(mod)));
-            tooltip.add(new TextComponent("\t" + name));
+            tooltip.add(new TextComponent("  " + name));
         }
 	}
 
