@@ -24,9 +24,9 @@ Craft the Tome with other books in the crafting grid to combine them
 
 ## Download
 
-You can download the v1.0.0 jar under the releases section on the right.
+https://curseforge.com/minecraft/mc-mods/eccentric-tome
 
-Curseforge is still reviewing the project, so you'll have to manually install it for now.
+Or you can download the jar under the releases section on the right.
 
 ## Credits
 
