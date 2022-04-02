@@ -87,6 +87,7 @@ if (ENV.CURSEFORGE_KEY) {
             releaseType 'beta'
             addGameVersion 'Forge'
             addGameVersion minecraft_version
+            addGameVersion 'Java 17'
             mainArtifact(jar)
         }
     }
