@@ -1,5 +1,8 @@
 # Eccentric Tome
 
+[![Curse Forge](http://cf.way2muchnoise.eu/597522.svg)](https://www.curseforge.com/minecraft/mc-mods/eccentric-tome)
+[![Curse Forge](http://cf.way2muchnoise.eu/versions/597522.svg)](https://www.curseforge.com/minecraft/mc-mods/eccentric-tome)
+
 This mod adds a single item: the Eccentric Tome.
 
 The Tome solves a single problem: managing all of your guide books.
