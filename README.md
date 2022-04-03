@@ -1,7 +1,7 @@
 # Eccentric Tome
-
 [![Curse Forge](http://cf.way2muchnoise.eu/597522.svg)](https://www.curseforge.com/minecraft/mc-mods/eccentric-tome)
 [![Curse Forge](http://cf.way2muchnoise.eu/versions/597522.svg)](https://www.curseforge.com/minecraft/mc-mods/eccentric-tome)
+[![AGPL-3.0](https://img.shields.io/github/license/EccentricVamp/EccentricTome)](https://www.gnu.org/licenses/agpl-3.0)
 
 This mod adds a single item: the Eccentric Tome.
 
@@ -24,12 +24,6 @@ Craft the Tome with other books in the crafting grid to combine them
 `Left-Click` on air to revert a book back into the Tome
 
 `Shift` + `Q` while holding the converted tome to eject a book from it
-
-## Download
-
-https://curseforge.com/minecraft/mc-mods/eccentric-tome
-
-Or you can download the jar under the releases section on the right.
 
 ## Credits
 
