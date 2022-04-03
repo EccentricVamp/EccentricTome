@@ -3,7 +3,6 @@ package website.eccentric.tome;
 import java.util.List;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
@@ -46,9 +45,7 @@ public class TomeItem extends Item {
         var tome = player.getItemInHand(hand);
         if (Tag.getBooks(tome).isEmpty()) return InteractionResultHolder.fail(tome);
 
-        if (level.isClientSide) {
-            Minecraft.getInstance().setScreen(new TomeScreen(tome));
-        }
+        if (level.isClientSide) EccentricTome.PROXY.tomeScreen(tome);
 
         return InteractionResultHolder.sidedSuccess(tome, level.isClientSide);
     }

@@ -10,6 +10,7 @@ import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -34,6 +35,7 @@ public class EccentricTome {
     public static final RegistryObject<RecipeSerializer<?>> ATTACHMENT = RECIPES.register("attachment", () -> new SimpleRecipeSerializer<>(AttachmentRecipe::new));
     public static final RegistryObject<Item> TOME = ITEMS.register("tome", TomeItem::new);
 
+    public static Proxy PROXY;
     public static SimpleChannel CHANNEL;
 
     public EccentricTome() {
@@ -45,6 +47,8 @@ public class EccentricTome {
         modEvent.addListener(this::onCommonSetup);
         modEvent.addListener(this::onGatherData);
         modEvent.addListener(this::onModConfig);
+
+        PROXY = DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> Proxy::new);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfiguration.SPEC);
 
