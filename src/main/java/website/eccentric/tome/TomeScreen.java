@@ -61,6 +61,7 @@ public class TomeScreen extends Screen {
             }
 
             minecraft.getItemRenderer().renderAndDecorateItem(book, stackX, stackY);
+            index++;
         }
 
         if (this.mod != null) {
