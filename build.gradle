@@ -89,16 +89,14 @@ jar {
 jar.finalizedBy('reobfJar')
 
 def ENV = System.getenv()
-if (ENV.CURSEFORGE_KEY) {
-    curseforge {
-        apiKey ENV.CURSEFORGE_KEY
-        project {
-            id curseforge_id
-            releaseType 'beta'
-            addGameVersion 'Forge'
-            addGameVersion minecraft_version
-            addGameVersion 'Java 17'
-            mainArtifact(jar)
-        }
+curseforge {
+    apiKey = ENV.CURSEFORGE_KEY
+    project {
+        id = curseforge_id
+        releaseType = 'beta'
+        addGameVersion 'Forge'
+        addGameVersion minecraft_version
+        addGameVersion 'Java 17'
+        mainArtifact(jar)
     }
 }
