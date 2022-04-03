@@ -49,10 +49,12 @@ minecraft {
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
-// repositories {
-//     maven { url 'https://maven.blamejared.com' }
-//     maven { url 'https://dvs1.progwml6.com/files/maven' }
-// }
+    maven {
+        url 'https://cursemaven.com'
+        content {
+            includeGroup 'curse.maven'
+        }
+    }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
