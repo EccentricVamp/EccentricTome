@@ -16,6 +16,9 @@ minecraft {
         client {
             workingDirectory project.file('run')
 
+            // property 'mixin.env.remapRefMap', 'true'
+            // property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
             mods {
                 eccentrictome {
                     source sourceSets.main
@@ -63,10 +66,10 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
+    // runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
 
-    runtimeOnly fg.deobf('curse.maven:cucumber-272335:3686400')
-    runtimeOnly fg.deobf('curse.maven:mystical-agriculture-246640:3686412')
+    // runtimeOnly fg.deobf('curse.maven:cucumber-272335:3686400')
+    // runtimeOnly fg.deobf('curse.maven:mystical-agriculture-246640:3686412')
 }
 
 jar {
