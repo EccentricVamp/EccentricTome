@@ -31,7 +31,10 @@ public class CommonConfiguration {
             .comment("Whitelisted items")
             .defineList(
                 "items",
-                List.of("tconstruct:materials_and_you"),
+                List.of(
+                    "tconstruct:materials_and_you",
+                    "cookingforblockheads:no_filter_edition"
+                ),
                 Validator::isStringResource
             );
 
@@ -54,8 +57,6 @@ public class CommonConfiguration {
                 ),
                 Validator::isString
             );
-
-        
 
         ALIASES = BUILDER
             .comment("Mod aliases")
