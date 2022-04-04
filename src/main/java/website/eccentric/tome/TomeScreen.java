@@ -10,8 +10,10 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.ItemStack;
 
 public class TomeScreen extends Screen {
+    private static final int LEFT_CLICK = 0;
 
     private final ItemStack tome;
+
     private String mod;
 
     protected TomeScreen(ItemStack tome) {
@@ -21,7 +23,7 @@ public class TomeScreen extends Screen {
 
     @Override
     public boolean mouseClicked(double x, double y, int button) {
-        if (button != 0 || mod == null) return super.mouseClicked(x, y, button);
+        if (button != LEFT_CLICK || mod == null) return super.mouseClicked(x, y, button);
 
         EccentricTome.CHANNEL.sendToServer(new ConvertMessage(mod));
         this.minecraft.setScreen(null);
