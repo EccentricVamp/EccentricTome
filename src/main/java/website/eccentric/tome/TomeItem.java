@@ -14,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -54,11 +55,13 @@ public class TomeItem extends Item {
     public void appendHoverText(ItemStack tome, Level level, List<Component> tooltip, TooltipFlag advanced) {
         var books = Tag.getBooks(tome);
         for (var mod : books.getAllKeys()) {
-            var book = ItemStack.of(books.getCompound(mod));        
+            var book = ItemStack.of(books.getCompound(mod));
+            if (book.is(Items.AIR)) continue;
+               
             var name = book.getHoverName().getString();
             
             tooltip.add(new TextComponent(Mod.name(mod)));
-            tooltip.add(new TextComponent("  " + name));
+            tooltip.add(new TextComponent("  " + ChatFormatting.GRAY + name));
         }
     }
 

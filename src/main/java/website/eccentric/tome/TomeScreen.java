@@ -8,6 +8,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class TomeScreen extends Screen {
     private static final int LEFT_CLICK = 0;
@@ -54,6 +55,8 @@ public class TomeScreen extends Screen {
         var index = 0;
         for (var mod : books.getAllKeys()) {
             var book = ItemStack.of(books.getCompound(mod));
+            if (book.is(Items.AIR)) continue;
+
             var stackX = startX + (index % booksPerRow) * iconSize;
             var stackY = startY + (index / booksPerRow) * iconSize;
 
