@@ -1,32 +1,28 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Report unexpected or problematic behavior
 title: ''
 labels: bug
 assignees: EccentricVamp
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
-
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '...'
-3. Scroll down to '...'
-4. See error
-
-**Expected behavior**
-A clear and concise description of what you expected to happen.
-
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
-
-**Versions (please complete the following information)**
+**Versions**
  - Minecraft: [e.g. 1.18.1]
  - Eccentric Tome: [e.g. 1.0.1]
  - Any other relevant mod versions
 
+**Describe the bug**
+What the bug is
+
+**To Reproduce**
+Steps to reproduce the behavior
+
+**Expected behavior**
+What you expected to happen
+
+**Screenshots**
+If applicable, add screenshots to help explain your problem
+
 **Additional context**
-Add any other context about the problem here.
+Add any other context about the problem

@@ -1,20 +1,20 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
+about: Suggest an improvement
 title: ''
-labels: ''
-assignees: ''
+labels: enhancement
+assignees: EccentricVamp
 
 ---
 
 **Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+The problem (for example: I'm always frustrated when [...])
 
 **Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+What you want to happen
 
 **Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+Alternative solutions or features you've considered
 
 **Additional context**
-Add any other context or screenshots about the feature request here.
+Context or screenshots about the feature request
