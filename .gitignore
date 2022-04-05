@@ -4,5 +4,6 @@ build
 bin
 run
 
-# VS Code
+# IDEs
 .vscode
+.idea

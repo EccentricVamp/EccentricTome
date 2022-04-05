@@ -33,7 +33,15 @@ public class CommonConfiguration {
                 "items",
                 List.of(
                     "tconstruct:materials_and_you",
-                    "cookingforblockheads:no_filter_edition"
+                    "tconstruct:puny_smelting",
+                    "tconstruct:mighty_smelting",
+                    "tconstruct:fantastic_foundry",
+                    "tconstruct:tinkers_gadgetry",
+                    "cookingforblockheads:no_filter_edition",
+                    "alexsmobs:animal_dictionary",
+                    "occultism:dictionary_of_spirits",
+                    "theoneprobe:probenote",
+                    "compactmachines:personal_shrinking_device"
                 ),
                 Validator::isStringResource
             );
@@ -53,7 +61,8 @@ public class CommonConfiguration {
                     "compendium",
                     "guide",
                     "codex",
-                    "journal"
+                    "journal",
+                    "enchiridion"
                 ),
                 Validator::isString
             );
