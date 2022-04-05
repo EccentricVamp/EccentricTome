@@ -3,6 +3,7 @@ package website.eccentric.tome;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 
+// TODO: handle migrations
 public class Tag {
 
     public static final String MODS = "eccentrictome:books";
