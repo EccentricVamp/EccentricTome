@@ -37,6 +37,7 @@ public class CommonConfiguration {
                     "tconstruct:mighty_smelting",
                     "tconstruct:fantastic_foundry",
                     "tconstruct:tinkers_gadgetry",
+                    "integrateddynamics:on_the_dynamics_of_integration",
                     "cookingforblockheads:no_filter_edition",
                     "alexsmobs:animal_dictionary",
                     "occultism:dictionary_of_spirits",
