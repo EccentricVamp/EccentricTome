@@ -34,9 +34,10 @@ public class TomeItem extends Item {
         var tome = player.getItemInHand(hand);
         var mod = Mod.from(level.getBlockState(position));
 
-        if (!player.isShiftKeyDown() || !Tag.hasBook(tome, mod)) return InteractionResult.PASS;
+        if (!player.isShiftKeyDown() || !Tag.hasMod(tome, mod)) return InteractionResult.PASS;
         
-        player.setItemInHand(hand, convert(tome, mod));
+        var key = Integer.toString(Tag.getBooks(tome, mod).size() - 1);
+        player.setItemInHand(hand, convert(tome, mod, key));
 
         return InteractionResult.SUCCESS;
     }
@@ -44,7 +45,7 @@ public class TomeItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         var tome = player.getItemInHand(hand);
-        if (Tag.getBooks(tome).isEmpty()) return InteractionResultHolder.fail(tome);
+        if (Tag.getMods(tome).isEmpty()) return InteractionResultHolder.fail(tome);
 
         if (level.isClientSide) EccentricTome.PROXY.tomeScreen(tome);
 
@@ -53,15 +54,17 @@ public class TomeItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack tome, Level level, List<Component> tooltip, TooltipFlag advanced) {
-        var books = Tag.getBooks(tome);
-        for (var mod : books.getAllKeys()) {
-            var book = ItemStack.of(books.getCompound(mod));
-            if (book.is(Items.AIR)) continue;
-               
-            var name = book.getHoverName().getString();
-            
+        var mods = Tag.getMods(tome);
+        for (var mod : mods.getAllKeys()) {
             tooltip.add(new TextComponent(Mod.name(mod)));
-            tooltip.add(new TextComponent("  " + ChatFormatting.GRAY + name));
+            var books = mods.getCompound(mod);
+            for (var key : books.getAllKeys()) {
+                var book = ItemStack.of(books.getCompound(key));
+                if (book.is(Items.AIR)) continue;
+                   
+                var name = book.getHoverName().getString();
+                tooltip.add(new TextComponent("  " + ChatFormatting.GRAY + name));
+            }
         }
     }
 
@@ -71,11 +74,11 @@ public class TomeItem extends Item {
         else return Tag.isTome(stack);
     }    
 
-    public static ItemStack convert(ItemStack tome, String mod) {
-        var book = ItemStack.of(Tag.popBook(tome, mod));
+    public static ItemStack convert(ItemStack tome, String mod, String key) {
+        var book = ItemStack.of(Tag.popBook(tome, mod, key));
         var name = book.getHoverName().getString();
-        Tag.copyBooks(tome, book);
-        Tag.fill(book, mod, name, true);
+        Tag.copyMods(tome, book);
+        Tag.fill(book, true);
 
         setHoverName(book, name);
         

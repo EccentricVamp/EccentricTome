@@ -16,6 +16,7 @@ public class TomeScreen extends Screen {
     private final ItemStack tome;
 
     private String mod;
+    private String key;
 
     protected TomeScreen(ItemStack tome) {
         super(new TextComponent(""));
@@ -26,7 +27,7 @@ public class TomeScreen extends Screen {
     public boolean mouseClicked(double x, double y, int button) {
         if (button != LEFT_CLICK || mod == null) return super.mouseClicked(x, y, button);
 
-        EccentricTome.CHANNEL.sendToServer(new ConvertMessage(mod));
+        EccentricTome.CHANNEL.sendToServer(new ConvertMessage(mod, key));
         this.minecraft.setScreen(null);
         return true;
     }
@@ -40,10 +41,10 @@ public class TomeScreen extends Screen {
     public void render(PoseStack poseStack, int mouseX, int mouseY, float ticks) { 
         super.render(poseStack, mouseX, mouseY, ticks);
 
-        var books = Tag.getBooks(tome);
+        var mods = Tag.getMods(tome);
         var window = minecraft.getWindow();
         var booksPerRow = 6;
-        var rows = books.size() / booksPerRow + 1;
+        var rows = mods.size() / booksPerRow + 1;
         var iconSize = 20;
         var startX = window.getGuiScaledWidth() / 2 - booksPerRow * iconSize / 2;
         var startY = window.getGuiScaledHeight() / 2 - rows * iconSize + 45;
@@ -53,20 +54,24 @@ public class TomeScreen extends Screen {
         this.mod = null;
         String name = null;
         var index = 0;
-        for (var mod : books.getAllKeys()) {
-            var book = ItemStack.of(books.getCompound(mod));
-            if (book.is(Items.AIR)) continue;
+        for (var mod : mods.getAllKeys()) {
+            var books = mods.getCompound(mod);
+            for (var key : books.getAllKeys()) {
+                var book = ItemStack.of(books.getCompound(key));
+                if (book.is(Items.AIR)) continue;
 
-            var stackX = startX + (index % booksPerRow) * iconSize;
-            var stackY = startY + (index / booksPerRow) * iconSize;
+                var stackX = startX + (index % booksPerRow) * iconSize;
+                var stackY = startY + (index / booksPerRow) * iconSize;
 
-            if (mouseX > stackX && mouseY > stackY && mouseX <= (stackX + 16) && mouseY <= (stackY + 16)) {
-                this.mod = mod;
-                name = book.getHoverName().getString();
+                if (mouseX > stackX && mouseY > stackY && mouseX <= (stackX + 16) && mouseY <= (stackY + 16)) {
+                    this.mod = mod;
+                    this.key = key;
+                    name = book.getHoverName().getString();
+                }
+
+                minecraft.getItemRenderer().renderAndDecorateItem(book, stackX, stackY);
+                index++;
             }
-
-            minecraft.getItemRenderer().renderAndDecorateItem(book, stackX, stackY);
-            index++;
         }
 
         if (this.mod != null) {

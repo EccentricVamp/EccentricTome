@@ -10,17 +10,22 @@ import net.minecraftforge.network.NetworkEvent;
 public class ConvertMessage {
 
     public String mod;
+    public String key;
 
-    public ConvertMessage(String mod) {
+    public ConvertMessage(String mod, String key) {
         this.mod = mod;
+        this.key = key;
     }
 
     public static ConvertMessage decode(final FriendlyByteBuf buffer) {
-        return new ConvertMessage(new String(buffer.readByteArray(), StandardCharsets.UTF_8));
+        var mod = new String(buffer.readByteArray(), StandardCharsets.UTF_8);
+        var key = new String(buffer.readByteArray(), StandardCharsets.UTF_8);
+        return new ConvertMessage(mod, key);
     }
 
     public static void encode(final ConvertMessage message, final FriendlyByteBuf buffer) {
         buffer.writeByteArray(message.mod.getBytes(StandardCharsets.UTF_8));
+        buffer.writeByteArray(message.key.getBytes(StandardCharsets.UTF_8));
     }
 
     public static void handle(final ConvertMessage message, final Supplier<NetworkEvent.Context> context) {
@@ -37,7 +42,7 @@ public class ConvertMessage {
             }
 
             if (hasTome) {
-                player.setItemInHand(hand, TomeItem.convert(stack, message.mod));
+                player.setItemInHand(hand, TomeItem.convert(stack, message.mod, message.key));
             }
     
             context.get().setPacketHandled(true);
