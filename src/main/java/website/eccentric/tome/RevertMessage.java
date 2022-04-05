@@ -33,7 +33,9 @@ public class RevertMessage {
             }
 
             if (hasTome) {
-                player.setItemInHand(hand, TomeItem.revert(stack));
+                var tome = TomeItem.revert(stack);
+                player.setItemInHand(hand, TomeItem.attach(tome, stack));
+
                 if (player.level.isClientSide) {
                     Minecraft.getInstance().gameRenderer.itemInHandRenderer.itemUsed(hand);
                 }

@@ -84,19 +84,11 @@ public class TomeItem extends Item {
 
     public static ItemStack revert(ItemStack book) {
         var tome = createStack();
-        Tag.copyBooks(book, tome);
+        Tag.copyMods(book, tome);
         Tag.clear(book);
 
         book.resetHoverName();
 
-        return attach(tome, book);
-    }
-
-    public static ItemStack detatch(ItemStack book) {
-        var mod = Tag.getMod(book);
-        var tome = revert(book);
-        Tag.popBook(tome, mod);
-        
         return tome;
     }
 

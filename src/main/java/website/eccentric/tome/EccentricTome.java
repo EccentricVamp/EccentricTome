@@ -85,7 +85,7 @@ public class EccentricTome {
         var level = entity.getCommandSenderWorld();
 
         if (TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
-            var detatchment = TomeItem.detatch(stack);
+            var detatchment = TomeItem.revert(stack);
 
             if (!level.isClientSide) {
                 level.addFreshEntity(new ItemEntity(level, entity.getX(), entity.getY(), entity.getZ(), detatchment));
