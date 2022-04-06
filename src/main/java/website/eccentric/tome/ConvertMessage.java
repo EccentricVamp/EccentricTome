@@ -1,31 +1,27 @@
 package website.eccentric.tome;
 
-import java.nio.charset.StandardCharsets;
 import java.util.function.Supplier;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 
 public class ConvertMessage {
 
-    public String mod;
-    public String key;
+    public ItemStack book;
 
-    public ConvertMessage(String mod, String key) {
-        this.mod = mod;
-        this.key = key;
+    public ConvertMessage(ItemStack book) {
+        this.book = book;
     }
 
     public static ConvertMessage decode(final FriendlyByteBuf buffer) {
-        var mod = new String(buffer.readByteArray(), StandardCharsets.UTF_8);
-        var key = new String(buffer.readByteArray(), StandardCharsets.UTF_8);
-        return new ConvertMessage(mod, key);
+        var book = buffer.readItem();
+        return new ConvertMessage(book);
     }
 
     public static void encode(final ConvertMessage message, final FriendlyByteBuf buffer) {
-        buffer.writeByteArray(message.mod.getBytes(StandardCharsets.UTF_8));
-        buffer.writeByteArray(message.key.getBytes(StandardCharsets.UTF_8));
+        buffer.writeItem(message.book);
     }
 
     public static void handle(final ConvertMessage message, final Supplier<NetworkEvent.Context> context) {
@@ -42,7 +38,7 @@ public class ConvertMessage {
             }
 
             if (hasTome) {
-                player.setItemInHand(hand, TomeItem.convert(stack, message.mod, message.key));
+                player.setItemInHand(hand, TomeItem.convert(stack, message.book));
             }
     
             context.get().setPacketHandled(true);

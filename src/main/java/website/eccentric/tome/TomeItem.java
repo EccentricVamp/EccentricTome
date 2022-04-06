@@ -1,6 +1,8 @@
 package website.eccentric.tome;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -33,11 +35,14 @@ public class TomeItem extends Item {
         var position = context.getClickedPos();
         var tome = player.getItemInHand(hand);
         var mod = Mod.from(level.getBlockState(position));
+        var modsBooks = Tag.getModsBooks(tome);
 
-        if (!player.isShiftKeyDown() || !Tag.hasMod(tome, mod)) return InteractionResult.PASS;
+        if (!player.isShiftKeyDown() || modsBooks.containsKey(mod)) return InteractionResult.PASS;
+
+        var books = modsBooks.get(mod);
+        var book = books.get(books.size() - 1);
         
-        var key = Integer.toString(Tag.getBooks(tome, mod).size() - 1);
-        player.setItemInHand(hand, convert(tome, mod, key));
+        player.setItemInHand(hand, convert(tome, book));
 
         return InteractionResult.SUCCESS;
     }
@@ -45,7 +50,6 @@ public class TomeItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         var tome = player.getItemInHand(hand);
-        if (Tag.getMods(tome).isEmpty()) return InteractionResultHolder.fail(tome);
 
         if (level.isClientSide) EccentricTome.PROXY.tomeScreen(tome);
 
@@ -54,14 +58,13 @@ public class TomeItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack tome, Level level, List<Component> tooltip, TooltipFlag advanced) {
-        var mods = Tag.getMods(tome);
-        for (var mod : mods.getAllKeys()) {
+        var modsBooks = Tag.getModsBooks(tome);
+        
+        for (var mod : modsBooks.keySet()) {
             tooltip.add(new TextComponent(Mod.name(mod)));
-            var books = mods.getCompound(mod);
-            for (var key : books.getAllKeys()) {
-                var book = ItemStack.of(books.getCompound(key));
+            var books = modsBooks.get(mod);
+            for (var book : books) {
                 if (book.is(Items.AIR)) continue;
-                   
                 var name = book.getHoverName().getString();
                 tooltip.add(new TextComponent("  " + ChatFormatting.GRAY + name));
             }
@@ -74,8 +77,15 @@ public class TomeItem extends Item {
         else return Tag.isTome(stack);
     }    
 
-    public static ItemStack convert(ItemStack tome, String mod, String key) {
-        var book = ItemStack.of(Tag.popBook(tome, mod, key));
+    public static ItemStack convert(ItemStack tome, ItemStack book) {
+        var modsBooks = Tag.getModsBooks(tome);
+        var mod = Mod.from(book);
+        var books = modsBooks.get(mod);
+        var registry = book.getItem().getRegistryName();
+        books = books.stream().filter(b -> !b.getItem().getRegistryName().equals(registry)).collect(Collectors.toList());
+        modsBooks.put(mod, books);
+        Tag.setModsBooks(tome, modsBooks);
+
         var name = book.getHoverName().getString();
         Tag.copyMods(tome, book);
         Tag.fill(book, true);
@@ -96,12 +106,19 @@ public class TomeItem extends Item {
     }
 
     public static ItemStack attach(ItemStack tome, ItemStack book) {
-        Tag.addBook(tome, book);
+        var mod = Mod.from(book);
+        var modsBooks = Tag.getModsBooks(tome);
+
+        var books = modsBooks.getOrDefault(mod, new ArrayList<ItemStack>());
+        books.add(book);
+        modsBooks.put(mod, books);
+        
+        Tag.setModsBooks(tome, modsBooks);
         return tome;
     }
 
     private static ItemStack createStack() {
-        return new ItemStack(EccentricTome.TOME.get());
+        return Tag.initialize(new ItemStack(EccentricTome.TOME.get()));
     }
 
     private static void setHoverName(ItemStack book, String name) {
