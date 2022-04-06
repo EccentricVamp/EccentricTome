@@ -16,8 +16,8 @@ minecraft {
         client {
             workingDirectory project.file('run')
 
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            // property 'mixin.env.remapRefMap', 'true'
+            // property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
                 eccentrictome {
@@ -29,8 +29,8 @@ minecraft {
         server {
             workingDirectory project.file('run')
 
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            // property 'mixin.env.remapRefMap', 'true'
+            // property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
                 eccentrictome {
@@ -42,8 +42,8 @@ minecraft {
         data {
             workingDirectory project.file('run')
 
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            // property 'mixin.env.remapRefMap', 'true'
+            // property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
@@ -60,39 +60,39 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     maven { url 'https://maven.blamejared.com' }
-    maven { url 'https://dvs1.progwml6.com/files/maven' }
-    maven {
-        url 'https://cursemaven.com'
-        content {
-            includeGroup 'curse.maven'
-        }
-    }
-    maven {
-        url 'https://maven.pkg.github.com/ModdingForBlockheads/Balm'
-        credentials {
-            username System.getenv('GITHUB_ACTOR')
-            password System.getenv('GITHUB_TOKEN')
-        }
-    }
-    maven {
-        url "https://maven.pkg.github.com/ModdingForBlockheads/CookingForBlockheads"
-        credentials {
-            username System.getenv('GITHUB_ACTOR')
-            password System.getenv('GITHUB_TOKEN')
-        }
-    }
+    // maven { url 'https://dvs1.progwml6.com/files/maven' }
+    // maven {
+    //     url 'https://cursemaven.com'
+    //     content {
+    //         includeGroup 'curse.maven'
+    //     }
+    // }
+    // maven {
+    //     url 'https://maven.pkg.github.com/ModdingForBlockheads/Balm'
+    //     credentials {
+    //         username System.getenv('GITHUB_ACTOR')
+    //         password System.getenv('GITHUB_TOKEN')
+    //     }
+    // }
+    // maven {
+    //     url "https://maven.pkg.github.com/ModdingForBlockheads/CookingForBlockheads"
+    //     credentials {
+    //         username System.getenv('GITHUB_ACTOR')
+    //         password System.getenv('GITHUB_TOKEN')
+    //     }
+    // }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
+    // runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
 
-    runtimeOnly fg.deobf('curse.maven:cucumber-272335:3686400')
-    runtimeOnly fg.deobf('curse.maven:mystical-agriculture-246640:3686412')
+    // runtimeOnly fg.deobf('curse.maven:cucumber-272335:3686400')
+    // runtimeOnly fg.deobf('curse.maven:mystical-agriculture-246640:3686412')
 
-    runtimeOnly fg.deobf("net.blay09.mods:balm:${balm_version}")
-    runtimeOnly fg.deobf("net.blay09.mods:cookingforblockheads-forge:${cfb_version}")
+    // runtimeOnly fg.deobf("net.blay09.mods:balm:${balm_version}")
+    // runtimeOnly fg.deobf("net.blay09.mods:cookingforblockheads-forge:${cfb_version}")
 }
 
 jar {
