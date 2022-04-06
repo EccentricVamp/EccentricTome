@@ -15,11 +15,8 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - name: Gradle setup
-        uses: gradle/gradle-build-action@v2
-      - name: Gradle build
-        run: ./gradlew build
-      - name: Publish to CurseForge
+      - uses: gradle/gradle-build-action@v2
         env:
           CURSEFORGE_KEY: ${{ secrets.CURSEFORGE_KEY }}
-        run: ./gradlew curseforge
+        with:
+          arguments: curseforge
