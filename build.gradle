@@ -115,7 +115,7 @@ curseforge {
     apiKey = System.getenv().CURSEFORGE_KEY
     project {
         id = curseforge_id
-        releaseType = 'alpha'
+        releaseType = 'release'
         addGameVersion 'Forge'
         addGameVersion minecraft_version
         addGameVersion 'Java 17'
