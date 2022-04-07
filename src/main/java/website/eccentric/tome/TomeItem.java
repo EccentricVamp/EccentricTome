@@ -37,7 +37,7 @@ public class TomeItem extends Item {
         var mod = Mod.from(level.getBlockState(position));
         var modsBooks = Tag.getModsBooks(tome);
 
-        if (!player.isShiftKeyDown() || modsBooks.containsKey(mod)) return InteractionResult.PASS;
+        if (!player.isShiftKeyDown() || !modsBooks.containsKey(mod)) return InteractionResult.PASS;
 
         var books = modsBooks.get(mod);
         var book = books.get(books.size() - 1);
