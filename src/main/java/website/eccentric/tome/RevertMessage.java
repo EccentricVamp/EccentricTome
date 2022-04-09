@@ -21,11 +21,11 @@ public class RevertMessage {
     @SuppressWarnings("resource")
     public static void handle(final RevertMessage message, final Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
-            var player = context.get().getSender();            
-            var stack = player.getMainHandItem();
-            var hand = InteractionHand.MAIN_HAND;
+            ServerPlayerEntity player = context.get().getSender();            
+            ItemStack stack = player.getMainHandItem();
+            Hand hand = Hand.MAIN_HAND;
 
-            var hasTome = TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem);
+            boolean hasTome = TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem);
             if (!hasTome) {
                 stack = player.getOffhandItem();
                 hasTome = TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem);
@@ -33,7 +33,7 @@ public class RevertMessage {
             }
 
             if (hasTome) {
-                var tome = TomeItem.revert(stack);
+                ItemStack tome = TomeItem.revert(stack);
                 player.setItemInHand(hand, TomeItem.attach(tome, stack));
 
                 if (player.level.isClientSide) {

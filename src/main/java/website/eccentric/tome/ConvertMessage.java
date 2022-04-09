@@ -26,11 +26,11 @@ public class ConvertMessage {
 
     public static void handle(final ConvertMessage message, final Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
-            var player = context.get().getSender();
-            var stack = player.getMainHandItem();
-            var hand = InteractionHand.MAIN_HAND;
+            ServerPlayerEntity player = context.get().getSender();
+            ItemStack stack = player.getMainHandItem();
+            Hand hand = Hand.MAIN_HAND;
 
-            var hasTome = !stack.isEmpty() && stack.getItem() instanceof TomeItem;
+            boolean hasTome = !stack.isEmpty() && stack.getItem() instanceof TomeItem;
             if (!hasTome) {
                 stack = player.getOffhandItem();
                 hasTome = !stack.isEmpty() && stack.getItem() instanceof TomeItem;

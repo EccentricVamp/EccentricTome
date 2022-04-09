@@ -20,7 +20,7 @@ public class CommonConfiguration {
     public static final ForgeConfigSpec SPEC;
 
     static {
-        var BUILDER = new ForgeConfigSpec.Builder()
+        Builder BUILDER = new ForgeConfigSpec.Builder()
             .comment("Common configuration settings")
             .push("common");
 
@@ -164,8 +164,8 @@ public class CommonConfiguration {
             NAMES = CommonConfiguration.NAMES.get();
 
             ALIASES = new HashMap<String, String>();
-            for (var alias : CommonConfiguration.ALIASES.get()) {
-                var tokens = alias.split("=");
+            for (String alias : CommonConfiguration.ALIASES.get()) {
+                String[] tokens = alias.split("=");
                 ALIASES.put(tokens[0], tokens[1]);
             }
 

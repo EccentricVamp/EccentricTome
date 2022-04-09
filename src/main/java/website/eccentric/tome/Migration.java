@@ -12,7 +12,7 @@ public class Migration {
 
     public static void Apply(CompoundTag tag) {
         while (getVersion(tag) < CURRENT_VERSION) {
-            var version = getVersion(tag) + 1;
+            int version = getVersion(tag) + 1;
             Steps.get(version).accept(tag);
             setVersion(tag, version);
         }
@@ -40,15 +40,15 @@ public class Migration {
         tag.remove("eccentrictome:mod");
 
         // Get old mods (books) tag
-        var books = "eccentrictome:books";
-        var oldMods = tag.getCompound(books);
-        if (oldMods == null) oldMods = new CompoundTag();
+        String books = "eccentrictome:books";
+        CompoundNBT oldMods = tag.getCompound(books);
+        if (oldMods == null) oldMods = new CompoundNBT();
         tag.remove(books);
 
         // Convert to new format and preserve existing books
-        var mods = new CompoundTag();
-        for (var modName : oldMods.getAllKeys()) {
-            var modTag = new CompoundTag();
+        CompoundNBT mods = new CompoundNBT();
+        for (String modName : oldMods.getAllKeys()) {
+            CompoundNBT modTag = new CompoundNBT();
             modTag.put(Integer.toString(0), oldMods.get(modName));
             mods.put(modName, modTag);
         }

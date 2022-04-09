@@ -14,23 +14,23 @@ public class Tag {
     public static final String IS_TOME = "eccentrictome:is_tome";
 
     public static ItemStack initialize(ItemStack stack) {
-        var tag = getOrSetTag(stack);
+        CompoundNBT tag = getOrSetTag(stack);
         Migration.setCurrentVersion(tag);
         tag.put(MODS, new CompoundTag());
         return stack;
     }
 
     public static Map<String, List<ItemStack>> getModsBooks(ItemStack stack) {
-        var tag = getOrSetTag(stack);
+        CompoundNBT tag = getOrSetTag(stack);
 
         Migration.Apply(tag);
 
-        var books = new HashMap<String, List<ItemStack>>();
-        var mods = tag.getCompound(MODS);
-        for (var mod : mods.getAllKeys()) {
-            var booksTag = mods.getCompound(mod);
-            var booksList = books.getOrDefault(mod, new ArrayList<ItemStack>());
-            for (var book : booksTag.getAllKeys()) {
+        Map<String, List<ItemStack>> books = new HashMap<String, List<ItemStack>>();
+        CompoundNBT mods = tag.getCompound(MODS);
+        for (String mod : mods.getAllKeys()) {
+            CompoundNBT booksTag = mods.getCompound(mod);
+            List<ItemStack> booksList = books.getOrDefault(mod, new ArrayList<ItemStack>());
+            for (String book : booksTag.getAllKeys()) {
                 booksList.add(ItemStack.of(booksTag.getCompound(book)));
             }
             books.put(mod, booksList);
@@ -40,17 +40,17 @@ public class Tag {
     }
 
     public static void setModsBooks(ItemStack stack, Map<String, List<ItemStack>> modsBooks) {
-        var tag = getOrSetTag(stack);
+        CompoundNBT tag = getOrSetTag(stack);
 
         Migration.Apply(tag);
 
-        var mods = new CompoundTag();
-        for (var mod : modsBooks.keySet()) {
-            var booksTag = new CompoundTag();
-            var booksList = modsBooks.get(mod);
-            for (var i = 0; i < booksList.size(); i++) {
-                var key = Integer.toString(i);
-                var bookTag = booksList.get(i).save(new CompoundTag());
+        CompoundNBT mods = new CompoundNBT();
+        for (String mod : modsBooks.keySet()) {
+            CompoundNBT booksTag = new CompoundNBT();
+            List<ItemStack> booksList = modsBooks.get(mod);
+            for (int i = 0; i < booksList.size(); i++) {
+                String key = Integer.toString(i);
+                CompoundNBT bookTag = booksList.get(i).save(new CompoundNBT());
                 booksTag.put(key, bookTag);
             }
             mods.put(mod, booksTag);
@@ -74,7 +74,7 @@ public class Tag {
     }
 
     public static void copyMods(ItemStack source, ItemStack target) {
-        var mods = getOrSetMods(getOrSetTag(source)).copy();
+        CompoundNBT mods = getOrSetMods(getOrSetTag(source)).copy();
         getOrSetTag(target).put(MODS, mods);
     }
 
@@ -83,7 +83,7 @@ public class Tag {
     }
 
     public static void clear(ItemStack stack) {
-        var tag = stack.getTag();
+        CompoundNBT tag = stack.getTag();
 
         tag.remove(MODS);
         tag.remove(IS_TOME);
@@ -91,7 +91,7 @@ public class Tag {
     }
 
     public static void fill(ItemStack stack, boolean isTome) {
-        var tag = stack.getTag();
+        CompoundNBT tag = stack.getTag();
 
         tag.putBoolean(Tag.IS_TOME, isTome);
     }

@@ -39,24 +39,24 @@ public class TomeScreen extends Screen {
     public void render(PoseStack poseStack, int mouseX, int mouseY, float ticks) { 
         super.render(poseStack, mouseX, mouseY, ticks);
 
-        var books = Tag.getModsBooks(tome).values().stream().flatMap(Collection::stream).collect(Collectors.toList());
+        List<ItemStack> books = Tag.getModsBooks(tome).values().stream().flatMap(Collection::stream).collect(Collectors.toList());
 
-        var window = minecraft.getWindow();
-        var booksPerRow = 6;
-        var rows = books.size() / booksPerRow + 1;
-        var iconSize = 20;
-        var startX = window.getGuiScaledWidth() / 2 - booksPerRow * iconSize / 2;
-        var startY = window.getGuiScaledHeight() / 2 - rows * iconSize + 45;
-        var padding = 4;
+        MainWindow window = minecraft.getWindow();
+        int booksPerRow = 6;
+        int rows = books.size() / booksPerRow + 1;
+        int iconSize = 20;
+        int startX = window.getGuiScaledWidth() / 2 - booksPerRow * iconSize / 2;
+        int startY = window.getGuiScaledHeight() / 2 - rows * iconSize + 45;
+        int padding = 4;
         fill(poseStack, startX - padding, startY - padding, startX + iconSize * booksPerRow + padding, startY + iconSize * rows + padding, 0x22000000);
 
         this.book = null;
-        var index = 0;
-        for (var book : books) {
-            if (book.is(Items.AIR)) continue;
+        int index = 0;
+        for (ItemStack book : books) {
+            if (book.getItem() == Items.AIR) continue;
 
-            var stackX = startX + (index % booksPerRow) * iconSize;
-            var stackY = startY + (index / booksPerRow) * iconSize;
+            int stackX = startX + (index % booksPerRow) * iconSize;
+            int stackY = startY + (index / booksPerRow) * iconSize;
 
             if (mouseX > stackX && mouseY > stackY && mouseX <= (stackX + 16) && mouseY <= (stackY + 16)) {
                 this.book = book;

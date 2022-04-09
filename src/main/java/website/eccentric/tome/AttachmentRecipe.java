@@ -20,8 +20,8 @@ public class AttachmentRecipe extends CustomRecipe {
         var foundTome = false;
         var foundTarget = false;
 
-        for (var i = 0; i < crafting.getContainerSize(); i++) {
-            var stack = crafting.getItem(i);
+        for (int i = 0; i < crafting.getContainerSize(); i++) {
+            ItemStack stack = crafting.getItem(i);
             if (stack.isEmpty()) continue;
             
             if (isTarget(stack)) {
@@ -43,8 +43,8 @@ public class AttachmentRecipe extends CustomRecipe {
         var tome = ItemStack.EMPTY;
         var target = ItemStack.EMPTY;
 
-        for (var i = 0; i < crafting.getContainerSize(); i++) {
-            var stack = crafting.getItem(i);
+        for (int i = 0; i < crafting.getContainerSize(); i++) {
+            ItemStack stack = crafting.getItem(i);
             if (stack.isEmpty()) continue;
             
             if (stack.getItem() instanceof TomeItem) tome = stack;
@@ -64,23 +64,23 @@ public class AttachmentRecipe extends CustomRecipe {
     public boolean isTarget(ItemStack stack) {
         if (stack.isEmpty() || TomeItem.isTome(stack)) return false;
 
-        var mod = Mod.from(stack);
+        String mod = Mod.from(stack);
         if (mod.equals(Mod.MINECRAFT)) return false;
 
         if (Cache.ALL_ITEMS) return true;
 
         if (Cache.EXCLUDE.contains(mod)) return false;
 
-        var location = stack.getItem().getRegistryName();
-        var locationString = location.toString();
-        var locationDamage = locationString + ":" + stack.getDamageValue();
+        ResourceLocation location = stack.getItem().getRegistryName();
+        String locationString = location.toString();
+        String locationDamage = locationString + ":" + stack.getDamageValue();
 
         if (Cache.EXCLUDE_ITEMS.contains(locationString) || Cache.EXCLUDE_ITEMS.contains(locationDamage)) return false;
 
         if (Cache.ITEMS.contains(locationString) || Cache.ITEMS.contains(locationDamage)) return true;
 
-        var path = location.getPath();
-        for (var name : Cache.NAMES) {
+        String path = location.getPath();
+        for (String name : Cache.NAMES) {
             if (path.contains(name)) return true;
         }
 

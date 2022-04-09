@@ -39,7 +39,7 @@ public class EccentricTome {
     public static SimpleChannel CHANNEL;
 
     public EccentricTome() {
-        var modEvent = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus modEvent = FMLJavaModLoadingContext.get().getModEventBus();
 
         ITEMS.register(modEvent);
         RECIPES.register(modEvent);
@@ -52,7 +52,7 @@ public class EccentricTome {
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfiguration.SPEC);
 
-        var minecraftEvent = MinecraftForge.EVENT_BUS;
+        IEventBus minecraftEvent = MinecraftForge.EVENT_BUS;
         minecraftEvent.addListener(this::onPlayerLeftClick);
         minecraftEvent.addListener(this::onItemDropped);
     }
@@ -62,7 +62,7 @@ public class EccentricTome {
     }
 
     private void onGatherData(GatherDataEvent event) {
-        var generator = event.getGenerator();
+        DataGenerator generator = event.getGenerator();
         generator.addProvider(new TomeRecipe(generator));
     }
 
@@ -71,7 +71,7 @@ public class EccentricTome {
     }
 
     private void onPlayerLeftClick(PlayerInteractEvent.LeftClickEmpty event) {
-        var stack = event.getItemStack();
+        ItemStack stack = event.getItemStack();
         if (TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
             CHANNEL.sendToServer(new RevertMessage());
         }
@@ -80,12 +80,12 @@ public class EccentricTome {
     private void onItemDropped(ItemTossEvent event) {
         if (!event.getPlayer().isShiftKeyDown()) return;
 
-        var entity = event.getEntityItem();
-        var stack = entity.getItem();
-        var level = entity.getCommandSenderWorld();
+        ItemEntity entity = event.getEntityItem();
+        ItemStack stack = entity.getItem();
+        World level = entity.getCommandSenderWorld();
 
         if (TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
-            var detatchment = TomeItem.revert(stack);
+            ItemStack detatchment = TomeItem.revert(stack);
 
             if (!level.isClientSide) {
                 level.addFreshEntity(new ItemEntity(level, entity.getX(), entity.getY(), entity.getZ(), detatchment));

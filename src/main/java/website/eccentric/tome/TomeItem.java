@@ -39,8 +39,8 @@ public class TomeItem extends Item {
 
         if (!player.isShiftKeyDown() || !modsBooks.containsKey(mod)) return InteractionResult.PASS;
 
-        var books = modsBooks.get(mod);
-        var book = books.get(books.size() - 1);
+        List<ItemStack> books = modsBooks.get(mod);
+        ItemStack book = books.get(books.size() - 1);
         
         player.setItemInHand(hand, convert(tome, book));
 
@@ -60,13 +60,12 @@ public class TomeItem extends Item {
     public void appendHoverText(ItemStack tome, Level level, List<Component> tooltip, TooltipFlag advanced) {
         var modsBooks = Tag.getModsBooks(tome);
         
-        for (var mod : modsBooks.keySet()) {
-            tooltip.add(new TextComponent(Mod.name(mod)));
-            var books = modsBooks.get(mod);
-            for (var book : books) {
-                if (book.is(Items.AIR)) continue;
-                var name = book.getHoverName().getString();
-                tooltip.add(new TextComponent("  " + ChatFormatting.GRAY + name));
+        for (String mod : modsBooks.keySet()) {
+            tooltip.add(new StringTextComponent(Mod.name(mod)));
+            List<ItemStack> books = modsBooks.get(mod);
+            for (ItemStack book : books) {
+                if (book.getItem() == Items.AIR) continue;
+                String name = book.getHoverName().getString();
             }
         }
     }
@@ -78,15 +77,15 @@ public class TomeItem extends Item {
     }    
 
     public static ItemStack convert(ItemStack tome, ItemStack book) {
-        var modsBooks = Tag.getModsBooks(tome);
-        var mod = Mod.from(book);
-        var books = modsBooks.get(mod);
-        var registry = book.getItem().getRegistryName();
+        Map<String, List<ItemStack>> modsBooks = Tag.getModsBooks(tome);
+        String mod = Mod.from(book);
+        List<ItemStack> books = modsBooks.get(mod);
+        ResourceLocation registry = book.getItem().getRegistryName();
         books = books.stream().filter(b -> !b.getItem().getRegistryName().equals(registry)).collect(Collectors.toList());
         modsBooks.put(mod, books);
         Tag.setModsBooks(tome, modsBooks);
 
-        var name = book.getHoverName().getString();
+        String name = book.getHoverName().getString();
         Tag.copyMods(tome, book);
         Tag.fill(book, true);
 
@@ -96,7 +95,7 @@ public class TomeItem extends Item {
     }
 
     public static ItemStack revert(ItemStack book) {
-        var tome = createStack();
+        ItemStack tome = createStack();
         Tag.copyMods(book, tome);
         Tag.clear(book);
 
@@ -106,10 +105,10 @@ public class TomeItem extends Item {
     }
 
     public static ItemStack attach(ItemStack tome, ItemStack book) {
-        var mod = Mod.from(book);
-        var modsBooks = Tag.getModsBooks(tome);
+        String mod = Mod.from(book);
+        Map<String, List<ItemStack>> modsBooks = Tag.getModsBooks(tome);
 
-        var books = modsBooks.getOrDefault(mod, new ArrayList<ItemStack>());
+        List<ItemStack> books = modsBooks.getOrDefault(mod, new ArrayList<ItemStack>());
         books.add(book);
         modsBooks.put(mod, books);
         
