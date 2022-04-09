@@ -15,6 +15,7 @@ public class CommonConfiguration {
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> NAMES;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> ALIASES;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> EXCLUDE;
+    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> EXCLUDE_ITEMS;
 
     public static final ForgeConfigSpec SPEC;
 
@@ -89,6 +90,10 @@ public class CommonConfiguration {
             .comment("Blacklisted mods")
             .defineList("exclude", Lists.newArrayList(), Validator::isString);
 
+        EXCLUDE_ITEMS = BUILDER
+            .comment("Blacklisted items")
+            .defineList("exclude_items", Lists.newArrayList(), Validator::isStringResource);
+
         BUILDER.pop();
 
         SPEC = BUILDER.build();
@@ -112,6 +117,7 @@ public class CommonConfiguration {
         public static List<? extends String> NAMES;
         public static HashMap<String, String> ALIASES;
         public static List<? extends String> EXCLUDE;
+        public static List<? extends String> EXCLUDE_ITEMS;
 
         public static void Refresh() {
             ALL_ITEMS = CommonConfiguration.ALL_ITEMS.get();
@@ -125,6 +131,7 @@ public class CommonConfiguration {
             }
 
             EXCLUDE = CommonConfiguration.EXCLUDE.get();
+            EXCLUDE = CommonConfiguration.EXCLUDE_ITEMS.get();
         }
     }
     
