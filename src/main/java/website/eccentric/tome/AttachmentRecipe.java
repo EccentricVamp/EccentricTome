@@ -73,7 +73,11 @@ public class AttachmentRecipe extends CustomRecipe {
 
         var location = stack.getItem().getRegistryName();
         var locationString = location.toString();
-        if (Cache.ITEMS.contains(locationString) || Cache.ITEMS.contains(locationString + ":" + stack.getDamageValue())) return true;
+        var locationDamage = locationString + ":" + stack.getDamageValue();
+
+        if (Cache.EXCLUDE_ITEMS.contains(locationString) || Cache.EXCLUDE_ITEMS.contains(locationDamage)) return false;
+
+        if (Cache.ITEMS.contains(locationString) || Cache.ITEMS.contains(locationDamage)) return true;
 
         var path = location.getPath();
         for (var name : Cache.NAMES) {
