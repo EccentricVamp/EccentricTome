@@ -98,7 +98,37 @@ public class CommonConfiguration {
             .comment("Blacklisted items")
             .defineListAllowEmpty(
                 List.of("exclude_items"),
-                () -> Lists.newArrayList(),
+                () -> List.of(
+                    "apotheosis:boots_tome",
+                    "apotheosis:bow_tome",
+                    "apotheosis:chestplate_tome",
+                    "apotheosis:fishing_tome",
+                    "apotheosis:helmet_tome",
+                    "apotheosis:leggings_tome",
+                    "apotheosis:other_tome",
+                    "apotheosis:pickaxe_tome",
+                    "apotheosis:scrap_tome",
+                    "apotheosis:weapon_tome",
+                    "darkutils:tome_enchanting",
+                    "darkutils:tome_illager",
+                    "darkutils:tome_pigpen",
+                    "darkutils:tome_runelic",
+                    "darkutils:tome_sga",
+                    "darkutils:tome_shadows",
+                    "minecolonies:ancienttome",
+                    "occultism:book_of_binding_afrit",
+                    "occultism:book_of_binding_bound_afrit",
+                    "occultism:book_of_binding_bound_djinni",
+                    "occultism:book_of_binding_bound_foliot",
+                    "occultism:book_of_binding_bound_marid",
+                    "occultism:book_of_binding_djinni",
+                    "occultism:book_of_binding_foliot",
+                    "occultism:book_of_binding_marid",
+                    "occultism:book_of_calling_djinni_manage_machine",
+                    "occultism:book_of_calling_foliot_cleaner",
+                    "occultism:book_of_calling_foliot_lumberjack",
+                    "occultism:book_of_calling_foliot_transport_items"
+                ),
                 Validator::isStringResource
             );
 
