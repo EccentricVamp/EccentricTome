@@ -9,6 +9,13 @@ The Tome solves a single problem: managing all of your guide books.
 
 The Tome allows many (infinite?) books to be combined into a single item, and enables them to be retrieved when needed.
 
+## Caution
+
+**Single-use items added to the tome will still be single use!**
+
+Items that vanish or break (such as Tome of Helmets or Galactic Tome) will cause
+the Eccentric Tome to vanish or break along with all the books stored inside of it.
+
 ## Crafting
 
 Craft the Tome in the crafting grid with a book and a bookcase
