@@ -30,9 +30,9 @@ public class CommonConfiguration {
 
         ITEMS = BUILDER
             .comment("Whitelisted items")
-            .defineList(
-                "items",
-                List.of(
+            .defineListAllowEmpty(
+                List.of("items"),
+                () -> List.of(
                     "tconstruct:materials_and_you",
                     "tconstruct:puny_smelting",
                     "tconstruct:mighty_smelting",
@@ -50,9 +50,9 @@ public class CommonConfiguration {
 
         NAMES = BUILDER
             .comment("Whitelisted names")
-            .defineList(
-                "names",
-                List.of(
+            .defineListAllowEmpty(
+                List.of("names"),
+                () -> List.of(
                     "book",
                     "tome",
                     "lexicon",
@@ -71,9 +71,9 @@ public class CommonConfiguration {
 
         ALIASES = BUILDER
             .comment("Mod aliases")
-            .defineList(
-                "aliases",
-                List.of(
+            .defineListAllowEmpty(
+                List.of("aliases"),
+                () -> List.of(
                     "thermalexpansion=thermalfoundation",
                     "thermaldynamics=thermalfoundation",
                     "thermalcultivation=thermalfoundation",
@@ -88,11 +88,19 @@ public class CommonConfiguration {
 
         EXCLUDE = BUILDER
             .comment("Blacklisted mods")
-            .defineList("exclude", Lists.newArrayList(), Validator::isString);
+            .defineListAllowEmpty(
+                List.of("exclude"),
+                () -> Lists.newArrayList(),
+                Validator::isString
+            );
 
         EXCLUDE_ITEMS = BUILDER
             .comment("Blacklisted items")
-            .defineList("exclude_items", Lists.newArrayList(), Validator::isStringResource);
+            .defineListAllowEmpty(
+                List.of("exclude_items"),
+                () -> Lists.newArrayList(),
+                Validator::isStringResource
+            );
 
         BUILDER.pop();
 
