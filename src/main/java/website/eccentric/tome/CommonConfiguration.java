@@ -112,6 +112,7 @@ public class CommonConfiguration {
     }
 
     public class Cache {
+        
         public static boolean ALL_ITEMS;
         public static List<? extends String> ITEMS;
         public static List<? extends String> NAMES;
@@ -133,6 +134,7 @@ public class CommonConfiguration {
             EXCLUDE = CommonConfiguration.EXCLUDE.get();
             EXCLUDE = CommonConfiguration.EXCLUDE_ITEMS.get();
         }
+        
     }
     
 }
