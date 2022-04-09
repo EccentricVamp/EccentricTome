@@ -150,7 +150,7 @@ public class CommonConfiguration {
 
     }
 
-    public class Cache {
+    public static class Cache {
         
         public static boolean ALL_ITEMS;
         public static List<? extends String> ITEMS;
