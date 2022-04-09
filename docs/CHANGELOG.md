@@ -4,10 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2022-04-08
+### Added
+- Configurable item blacklist (#11)
+
 ## [1.1.0] - 2022-04-06
+### Changes
 - Fixed `Shift` + `Right-click` for converting tome (#10)
 
 ## [1.0.4] - 2022-04-05
+### Changes
 - Allowed multiple books from the same mod to be stored in the Tome (#7,#8)
 - Fixed issue where removed mods stayed in the Tome and would turn it into air (#6)
 
