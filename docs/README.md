@@ -20,11 +20,15 @@ the Eccentric Tome to vanish or break along with all the books stored inside of 
 
 Craft the Tome in the crafting grid with a book and a bookcase
 
-Craft the Tome with other books in the crafting grid to combine them
+![crafting](crafting.png)
+
+Craft the Tome with other books in the crafting grid to attach them
+
+![attaching](attaching.png)
 
 ## Controls
 
-`Right-Click` while holding Tome to open the GUI and select a book to convert it into
+`Right-Click` while holding Tome to open the book selection screen
 
 `Shift` + `Right-Click` while holding Tome to convert to the book for the block you're looking at
 
