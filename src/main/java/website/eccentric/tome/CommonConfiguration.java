@@ -140,7 +140,7 @@ public class CommonConfiguration {
             }
 
             EXCLUDE = CommonConfiguration.EXCLUDE.get();
-            EXCLUDE = CommonConfiguration.EXCLUDE_ITEMS.get();
+            EXCLUDE_ITEMS = CommonConfiguration.EXCLUDE_ITEMS.get();
         }
         
     }
