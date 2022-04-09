@@ -1,5 +1,6 @@
 package website.eccentric.tome;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -30,9 +31,13 @@ public class Migration {
         tag.putInt(VERSION, CURRENT_VERSION);
     }
 
-    public static Map<Integer, Consumer<CompoundNBT>> Steps = Map.of(
+    public static Map<Integer, Consumer<CompoundNBT>> Steps;
+    static {
+    Steps = new HashMap<>();
+    Steps.put(
         Integer.valueOf(1), Migration::One
     );
+    }
 
     public static void One(CompoundNBT tag) {
         // Remove unused tags

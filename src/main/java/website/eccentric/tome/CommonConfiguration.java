@@ -32,8 +32,8 @@ public class CommonConfiguration {
         ITEMS = BUILDER
             .comment("Whitelisted items")
             .defineListAllowEmpty(
-                List.of("items"),
-                () -> List.of(
+                Lists.newArrayList("items"),
+                () -> Lists.newArrayList(
                     "tconstruct:materials_and_you",
                     "tconstruct:puny_smelting",
                     "tconstruct:mighty_smelting",
@@ -52,8 +52,8 @@ public class CommonConfiguration {
         NAMES = BUILDER
             .comment("Whitelisted names")
             .defineListAllowEmpty(
-                List.of("names"),
-                () -> List.of(
+                Lists.newArrayList("names"),
+                () -> Lists.newArrayList(
                     "book",
                     "tome",
                     "lexicon",
@@ -73,8 +73,8 @@ public class CommonConfiguration {
         ALIASES = BUILDER
             .comment("Mod aliases")
             .defineListAllowEmpty(
-                List.of("aliases"),
-                () -> List.of(
+                Lists.newArrayList("aliases"),
+                () -> Lists.newArrayList(
                     "thermalexpansion=thermalfoundation",
                     "thermaldynamics=thermalfoundation",
                     "thermalcultivation=thermalfoundation",
@@ -90,7 +90,7 @@ public class CommonConfiguration {
         EXCLUDE = BUILDER
             .comment("Blacklisted mods")
             .defineListAllowEmpty(
-                List.of("exclude"),
+                Lists.newArrayList("exclude"),
                 () -> Lists.newArrayList(),
                 Validator::isString
             );
@@ -98,8 +98,8 @@ public class CommonConfiguration {
         EXCLUDE_ITEMS = BUILDER
             .comment("Blacklisted items")
             .defineListAllowEmpty(
-                List.of("exclude_items"),
-                () -> List.of(
+                Lists.newArrayList("exclude_items"),
+                () -> Lists.newArrayList(
                     "apotheosis:boots_tome",
                     "apotheosis:bow_tome",
                     "apotheosis:chestplate_tome",
