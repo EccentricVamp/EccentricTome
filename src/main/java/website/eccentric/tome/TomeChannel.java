@@ -1,8 +1,8 @@
 package website.eccentric.tome;
 
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.network.NetworkRegistry;
+import net.minecraftforge.fml.network.simple.SimpleChannel;
 
 public class TomeChannel {
 
@@ -10,7 +10,7 @@ public class TomeChannel {
     public static final String version = new ResourceLocation(EccentricTome.MODID, "1").toString();
 
     public static SimpleChannel register() {
-        final var channel = NetworkRegistry.ChannelBuilder.named(name)
+        final SimpleChannel channel = NetworkRegistry.ChannelBuilder.named(name)
             .clientAcceptedVersions(version -> true)
             .serverAcceptedVersions(version -> true)
             .networkProtocolVersion(() -> version)

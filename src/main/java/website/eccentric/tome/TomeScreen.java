@@ -1,14 +1,16 @@
 package website.eccentric.tome;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.matrix.MatrixStack;
 
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.client.MainWindow;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.text.StringTextComponent;
 
 public class TomeScreen extends Screen {
     private static final int LEFT_CLICK = 0;
@@ -17,7 +19,7 @@ public class TomeScreen extends Screen {
     private ItemStack book;
 
     protected TomeScreen(ItemStack tome) {
-        super(new TextComponent(""));
+        super(new StringTextComponent(""));
         this.tome = tome;
     }
 
@@ -36,7 +38,7 @@ public class TomeScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float ticks) { 
+    public void render(MatrixStack poseStack, int mouseX, int mouseY, float ticks) { 
         super.render(poseStack, mouseX, mouseY, ticks);
 
         List<ItemStack> books = Tag.getModsBooks(tome).values().stream().flatMap(Collection::stream).collect(Collectors.toList());
@@ -67,7 +69,7 @@ public class TomeScreen extends Screen {
         }
 
         if (this.book != null) {
-            renderComponentTooltip(poseStack, getTooltipFromItem(this.book), mouseX, mouseY, font);
+            renderComponentTooltip(poseStack, getTooltipFromItem(this.book), mouseX, mouseY);
         }
     }
 

@@ -3,14 +3,14 @@ package website.eccentric.tome;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.CompoundNBT;
 
 public class Migration {
 
     public static final String VERSION = "eccentrictome:version";
     public static final int CURRENT_VERSION = 1;
 
-    public static void Apply(CompoundTag tag) {
+    public static void Apply(CompoundNBT tag) {
         while (getVersion(tag) < CURRENT_VERSION) {
             int version = getVersion(tag) + 1;
             Steps.get(version).accept(tag);
@@ -18,23 +18,23 @@ public class Migration {
         }
     }
 
-    public static int getVersion(CompoundTag tag) {
+    public static int getVersion(CompoundNBT tag) {
         return tag.contains(VERSION) ? tag.getInt(VERSION) : 0;
     }
 
-    public static void setVersion(CompoundTag tag, int version) {
+    public static void setVersion(CompoundNBT tag, int version) {
         tag.putInt(VERSION, version);
     }
 
-    public static void setCurrentVersion(CompoundTag tag) {
+    public static void setCurrentVersion(CompoundNBT tag) {
         tag.putInt(VERSION, CURRENT_VERSION);
     }
 
-    public static Map<Integer, Consumer<CompoundTag>> Steps = Map.of(
+    public static Map<Integer, Consumer<CompoundNBT>> Steps = Map.of(
         Integer.valueOf(1), Migration::One
     );
 
-    public static void One(CompoundTag tag) {
+    public static void One(CompoundNBT tag) {
         // Remove unused tags
         tag.remove("eccentrictome:name");
         tag.remove("eccentrictome:mod");

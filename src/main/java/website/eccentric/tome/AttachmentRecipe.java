@@ -1,24 +1,24 @@
 package website.eccentric.tome;
 
-import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.CraftingContainer;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CustomRecipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.level.Level;
+import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.SpecialRecipe;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import website.eccentric.tome.CommonConfiguration.Cache;
 
-public class AttachmentRecipe extends CustomRecipe {
+public class AttachmentRecipe extends SpecialRecipe {
 
     public AttachmentRecipe(ResourceLocation location) {
         super(location);
     }
 
     @Override
-    public boolean matches(CraftingContainer crafting, Level level) {
-        var foundTome = false;
-        var foundTarget = false;
+    public boolean matches(CraftingInventory crafting, World level) {
+        boolean foundTome = false;
+        boolean foundTarget = false;
 
         for (int i = 0; i < crafting.getContainerSize(); i++) {
             ItemStack stack = crafting.getItem(i);
@@ -39,9 +39,9 @@ public class AttachmentRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer crafting) {
-        var tome = ItemStack.EMPTY;
-        var target = ItemStack.EMPTY;
+    public ItemStack assemble(CraftingInventory crafting) {
+        ItemStack tome = ItemStack.EMPTY;
+        ItemStack target = ItemStack.EMPTY;
 
         for (int i = 0; i < crafting.getContainerSize(); i++) {
             ItemStack stack = crafting.getItem(i);
@@ -93,12 +93,12 @@ public class AttachmentRecipe extends CustomRecipe {
     }
 
     @Override
-    public NonNullList<ItemStack> getRemainingItems(CraftingContainer crafting) {
+    public NonNullList<ItemStack> getRemainingItems(CraftingInventory crafting) {
         return NonNullList.withSize(crafting.getContainerSize(), ItemStack.EMPTY);
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public IRecipeSerializer<?> getSerializer() {
         return EccentricTome.ATTACHMENT.get();
     }
 

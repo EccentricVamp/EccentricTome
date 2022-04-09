@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 
 public class Tag {
 
@@ -16,7 +16,7 @@ public class Tag {
     public static ItemStack initialize(ItemStack stack) {
         CompoundNBT tag = getOrSetTag(stack);
         Migration.setCurrentVersion(tag);
-        tag.put(MODS, new CompoundTag());
+        tag.put(MODS, new CompoundNBT());
         return stack;
     }
 
@@ -59,17 +59,17 @@ public class Tag {
         tag.put(MODS, mods);
     }
 
-    public static CompoundTag getOrSetTag(ItemStack stack) {
-        if (!stack.hasTag()) stack.setTag(new CompoundTag());
+    public static CompoundNBT getOrSetTag(ItemStack stack) {
+        if (!stack.hasTag()) stack.setTag(new CompoundNBT());
         return stack.getTag();
     }
 
-    public static CompoundTag getOrSetMods(CompoundTag tag) {
-        if (!tag.contains(MODS)) tag.put(MODS, new CompoundTag());
+    public static CompoundNBT getOrSetMods(CompoundNBT tag) {
+        if (!tag.contains(MODS)) tag.put(MODS, new CompoundNBT());
         return tag.getCompound(MODS);
     }
 
-    public static void setMods(ItemStack stack, CompoundTag mods) {
+    public static void setMods(ItemStack stack, CompoundNBT mods) {
         getOrSetTag(stack).put(MODS, mods);
     }
 

@@ -3,18 +3,20 @@ package website.eccentric.tome;
 import java.util.function.Supplier;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.InteractionHand;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.Hand;
+import net.minecraftforge.fml.network.NetworkEvent;
 
 public class RevertMessage {
 
-    public static RevertMessage decode(final FriendlyByteBuf buffer) {
+    public static RevertMessage decode(final PacketBuffer buffer) {
         buffer.readByte();
         return new RevertMessage();
     }
 
-    public static void encode(final RevertMessage message, final FriendlyByteBuf buffer) {
+    public static void encode(final RevertMessage message, final PacketBuffer buffer) {
         buffer.writeByte(0);
     }
     
@@ -29,7 +31,7 @@ public class RevertMessage {
             if (!hasTome) {
                 stack = player.getOffhandItem();
                 hasTome = TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem);
-                hand = InteractionHand.OFF_HAND;
+                hand = Hand.OFF_HAND;
             }
 
             if (hasTome) {

@@ -2,10 +2,11 @@ package website.eccentric.tome;
 
 import java.util.function.Supplier;
 
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.Hand;
+import net.minecraftforge.fml.network.NetworkEvent;
 
 public class ConvertMessage {
 
@@ -15,12 +16,12 @@ public class ConvertMessage {
         this.book = book;
     }
 
-    public static ConvertMessage decode(final FriendlyByteBuf buffer) {
-        var book = buffer.readItem();
+    public static ConvertMessage decode(final PacketBuffer buffer) {
+        ItemStack book = buffer.readItem();
         return new ConvertMessage(book);
     }
 
-    public static void encode(final ConvertMessage message, final FriendlyByteBuf buffer) {
+    public static void encode(final ConvertMessage message, final PacketBuffer buffer) {
         buffer.writeItem(message.book);
     }
 
@@ -34,7 +35,7 @@ public class ConvertMessage {
             if (!hasTome) {
                 stack = player.getOffhandItem();
                 hasTome = !stack.isEmpty() && stack.getItem() instanceof TomeItem;
-                hand = InteractionHand.OFF_HAND;
+                hand = Hand.OFF_HAND;
             }
 
             if (hasTome) {

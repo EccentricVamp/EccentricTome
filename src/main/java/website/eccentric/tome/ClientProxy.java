@@ -1,7 +1,7 @@
 package website.eccentric.tome;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.item.ItemStack;
 
 public class ClientProxy extends Proxy {
 

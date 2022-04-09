@@ -2,63 +2,67 @@ package website.eccentric.tome;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.Level;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.Items;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
 
 public class TomeItem extends Item {
 
     public TomeItem() {
-        super(new Properties().stacksTo(1).tab(CreativeModeTab.TAB_TOOLS));
+        super(new Properties().stacksTo(1).tab(ItemGroup.TAB_TOOLS));
     }
 
     @Override
-    public InteractionResult useOn(UseOnContext context) {
-        var player = context.getPlayer();
-        var hand = context.getHand();
-        var level = context.getLevel();
-        var position = context.getClickedPos();
-        var tome = player.getItemInHand(hand);
-        var mod = Mod.from(level.getBlockState(position));
-        var modsBooks = Tag.getModsBooks(tome);
+    public ActionResultType useOn(ItemUseContext context) {
+        PlayerEntity player = context.getPlayer();
+        Hand hand = context.getHand();
+        World level = context.getLevel();
+        BlockPos position = context.getClickedPos();
+        ItemStack tome = player.getItemInHand(hand);
+        String mod = Mod.from(level.getBlockState(position));
+        Map<String, List<ItemStack>> modsBooks = Tag.getModsBooks(tome);
 
-        if (!player.isShiftKeyDown() || !modsBooks.containsKey(mod)) return InteractionResult.PASS;
+        if (!player.isShiftKeyDown() || !modsBooks.containsKey(mod)) return ActionResultType.PASS;
 
         List<ItemStack> books = modsBooks.get(mod);
         ItemStack book = books.get(books.size() - 1);
         
         player.setItemInHand(hand, convert(tome, book));
 
-        return InteractionResult.SUCCESS;
+        return ActionResultType.SUCCESS;
     }
     
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-        var tome = player.getItemInHand(hand);
+    public ActionResult<ItemStack> use(World level, PlayerEntity player, Hand hand) {
+        ItemStack tome = player.getItemInHand(hand);
 
         if (level.isClientSide) EccentricTome.PROXY.tomeScreen(tome);
 
-        return InteractionResultHolder.sidedSuccess(tome, level.isClientSide);
+        return ActionResult.sidedSuccess(tome, level.isClientSide);
     }
 
     @Override
-    public void appendHoverText(ItemStack tome, Level level, List<Component> tooltip, TooltipFlag advanced) {
-        var modsBooks = Tag.getModsBooks(tome);
+    public void appendHoverText(ItemStack tome, World level, List<ITextComponent> tooltip, ITooltipFlag advanced) {
+        Map<String, List<ItemStack>> modsBooks = Tag.getModsBooks(tome);
         
         for (String mod : modsBooks.keySet()) {
             tooltip.add(new StringTextComponent(Mod.name(mod)));
@@ -66,6 +70,7 @@ public class TomeItem extends Item {
             for (ItemStack book : books) {
                 if (book.getItem() == Items.AIR) continue;
                 String name = book.getHoverName().getString();
+                tooltip.add(new StringTextComponent("  " + TextFormatting.GRAY + name));
             }
         }
     }
@@ -121,8 +126,8 @@ public class TomeItem extends Item {
     }
 
     private static void setHoverName(ItemStack book, String name) {
-        var bookName = new TextComponent(name).setStyle(Style.EMPTY.applyFormats(ChatFormatting.GREEN));
-        book.setHoverName(new TranslatableComponent("eccentrictome.name", bookName));
+        IFormattableTextComponent bookName = new StringTextComponent(name).setStyle(Style.EMPTY.applyFormats(TextFormatting.GREEN));
+        book.setHoverName(new TranslationTextComponent("eccentrictome.name", bookName));
     }
 
 }
