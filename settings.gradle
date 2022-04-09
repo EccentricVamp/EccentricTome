@@ -9,5 +9,6 @@ pluginManagement {
     repositories {
         maven { url 'https://maven.minecraftforge.net' }
         maven { url 'https://plugins.gradle.org/m2/' }
+        maven { url 'https://files.minecraftforge.net/maven' }
     }
 }
