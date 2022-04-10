@@ -59,26 +59,12 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-    maven { url 'https://maven.blamejared.com' }
+    // maven { url 'https://maven.blamejared.com' }
     // maven { url 'https://dvs1.progwml6.com/files/maven' }
     // maven {
     //     url 'https://cursemaven.com'
     //     content {
     //         includeGroup 'curse.maven'
-    //     }
-    // }
-    // maven {
-    //     url 'https://maven.pkg.github.com/ModdingForBlockheads/Balm'
-    //     credentials {
-    //         username System.getenv('GITHUB_ACTOR')
-    //         password System.getenv('GITHUB_TOKEN')
-    //     }
-    // }
-    // maven {
-    //     url "https://maven.pkg.github.com/ModdingForBlockheads/CookingForBlockheads"
-    //     credentials {
-    //         username System.getenv('GITHUB_ACTOR')
-    //         password System.getenv('GITHUB_TOKEN')
     //     }
     // }
 }
@@ -88,13 +74,10 @@ dependencies {
 
     // runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
 
-    // runtimeOnly fg.deobf('curse.maven:cucumber-272335:3686400')
-    // runtimeOnly fg.deobf('curse.maven:mystical-agriculture-246640:3686412')
+    // runtimeOnly fg.deobf('curse.maven:cucumber-272335:3507886')
+    // runtimeOnly fg.deobf('curse.maven:mystical-agriculture-246640:3562127')
 
-    // runtimeOnly fg.deobf("net.blay09.mods:cookingforblockheads-forge:${cfb_version}")
-
-    // runtimeOnly fg.deobf('curse.maven:placebo-283644:3725741')
-    // runtimeOnly fg.deobf('curse.maven:apotheosis-313970:3717791')
+    // runtimeOnly fg.deobf("curse.maven:cfb-231484:3445172")
 }
 
 jar {
