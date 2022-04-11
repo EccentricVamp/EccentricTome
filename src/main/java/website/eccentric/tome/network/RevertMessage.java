@@ -1,4 +1,4 @@
-package website.eccentric.tome;
+package website.eccentric.tome.network;
 
 import java.util.function.Supplier;
 
@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
 import net.minecraftforge.network.NetworkEvent;
+import website.eccentric.tome.TomeItem;
 
 public class RevertMessage {
 

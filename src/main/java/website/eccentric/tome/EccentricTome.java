@@ -22,6 +22,8 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import website.eccentric.tome.network.RevertMessage;
+import website.eccentric.tome.network.TomeChannel;
 
 @Mod(EccentricTome.MODID)
 public class EccentricTome {
