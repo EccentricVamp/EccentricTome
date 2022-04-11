@@ -1,4 +1,4 @@
-package website.eccentric.tome;
+package website.eccentric.tome.util;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fml.ModList;
+import website.eccentric.tome.CommonConfiguration;
 
 public final class Mod {
 

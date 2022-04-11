@@ -1,4 +1,4 @@
-package website.eccentric.tome;
+package website.eccentric.tome.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -9,6 +9,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import website.eccentric.tome.util.Tag;
 
 public class TomeScreen extends Screen {
     private static final int LEFT_CLICK = 0;
