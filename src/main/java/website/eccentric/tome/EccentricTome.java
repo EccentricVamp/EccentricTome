@@ -24,6 +24,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import website.eccentric.tome.network.RevertMessage;
 import website.eccentric.tome.network.TomeChannel;
+import website.eccentric.tome.proxy.ClientProxy;
+import website.eccentric.tome.proxy.Proxy;
 
 @Mod(EccentricTome.MODID)
 public class EccentricTome {

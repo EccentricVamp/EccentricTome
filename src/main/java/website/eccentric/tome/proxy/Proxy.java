@@ -1,4 +1,4 @@
-package website.eccentric.tome;
+package website.eccentric.tome.proxy;
 
 import net.minecraft.world.item.ItemStack;
 

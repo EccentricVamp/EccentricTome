@@ -18,7 +18,7 @@ public class TomeScreen extends Screen {
     private final ItemStack tome;
     private ItemStack book;
 
-    protected TomeScreen(ItemStack tome) {
+    public TomeScreen(ItemStack tome) {
         super(new TextComponent(""));
         this.tome = tome;
     }
