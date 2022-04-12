@@ -11,6 +11,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 public class CommonConfiguration {
 
     public static final ForgeConfigSpec.BooleanValue ALL_ITEMS;
+    public static final ForgeConfigSpec.BooleanValue DISABLE_OVERLAY;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> ITEMS;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> NAMES;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> ALIASES;
@@ -27,6 +28,10 @@ public class CommonConfiguration {
         ALL_ITEMS = BUILDER
             .comment("Allow all items to be added")
             .define("allitems", false);
+
+        DISABLE_OVERLAY = BUILDER
+            .comment("Disable overlay previewing tome conversion")
+            .define("disable_overlay", false);
 
         ITEMS = BUILDER
             .comment("Whitelisted items")
@@ -152,6 +157,7 @@ public class CommonConfiguration {
     public class Cache {
         
         public static boolean ALL_ITEMS;
+        public static boolean DISABLE_OVERLAY;
         public static List<? extends String> ITEMS;
         public static List<? extends String> NAMES;
         public static HashMap<String, String> ALIASES;
@@ -160,6 +166,7 @@ public class CommonConfiguration {
 
         public static void Refresh() {
             ALL_ITEMS = CommonConfiguration.ALL_ITEMS.get();
+            DISABLE_OVERLAY = CommonConfiguration.DISABLE_OVERLAY.get();
             ITEMS = CommonConfiguration.ITEMS.get();
             NAMES = CommonConfiguration.NAMES.get();
 

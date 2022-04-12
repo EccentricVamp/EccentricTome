@@ -10,6 +10,7 @@ import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -22,6 +23,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import website.eccentric.tome.client.gui.RenderGameOverlayHandler;
 import website.eccentric.tome.network.RevertMessage;
 import website.eccentric.tome.network.TomeChannel;
 import website.eccentric.tome.proxy.ClientProxy;
@@ -58,7 +60,8 @@ public class EccentricTome {
 
         var minecraftEvent = MinecraftForge.EVENT_BUS;
         minecraftEvent.addListener(this::onPlayerLeftClick);
-        minecraftEvent.addListener(this::onItemDropped);
+        minecraftEvent.addListener(EventPriority.LOW, this::onItemDropped);
+        minecraftEvent.addListener(EventPriority.LOW, RenderGameOverlayHandler::onRender);
     }
 
     private void onCommonSetup(final FMLCommonSetupEvent event) {
