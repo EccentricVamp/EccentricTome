@@ -77,7 +77,19 @@ public class TomeItem extends Item {
         if (stack.isEmpty()) return false;
         else if (stack.getItem() instanceof TomeItem) return true;
         else return Tag.isTome(stack);
-    }    
+    }
+
+    public static InteractionHand inHand(Player player) {
+        var hand = InteractionHand.MAIN_HAND;
+        var stack = player.getItemInHand(hand);
+        if (isTome(stack)) return hand;
+        
+        hand = InteractionHand.OFF_HAND;
+        stack = player.getItemInHand(hand);
+        if (isTome(stack)) return hand;
+
+        return null;
+    }
 
     public static ItemStack convert(ItemStack tome, ItemStack book) {
         var modsBooks = Tag.getModsBooks(tome);

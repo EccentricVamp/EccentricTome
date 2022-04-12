@@ -4,7 +4,6 @@ import java.util.function.Supplier;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.InteractionHand;
 import net.minecraftforge.network.NetworkEvent;
 import website.eccentric.tome.TomeItem;
 
@@ -22,18 +21,11 @@ public class RevertMessage {
     @SuppressWarnings("resource")
     public static void handle(final RevertMessage message, final Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
-            var player = context.get().getSender();            
-            var stack = player.getMainHandItem();
-            var hand = InteractionHand.MAIN_HAND;
+            var player = context.get().getSender();
+            var hand = TomeItem.inHand(player);
 
-            var hasTome = TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem);
-            if (!hasTome) {
-                stack = player.getOffhandItem();
-                hasTome = TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem);
-                hand = InteractionHand.OFF_HAND;
-            }
-
-            if (hasTome) {
+            if (hand != null) {
+                var stack = player.getItemInHand(hand);
                 var tome = TomeItem.revert(stack);
                 player.setItemInHand(hand, TomeItem.attach(tome, stack));
 
