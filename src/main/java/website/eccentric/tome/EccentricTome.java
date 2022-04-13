@@ -16,6 +16,7 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
@@ -50,6 +51,7 @@ public class EccentricTome {
         ITEMS.register(modEvent);
         RECIPES.register(modEvent);
 
+        modEvent.addListener(this::onClientSetup);
         modEvent.addListener(this::onCommonSetup);
         modEvent.addListener(this::onGatherData);
         modEvent.addListener(this::onModConfig);
@@ -61,7 +63,10 @@ public class EccentricTome {
         var minecraftEvent = MinecraftForge.EVENT_BUS;
         minecraftEvent.addListener(this::onPlayerLeftClick);
         minecraftEvent.addListener(EventPriority.LOW, this::onItemDropped);
-        minecraftEvent.addListener(EventPriority.LOW, RenderGameOverlayHandler::onRender);
+    }
+
+    private void onClientSetup(final FMLClientSetupEvent event) {
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, RenderGameOverlayHandler::onRender);
     }
 
     private void onCommonSetup(final FMLCommonSetupEvent event) {
