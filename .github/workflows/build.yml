@@ -3,12 +3,12 @@ name: Build
 on:
   push:
     branches: [ main ]
-  paths-ignore:
-    - CHANGELOG
-    - LICENSE
-    - 'README.md'
-    - '.github'
-    - '.gitignore'
+    paths-ignore:
+      - CHANGELOG
+      - LICENSE
+      - 'README.md'
+      - '.github'
+      - '.gitignore'
 
 jobs:
   build:
