@@ -16,8 +16,8 @@ minecraft {
         client {
             workingDirectory project.file('run')
 
-            // property 'mixin.env.remapRefMap', 'true'
-            // property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
                 eccentrictome {
@@ -29,8 +29,8 @@ minecraft {
         server {
             workingDirectory project.file('run')
 
-            // property 'mixin.env.remapRefMap', 'true'
-            // property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
                 eccentrictome {
@@ -42,10 +42,27 @@ minecraft {
         data {
             workingDirectory project.file('run')
 
-            // property 'mixin.env.remapRefMap', 'true'
-            // property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+
+            mods {
+                eccentrictome {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        gameTestServer {
+            workingDirectory project.file('run')
+
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
+            property 'forge.enabledGameTestNamespaces', 'eccentrictome'
+            
+            forceExit false
 
             mods {
                 eccentrictome {
@@ -59,7 +76,7 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-    maven { url 'https://maven.blamejared.com' }
+    // maven { url 'https://maven.blamejared.com' }
     // maven { url 'https://dvs1.progwml6.com/files/maven' }
     // maven {
     //     url 'https://cursemaven.com'
@@ -86,6 +103,7 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
+    // Mods for testing
     // runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
 
     // runtimeOnly fg.deobf('curse.maven:cucumber-272335:3686400')
