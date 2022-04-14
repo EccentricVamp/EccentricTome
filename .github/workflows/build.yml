@@ -6,9 +6,9 @@ on:
     paths-ignore:
       - CHANGELOG
       - LICENSE
-      - 'README.md'
-      - '.github'
-      - '.gitignore'
+      - README.md
+      - .github/**
+      - .gitignore
 
 jobs:
   build:
