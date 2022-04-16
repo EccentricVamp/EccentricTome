@@ -2,13 +2,8 @@ plugins {
     id 'eclipse'
     id 'net.minecraftforge.gradle' version '5.1.+'
     id 'com.matthewprenger.cursegradle' version '1.4.0'
+    id 'eccentric-tome.mod-conventions'
 }
-
-version = "${minecraft_version}-${mod_version}"
-group = mod_group
-archivesBaseName = mod_id
-
-java.toolchain.languageVersion = JavaLanguageVersion.of java_version
 
 sourceSets.main.resources.srcDirs += 'src/generated/resources'
 
@@ -80,6 +75,8 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
+    implementation project(':common')
+
     if (is_testing) {
         runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
 
@@ -94,26 +91,4 @@ dependencies {
     }
 }
 
-jar.manifest.attributes = [
-    'Specification-Title'     : mod_id,
-    'Specification-Vendor'    : mod_author,
-    'Specification-Version'   : '1',
-    'Implementation-Title'    : project.name,
-    'Implementation-Version'  : mod_version,
-    'Implementation-Vendor'   : mod_author,
-    'Implementation-Timestamp': new Date().format('yyyy-MM-dd\'T\'HH:mm:ssZ')
-]
-
 jar.finalizedBy 'reobfJar'
-
-curseforge {
-    apiKey = System.getenv().CURSEFORGE_KEY
-    project {
-        id = curseforge_id
-        releaseType = 'beta'
-        addGameVersion 'Forge'
-        addGameVersion minecraft_version
-        addGameVersion "Java ${java_version}"
-        mainArtifact jar
-    }
-}
