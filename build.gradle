@@ -8,129 +8,103 @@ version = "${minecraft_version}-${mod_version}"
 group = mod_group
 archivesBaseName = mod_id
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(java_version)
+java.toolchain.languageVersion = JavaLanguageVersion.of java_version
+
+sourceSets.main.resources.srcDirs += 'src/generated/resources'
+
+def baseProperties = is_testing ? [
+    'mixin.env.remapRefMap'        : 'true',
+    'mixin.env.refMapRemappingFile': file('build/createSrgToMcp/output.srg')
+] : [];
+
+def baseMods = {
+    eccentrictome.source sourceSets.main
+}
 
 minecraft {
     mappings channel: 'official', version: minecraft_version
     runs {
         client {
-            workingDirectory project.file('run')
-
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
-            mods {
-                eccentrictome {
-                    source sourceSets.main
-                }
-            }
+            workingDirectory file('run')
+            properties baseProperties
+            mods baseMods
         }
 
         server {
-            workingDirectory project.file('run')
-
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
-            mods {
-                eccentrictome {
-                    source sourceSets.main
-                }
-            }
+            workingDirectory file('run')
+            properties baseProperties
+            mods baseMods
         }
 
         data {
-            workingDirectory project.file('run')
-
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
-            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-
-            mods {
-                eccentrictome {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        gameTestServer {
-            workingDirectory project.file('run')
-
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
-            property 'forge.enabledGameTestNamespaces', 'eccentrictome'
-            
-            forceExit false
-
-            mods {
-                eccentrictome {
-                    source sourceSets.main
-                }
-            }
+            workingDirectory file('run')
+            properties baseProperties
+            mods baseMods
+            args(
+                '--mod', mod_id,
+                '--all',
+                '--output', file('src/generated/resources/'),
+                '--existing', file('src/main/resources/')
+            )
         }
     }
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
-
 repositories {
-    // maven { url 'https://maven.blamejared.com' }
-    // maven { url 'https://dvs1.progwml6.com/files/maven' }
-    // maven {
-    //     url 'https://cursemaven.com'
-    //     content {
-    //         includeGroup 'curse.maven'
-    //     }
-    // }
-    // maven {
-    //     url 'https://maven.pkg.github.com/ModdingForBlockheads/Balm'
-    //     credentials {
-    //         username System.getenv('GITHUB_ACTOR')
-    //         password System.getenv('GITHUB_TOKEN')
-    //     }
-    // }
-    // maven {
-    //     url "https://maven.pkg.github.com/ModdingForBlockheads/CookingForBlockheads"
-    //     credentials {
-    //         username System.getenv('GITHUB_ACTOR')
-    //         password System.getenv('GITHUB_TOKEN')
-    //     }
-    // }
+    if (is_testing) {    
+        maven { url 'https://maven.blamejared.com' }
+        maven { url 'https://dvs1.progwml6.com/files/maven' }
+        maven {
+            url 'https://cursemaven.com'
+            content {
+                includeGroup 'curse.maven'
+            }
+        }
+        maven {
+            url 'https://maven.pkg.github.com/ModdingForBlockheads/Balm'
+            credentials {
+                username System.getenv('GITHUB_ACTOR')
+                password System.getenv('GITHUB_TOKEN')
+            }
+        }
+        maven {
+            url "https://maven.pkg.github.com/ModdingForBlockheads/CookingForBlockheads"
+            credentials {
+                username System.getenv('GITHUB_ACTOR')
+                password System.getenv('GITHUB_TOKEN')
+            }
+        }
+    }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    // Mods for testing
-    // runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
+    if (is_testing) {
+        runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
 
-    // runtimeOnly fg.deobf('curse.maven:cucumber-272335:3686400')
-    // runtimeOnly fg.deobf('curse.maven:mystical-agriculture-246640:3686412')
+        runtimeOnly fg.deobf('curse.maven:cucumber-272335:3686400')
+        runtimeOnly fg.deobf('curse.maven:mystical-agriculture-246640:3686412')
 
-    // runtimeOnly fg.deobf("net.blay09.mods:balm:${balm_version}")
-    // runtimeOnly fg.deobf("net.blay09.mods:cookingforblockheads-forge:${cfb_version}")
+        runtimeOnly fg.deobf("net.blay09.mods:balm:${balm_version}")
+        runtimeOnly fg.deobf("net.blay09.mods:cookingforblockheads-forge:${cfb_version}")
 
-    // runtimeOnly fg.deobf('curse.maven:placebo-283644:3725741')
-    // runtimeOnly fg.deobf('curse.maven:apotheosis-313970:3717791')
-}
-
-jar {
-    manifest {
-        attributes([
-            "Specification-Title"     : mod_id,
-            "Specification-Vendor"    : mod_author,
-            "Specification-Version"   : "1",
-            "Implementation-Title"    : project.name,
-            "Implementation-Version"  : mod_version,
-            "Implementation-Vendor"   : mod_author,
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-        ])
+        runtimeOnly fg.deobf('curse.maven:placebo-283644:3725741')
+        runtimeOnly fg.deobf('curse.maven:apotheosis-313970:3717791')
     }
 }
 
-jar.finalizedBy('reobfJar')
+jar.manifest.attributes = [
+    'Specification-Title'     : mod_id,
+    'Specification-Vendor'    : mod_author,
+    'Specification-Version'   : '1',
+    'Implementation-Title'    : project.name,
+    'Implementation-Version'  : mod_version,
+    'Implementation-Vendor'   : mod_author,
+    'Implementation-Timestamp': new Date().format('yyyy-MM-dd\'T\'HH:mm:ssZ')
+]
+
+jar.finalizedBy 'reobfJar'
 
 curseforge {
     apiKey = System.getenv().CURSEFORGE_KEY
@@ -140,6 +114,6 @@ curseforge {
         addGameVersion 'Forge'
         addGameVersion minecraft_version
         addGameVersion "Java ${java_version}"
-        mainArtifact(jar)
+        mainArtifact jar
     }
 }

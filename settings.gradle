@@ -2,7 +2,7 @@ pluginManagement {
     resolutionStrategy {
         eachPlugin {
             if (requested.id.namespace == 'net.minecraftforge') {
-                useModule("net.minecraftforge.gradle:ForgeGradle:${requested.version}")
+                useModule "net.minecraftforge.gradle:ForgeGradle:${requested.version}"
             }
         }
     }
