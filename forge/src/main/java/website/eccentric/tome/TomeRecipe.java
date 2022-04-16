@@ -7,7 +7,7 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.common.Tags;
+import net.minecraft.world.level.block.Blocks;
 
 public class TomeRecipe extends RecipeProvider {
 
@@ -20,7 +20,7 @@ public class TomeRecipe extends RecipeProvider {
         ShapelessRecipeBuilder
             .shapeless(EccentricTome.TOME.get())
             .requires(Items.BOOK)
-            .requires(Tags.Items.BOOKSHELVES)
+            .requires(Blocks.BOOKSHELF)
             .unlockedBy("has_book", has(Items.BOOK))
             .save(consumer);
     }
