@@ -12,8 +12,9 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import website.eccentric.tome.TomeItem;
 import website.eccentric.tome.CommonConfiguration.Cache;
-import website.eccentric.tome.util.Mod;
 import website.eccentric.tome.util.Tag;
+
+import static website.eccentric.tome.EccentricTome.MOD_NAME;
 
 public class RenderGameOverlayHandler {
 
@@ -34,7 +35,7 @@ public class RenderGameOverlayHandler {
 		if (state.isAir()) return;
 
 		var tome = minecraft.player.getItemInHand(hand);
-		var mod = Mod.from(state);
+		var mod = MOD_NAME.from(state);
 		var modsBooks = Tag.getModsBooks(tome);
 		if (!modsBooks.containsKey(mod)) return;
 

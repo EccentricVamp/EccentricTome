@@ -20,8 +20,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import website.eccentric.tome.util.Mod;
 import website.eccentric.tome.util.Tag;
+
+import static website.eccentric.tome.EccentricTome.MOD_NAME;
 
 public class TomeItem extends Item {
 
@@ -36,7 +37,7 @@ public class TomeItem extends Item {
         var level = context.getLevel();
         var position = context.getClickedPos();
         var tome = player.getItemInHand(hand);
-        var mod = Mod.from(level.getBlockState(position));
+        var mod = MOD_NAME.from(level.getBlockState(position));
         var modsBooks = Tag.getModsBooks(tome);
 
         if (!player.isShiftKeyDown() || !modsBooks.containsKey(mod)) return InteractionResult.PASS;
@@ -63,7 +64,7 @@ public class TomeItem extends Item {
         var modsBooks = Tag.getModsBooks(tome);
         
         for (var mod : modsBooks.keySet()) {
-            tooltip.add(new TextComponent(Mod.name(mod)));
+            tooltip.add(new TextComponent(MOD_NAME.name(mod)));
             var books = modsBooks.get(mod);
             for (var book : books) {
                 if (book.is(Items.AIR)) continue;
@@ -93,7 +94,7 @@ public class TomeItem extends Item {
 
     public static ItemStack convert(ItemStack tome, ItemStack book) {
         var modsBooks = Tag.getModsBooks(tome);
-        var mod = Mod.from(book);
+        var mod = MOD_NAME.from(book);
         var books = modsBooks.get(mod);
         var registry = book.getItem().getRegistryName();
         books = books.stream().filter(b -> !b.getItem().getRegistryName().equals(registry)).collect(Collectors.toList());
@@ -120,7 +121,7 @@ public class TomeItem extends Item {
     }
 
     public static ItemStack attach(ItemStack tome, ItemStack book) {
-        var mod = Mod.from(book);
+        var mod = MOD_NAME.from(book);
         var modsBooks = Tag.getModsBooks(tome);
 
         var books = modsBooks.getOrDefault(mod, new ArrayList<ItemStack>());

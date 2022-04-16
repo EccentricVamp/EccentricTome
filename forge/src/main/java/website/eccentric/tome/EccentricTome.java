@@ -35,6 +35,7 @@ public class EccentricTome {
 
     public static final String MODID = "eccentrictome";
     public static final Logger LOGGER = LogManager.getLogger(MODID);
+    public static final ModName MOD_NAME = new ModName();
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final DeferredRegister<RecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MODID);

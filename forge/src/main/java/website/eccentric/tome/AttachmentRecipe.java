@@ -8,7 +8,8 @@ import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import website.eccentric.tome.CommonConfiguration.Cache;
-import website.eccentric.tome.util.Mod;
+
+import static website.eccentric.tome.EccentricTome.MOD_NAME;
 
 public class AttachmentRecipe extends CustomRecipe {
 
@@ -65,8 +66,8 @@ public class AttachmentRecipe extends CustomRecipe {
     public boolean isTarget(ItemStack stack) {
         if (stack.isEmpty() || TomeItem.isTome(stack)) return false;
 
-        var mod = Mod.from(stack);
-        if (mod.equals(Mod.MINECRAFT)) return false;
+        var mod = MOD_NAME.from(stack);
+        if (mod.equals(ModName.MINECRAFT)) return false;
 
         if (Cache.ALL_ITEMS) return true;
 

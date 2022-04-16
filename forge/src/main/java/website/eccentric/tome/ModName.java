@@ -8,7 +8,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fml.ModList;
 
-public final class Mod implements IMod {
+import website.eccentric.tome.util.IModName;
+
+public final class ModName implements IModName {
 
     private static final Map<String, String> modNames = new HashMap<String, String>();
 
@@ -22,11 +24,11 @@ public final class Mod implements IMod {
         }
     }
 
-    public static final String from(BlockState state) {
+    public String from(BlockState state) {
         return orAlias(state.getBlock().getRegistryName().getNamespace());
     }
 
-    public static final String from(ItemStack stack) {
+    public String from(ItemStack stack) {
         if (stack.isEmpty()) return MINECRAFT;
 
         var mod = stack.getItem().getCreatorModId(stack);
@@ -38,11 +40,11 @@ public final class Mod implements IMod {
         return orAlias(mod);
     }
 
-    public static final String orAlias(String mod) {
+    public String orAlias(String mod) {
         return CommonConfiguration.Cache.ALIASES.getOrDefault(mod, mod);
     }
 
-    public static String name(String mod) {
+    public String name(String mod) {
         return modNames.getOrDefault(mod, mod);
     }
     
