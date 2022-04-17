@@ -11,5 +11,5 @@ jar.manifest.attributes = [
     'Implementation-Title'    : project.name,
     'Implementation-Version'  : mod_version,
     'Implementation-Vendor'   : mod_author,
-    'Implementation-Timestamp': new Date().format('yyyy-MM-dd\'T\'HH:mm:ssZ')
+    'Implementation-Timestamp': new Date().format('yyyy-MM-dd\'T\'HH:mm:ssZ'),
 ]
