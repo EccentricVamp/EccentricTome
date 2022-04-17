@@ -11,14 +11,14 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import website.eccentric.tome.TomeItem;
-import website.eccentric.tome.util.IModName;
+import website.eccentric.tome.util.ModName;
 import website.eccentric.tome.util.Tag;
 
 public class RenderGameOverlayHandler {
 
-	private final IModName modName;
+	private final ModName modName;
 
-	public RenderGameOverlayHandler(IModName modName) {
+	public RenderGameOverlayHandler(ModName modName) {
 		this.modName = modName;
 	}
 

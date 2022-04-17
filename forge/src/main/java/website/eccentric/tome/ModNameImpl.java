@@ -10,17 +10,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fml.ModList;
 
-import website.eccentric.tome.util.IModName;
+import website.eccentric.tome.util.ModName;
 
-public class ModName implements IModName {
-
-    private Configuration _configuration;
-
-    private static final Map<String, String> modNames = new HashMap<String, String>();
+public class ModNameImpl implements ModName {
 
     public static final String MINECRAFT = "minecraft";
     public static final String PATCHOULI = "patchouli";
     public static final String PATCHOULI_BOOK = PATCHOULI + ":book";
+
+    private static final Map<String, String> modNames = new HashMap<String, String>();
 
     static {
         for (var mod : ModList.get().getMods()) {
@@ -28,9 +26,11 @@ public class ModName implements IModName {
         }
     }
 
+    private final Configuration configuration;
+
     @Inject
-    public ModName(Configuration configuration) {
-        _configuration = configuration;
+    public ModNameImpl(Configuration configuration) {
+        this.configuration = configuration;
     }
 
     public String from(BlockState state) {
@@ -50,11 +50,10 @@ public class ModName implements IModName {
     }
 
     public String orAlias(String mod) {
-        return _configuration.aliases().getOrDefault(mod, mod);
+        return configuration.aliases().getOrDefault(mod, mod);
     }
 
     public String name(String mod) {
         return modNames.getOrDefault(mod, mod);
     }
-    
 }

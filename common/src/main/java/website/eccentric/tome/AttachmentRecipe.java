@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import website.eccentric.tome.util.IModName;
+import website.eccentric.tome.util.ModName;
 import com.google.inject.Inject;
 
 public class AttachmentRecipe extends CustomRecipe {
@@ -17,7 +17,7 @@ public class AttachmentRecipe extends CustomRecipe {
     private Configuration configuration;
 
     @Inject
-    private IModName modName;
+    private ModName modName;
 
     @Inject
     private AttachmentSerializer serializer;

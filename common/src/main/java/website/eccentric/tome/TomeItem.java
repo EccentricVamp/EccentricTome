@@ -23,12 +23,12 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import website.eccentric.tome.util.IModName;
+import website.eccentric.tome.util.ModName;
 import website.eccentric.tome.util.Tag;
 
 public class TomeItem extends Item {
 
-    @Inject IModName modName;
+    @Inject ModName modName;
     
     public TomeItem() {
         super(new Properties().stacksTo(1).tab(CreativeModeTab.TAB_TOOLS));
