@@ -24,4 +24,4 @@ pluginManagement {
 }
 
 rootProject.name = 'eccentric-tome'
-include 'forge', 'common'
+include 'common', 'forge'

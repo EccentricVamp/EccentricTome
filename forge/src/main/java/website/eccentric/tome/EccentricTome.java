@@ -1,14 +1,8 @@
 package website.eccentric.tome;
 
-import java.util.function.Function;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -34,31 +28,23 @@ import website.eccentric.tome.network.TomeChannel;
 import website.eccentric.tome.proxy.ClientProxy;
 import website.eccentric.tome.proxy.Proxy;
 
+import static website.eccentric.tome.Services.CONFIGURATION;
+
 @Mod(EccentricTome.MODID)
 public class EccentricTome {
-    private Injector _injector;
-
     public static final String MODID = "eccentrictome";
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final DeferredRegister<RecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MODID);
 
+    public static final RegistryObject<RecipeSerializer<?>> ATTACHMENT = RECIPES.register("attachment", () -> new AttachmentSerializer(AttachmentRecipe::new));
+    public static final RegistryObject<Item> TOME = ITEMS.register("tome", TomeItem::new);
 
     public static Proxy PROXY;
     public static SimpleChannel CHANNEL;
-    public static RegistryObject<RecipeSerializer<?>> ATTACHMENT;
-    public static RegistryObject<Item> TOME;
 
     public EccentricTome() {
-        _injector = Guice.createInjector(
-            new CommonModule(),
-            new ForgeModule()
-        );
-
-        ATTACHMENT = RECIPES.register("attachment", () -> new AttachmentSerializer(superJank(_injector)));
-        TOME =  ITEMS.register("tome", () -> _injector.getInstance(TomeItem.class));
-
         var modEvent = FMLJavaModLoadingContext.get().getModEventBus();
 
         ITEMS.register(modEvent);
@@ -79,7 +65,7 @@ public class EccentricTome {
     }
 
     private void onClientSetup(final FMLClientSetupEvent event) {
-        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, _injector.getInstance(RenderGameOverlayHandler.class)::onRender);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, RenderGameOverlayHandler::onRender);
     }
 
     private void onCommonSetup(final FMLCommonSetupEvent event) {
@@ -88,13 +74,11 @@ public class EccentricTome {
 
     private void onGatherData(GatherDataEvent event) {
         var generator = event.getGenerator();
-        var recipe = new TomeRecipe(generator);
-        _injector.injectMembers(generator);
-        generator.addProvider(recipe);
+        generator.addProvider(new TomeRecipe(generator));
     }
 
     private void onModConfig(ModConfigEvent event) {
-        // CONFIGURATION.Refresh();
+        CONFIGURATION.refresh();
     }
 
     private void onPlayerLeftClick(PlayerInteractEvent.LeftClickEmpty event) {
@@ -112,7 +96,7 @@ public class EccentricTome {
         var level = entity.getCommandSenderWorld();
 
         if (TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
-            var detatchment = _injector.getInstance(TomeItem.class).revert(stack);
+            var detatchment = ((TomeItem)TOME.get()).revert(stack);
 
             if (!level.isClientSide) {
                 level.addFreshEntity(new ItemEntity(level, entity.getX(), entity.getY(), entity.getZ(), detatchment));
@@ -120,13 +104,5 @@ public class EccentricTome {
 
             entity.setItem(stack);
         }
-    }
-
-    private Function<ResourceLocation, AttachmentRecipe> superJank(Injector injector) {
-        return (ResourceLocation location) -> {
-            var recipe = new AttachmentRecipe(location);
-            injector.injectMembers(recipe);
-            return recipe;
-        };
     }
 }

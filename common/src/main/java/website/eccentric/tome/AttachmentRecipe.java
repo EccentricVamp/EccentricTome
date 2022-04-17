@@ -8,22 +8,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import website.eccentric.tome.util.ModName;
-import com.google.inject.Inject;
+
+import static website.eccentric.tome.Services.MOD;
+import static website.eccentric.tome.Services.CONFIGURATION;
 
 public class AttachmentRecipe extends CustomRecipe {
-
-    @Inject
-    private Configuration configuration;
-
-    @Inject
-    private ModName modName;
-
-    @Inject
-    private AttachmentSerializer serializer;
-
-    @Inject
-    private TomeItem tomeItem;
 
     public AttachmentRecipe(ResourceLocation location) {
         super(location);
@@ -67,7 +56,7 @@ public class AttachmentRecipe extends CustomRecipe {
 
         tome = tome.copy();
 
-        return tomeItem.attach(tome, target);
+        return ((TomeItem)tome.getItem()).attach(tome, target);
     }
 
     @Override
@@ -78,23 +67,23 @@ public class AttachmentRecipe extends CustomRecipe {
     public boolean isTarget(ItemStack stack) {
         if (stack.isEmpty() || TomeItem.isTome(stack)) return false;
 
-        var mod = modName.from(stack);
+        var mod = MOD.from(stack);
         if (mod.equals("minecraft")) return false;
 
-        if (configuration.allItems()) return true;
+        if (CONFIGURATION.allItems()) return true;
 
-        if (configuration.exclude().contains(mod)) return false;
+        if (CONFIGURATION.exclude().contains(mod)) return false;
 
         var location = Registry.ITEM.getKey(stack.getItem());
         var locationString = location.toString();
         var locationDamage = locationString + ":" + stack.getDamageValue();
 
-        if (configuration.excludeItems().contains(locationString) || configuration.excludeItems().contains(locationDamage)) return false;
+        if (CONFIGURATION.excludeItems().contains(locationString) || CONFIGURATION.excludeItems().contains(locationDamage)) return false;
 
-        if (configuration.items().contains(locationString) || configuration.items().contains(locationDamage)) return true;
+        if (CONFIGURATION.items().contains(locationString) || CONFIGURATION.items().contains(locationDamage)) return true;
 
         var path = location.getPath();
-        for (var name : configuration.names()) {
+        for (var name : CONFIGURATION.names()) {
             if (path.contains(name)) return true;
         }
 
@@ -113,7 +102,7 @@ public class AttachmentRecipe extends CustomRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return serializer;
+        return null; //return serializer;
     }
 
 }

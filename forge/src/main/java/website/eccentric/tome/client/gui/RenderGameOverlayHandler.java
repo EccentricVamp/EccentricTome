@@ -11,18 +11,13 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import website.eccentric.tome.TomeItem;
-import website.eccentric.tome.util.ModName;
 import website.eccentric.tome.util.Tag;
+
+import static website.eccentric.tome.Services.MOD;
 
 public class RenderGameOverlayHandler {
 
-	private final ModName modName;
-
-	public RenderGameOverlayHandler(ModName modName) {
-		this.modName = modName;
-	}
-
-	public void onRender(RenderGameOverlayEvent.Post event) {
+	public static void onRender(RenderGameOverlayEvent.Post event) {
 		if (event.getType() != ElementType.ALL) return;
 
 		var minecraft = Minecraft.getInstance();
@@ -38,7 +33,7 @@ public class RenderGameOverlayHandler {
 		if (state.isAir()) return;
 
 		var tome = minecraft.player.getItemInHand(hand);
-		var mod = modName.from(state);
+		var mod = MOD.from(state);
 		var modsBooks = Tag.getModsBooks(tome);
 		if (!modsBooks.containsKey(mod)) return;
 

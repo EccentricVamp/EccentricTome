@@ -11,4 +11,5 @@ public interface Configuration {
     public HashMap<String, String> aliases();
     public List<? extends String> exclude();
     public List<? extends String> excludeItems();
+    public void refresh();
 }

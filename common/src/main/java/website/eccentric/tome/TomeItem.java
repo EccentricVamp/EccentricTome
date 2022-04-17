@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.google.inject.Inject;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
@@ -23,12 +21,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import website.eccentric.tome.util.ModName;
 import website.eccentric.tome.util.Tag;
 
 public class TomeItem extends Item {
-
-    @Inject ModName modName;
     
     public TomeItem() {
         super(new Properties().stacksTo(1).tab(CreativeModeTab.TAB_TOOLS));
@@ -41,7 +36,7 @@ public class TomeItem extends Item {
         var level = context.getLevel();
         var position = context.getClickedPos();
         var tome = player.getItemInHand(hand);
-        var mod = modName.from(level.getBlockState(position));
+        var mod = Services.MOD.from(level.getBlockState(position));
         var modsBooks = Tag.getModsBooks(tome);
 
         if (!player.isShiftKeyDown() || !modsBooks.containsKey(mod)) return InteractionResult.PASS;
@@ -68,7 +63,7 @@ public class TomeItem extends Item {
         var modsBooks = Tag.getModsBooks(tome);
         
         for (var mod : modsBooks.keySet()) {
-            tooltip.add(new TextComponent(modName.name(mod)));
+            tooltip.add(new TextComponent(Services.MOD.name(mod)));
             var books = modsBooks.get(mod);
             for (var book : books) {
                 if (book.is(Items.AIR)) continue;
@@ -98,7 +93,7 @@ public class TomeItem extends Item {
 
     public ItemStack convert(ItemStack tome, ItemStack book) {
         var modsBooks = Tag.getModsBooks(tome);
-        var mod = modName.from(book);
+        var mod = Services.MOD.from(book);
         var books = modsBooks.get(mod);
         var registry = Registry.ITEM.getKey(book.getItem());
         books = books.stream().filter(b -> !Registry.ITEM.getKey(b.getItem()).equals(registry)).collect(Collectors.toList());
@@ -125,7 +120,7 @@ public class TomeItem extends Item {
     }
 
     public ItemStack attach(ItemStack tome, ItemStack book) {
-        var mod = modName.from(book);
+        var mod = Services.MOD.from(book);
         var modsBooks = Tag.getModsBooks(tome);
 
         var books = modsBooks.getOrDefault(mod, new ArrayList<ItemStack>());

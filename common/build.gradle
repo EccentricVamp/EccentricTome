@@ -4,7 +4,3 @@ plugins {
 }
 
 minecraft.version minecraft_version
-
-dependencies {
-    implementation "com.google.inject:guice:${guice_version}"
-}
