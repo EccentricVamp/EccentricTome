@@ -52,6 +52,7 @@ public class EccentricTome {
 
     public EccentricTome() {
         _injector = Guice.createInjector(
+            new CommonModule(),
             new ForgeModule()
         );
 
