@@ -2,6 +2,8 @@ package website.eccentric.tome;
 
 import java.util.function.Consumer;
 
+import com.google.inject.Inject;
+
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
@@ -11,6 +13,9 @@ import net.minecraft.world.level.block.Blocks;
 
 public class TomeRecipe extends RecipeProvider {
 
+    @Inject
+    private TomeItem tomeItem;
+    
     public TomeRecipe(DataGenerator generator) {
         super(generator);
     }
@@ -18,11 +23,9 @@ public class TomeRecipe extends RecipeProvider {
     @Override
     protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
         ShapelessRecipeBuilder
-            .shapeless(EccentricTome.TOME.get())
+            .shapeless(tomeItem)
             .requires(Items.BOOK)
             .requires(Blocks.BOOKSHELF)
-            .unlockedBy("has_book", has(Items.BOOK))
             .save(consumer);
     }
-    
 }

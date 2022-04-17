@@ -3,6 +3,8 @@ package website.eccentric.tome;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.inject.Inject;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -10,7 +12,9 @@ import net.minecraftforge.fml.ModList;
 
 import website.eccentric.tome.util.IModName;
 
-public final class ModName implements IModName {
+public class ModName implements IModName {
+
+    private Configuration _configuration;
 
     private static final Map<String, String> modNames = new HashMap<String, String>();
 
@@ -22,6 +26,11 @@ public final class ModName implements IModName {
         for (var mod : ModList.get().getMods()) {
             modNames.put(mod.getModId(), mod.getDisplayName());
         }
+    }
+
+    @Inject
+    public ModName(Configuration configuration) {
+        _configuration = configuration;
     }
 
     public String from(BlockState state) {
@@ -41,7 +50,7 @@ public final class ModName implements IModName {
     }
 
     public String orAlias(String mod) {
-        return CommonConfiguration.Cache.ALIASES.getOrDefault(mod, mod);
+        return _configuration.aliases().getOrDefault(mod, mod);
     }
 
     public String name(String mod) {

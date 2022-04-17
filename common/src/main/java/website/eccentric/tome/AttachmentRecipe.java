@@ -14,7 +14,7 @@ import com.google.inject.Inject;
 public class AttachmentRecipe extends CustomRecipe {
 
     @Inject
-    private IConfiguration configuration;
+    private Configuration configuration;
 
     @Inject
     private IModName modName;
@@ -81,20 +81,20 @@ public class AttachmentRecipe extends CustomRecipe {
         var mod = modName.from(stack);
         if (mod.equals("minecraft")) return false;
 
-        if (configuration.AllItems()) return true;
+        if (configuration.allItems()) return true;
 
-        if (configuration.Exclude().contains(mod)) return false;
+        if (configuration.exclude().contains(mod)) return false;
 
         var location = Registry.ITEM.getKey(stack.getItem());
         var locationString = location.toString();
         var locationDamage = locationString + ":" + stack.getDamageValue();
 
-        if (configuration.ExcludeItems().contains(locationString) || configuration.ExcludeItems().contains(locationDamage)) return false;
+        if (configuration.excludeItems().contains(locationString) || configuration.excludeItems().contains(locationDamage)) return false;
 
-        if (configuration.Items().contains(locationString) || configuration.Items().contains(locationDamage)) return true;
+        if (configuration.items().contains(locationString) || configuration.items().contains(locationDamage)) return true;
 
         var path = location.getPath();
-        for (var name : configuration.Names()) {
+        for (var name : configuration.names()) {
             if (path.contains(name)) return true;
         }
 
