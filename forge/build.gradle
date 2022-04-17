@@ -46,6 +46,7 @@ minecraft {
 }
 
 repositories {
+    mavenCentral()
     if (is_testing) {    
         maven { url 'https://maven.blamejared.com' }
         maven { url 'https://dvs1.progwml6.com/files/maven' }
@@ -76,7 +77,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
     implementation project(':common')
-    implementation 'com.google.inject:guice:5.1.0'
+    implementation "com.google.inject:guice:${guice_version}"
 
     if (is_testing) {
         runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
