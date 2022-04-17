@@ -1,4 +1,4 @@
-package website.eccentric.tome.client.gui;
+package website.eccentric.tome;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -9,14 +9,13 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import website.eccentric.tome.EccentricTome;
-import website.eccentric.tome.network.ConvertMessage;
 import website.eccentric.tome.util.Tag;
 
 public class TomeScreen extends Screen {
     private static final int LEFT_CLICK = 0;
 
     private final ItemStack tome;
+    
     private ItemStack book;
 
     public TomeScreen(ItemStack tome) {
@@ -28,7 +27,7 @@ public class TomeScreen extends Screen {
     public boolean mouseClicked(double x, double y, int button) {
         if (button != LEFT_CLICK || book == null) return super.mouseClicked(x, y, button);
 
-        EccentricTome.CHANNEL.sendToServer(new ConvertMessage(book));
+        //EccentricTome.CHANNEL.sendToServer(new ConvertMessage(book));
         this.minecraft.setScreen(null);
         return true;
     }
@@ -70,7 +69,7 @@ public class TomeScreen extends Screen {
         }
 
         if (this.book != null) {
-            renderComponentTooltip(poseStack, getTooltipFromItem(this.book), mouseX, mouseY, font);
+            renderComponentTooltip(poseStack, getTooltipFromItem(this.book), mouseX, mouseY);
         }
     }
 

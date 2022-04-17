@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.google.inject.Inject;
+
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
@@ -20,12 +23,13 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import website.eccentric.tome.util.IModName;
 import website.eccentric.tome.util.Tag;
-
-import static website.eccentric.tome.EccentricTome.MOD_NAME;
 
 public class TomeItem extends Item {
 
+    @Inject IModName modName;
+    
     public TomeItem() {
         super(new Properties().stacksTo(1).tab(CreativeModeTab.TAB_TOOLS));
     }
@@ -37,7 +41,7 @@ public class TomeItem extends Item {
         var level = context.getLevel();
         var position = context.getClickedPos();
         var tome = player.getItemInHand(hand);
-        var mod = MOD_NAME.from(level.getBlockState(position));
+        var mod = modName.from(level.getBlockState(position));
         var modsBooks = Tag.getModsBooks(tome);
 
         if (!player.isShiftKeyDown() || !modsBooks.containsKey(mod)) return InteractionResult.PASS;
@@ -54,7 +58,7 @@ public class TomeItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         var tome = player.getItemInHand(hand);
 
-        if (level.isClientSide) EccentricTome.PROXY.tomeScreen(tome);
+        //if (level.isClientSide) EccentricTome.PROXY.tomeScreen(tome);
 
         return InteractionResultHolder.sidedSuccess(tome, level.isClientSide);
     }
@@ -64,7 +68,7 @@ public class TomeItem extends Item {
         var modsBooks = Tag.getModsBooks(tome);
         
         for (var mod : modsBooks.keySet()) {
-            tooltip.add(new TextComponent(MOD_NAME.name(mod)));
+            tooltip.add(new TextComponent(modName.name(mod)));
             var books = modsBooks.get(mod);
             for (var book : books) {
                 if (book.is(Items.AIR)) continue;
@@ -92,12 +96,12 @@ public class TomeItem extends Item {
         return null;
     }
 
-    public static ItemStack convert(ItemStack tome, ItemStack book) {
+    public ItemStack convert(ItemStack tome, ItemStack book) {
         var modsBooks = Tag.getModsBooks(tome);
-        var mod = MOD_NAME.from(book);
+        var mod = modName.from(book);
         var books = modsBooks.get(mod);
-        var registry = book.getItem().getRegistryName();
-        books = books.stream().filter(b -> !b.getItem().getRegistryName().equals(registry)).collect(Collectors.toList());
+        var registry = Registry.ITEM.getKey(book.getItem());
+        books = books.stream().filter(b -> !Registry.ITEM.getKey(b.getItem()).equals(registry)).collect(Collectors.toList());
         modsBooks.put(mod, books);
         Tag.setModsBooks(tome, modsBooks);
 
@@ -110,7 +114,7 @@ public class TomeItem extends Item {
         return book;
     }
 
-    public static ItemStack revert(ItemStack book) {
+    public ItemStack revert(ItemStack book) {
         var tome = createStack();
         Tag.copyMods(book, tome);
         Tag.clear(book);
@@ -120,8 +124,8 @@ public class TomeItem extends Item {
         return tome;
     }
 
-    public static ItemStack attach(ItemStack tome, ItemStack book) {
-        var mod = MOD_NAME.from(book);
+    public ItemStack attach(ItemStack tome, ItemStack book) {
+        var mod = modName.from(book);
         var modsBooks = Tag.getModsBooks(tome);
 
         var books = modsBooks.getOrDefault(mod, new ArrayList<ItemStack>());
@@ -132,11 +136,11 @@ public class TomeItem extends Item {
         return tome;
     }
 
-    private static ItemStack createStack() {
-        return Tag.initialize(new ItemStack(EccentricTome.TOME.get()));
+    private ItemStack createStack() {
+        return Tag.initialize(new ItemStack(this));
     }
 
-    private static void setHoverName(ItemStack book, String name) {
+    private void setHoverName(ItemStack book, String name) {
         var bookName = new TextComponent(name).setStyle(Style.EMPTY.applyFormats(ChatFormatting.GREEN));
         book.setHoverName(new TranslatableComponent("eccentrictome.name", bookName));
     }

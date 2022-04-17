@@ -1,17 +1,29 @@
 package website.eccentric.tome;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import website.eccentric.tome.CommonConfiguration.Cache;
-
-import static website.eccentric.tome.EccentricTome.MOD_NAME;
+import website.eccentric.tome.util.IModName;
+import com.google.inject.Inject;
 
 public class AttachmentRecipe extends CustomRecipe {
+
+    @Inject
+    private IConfiguration configuration;
+
+    @Inject
+    private IModName modName;
+
+    @Inject
+    private AttachmentSerializer serializer;
+
+    @Inject
+    private TomeItem tomeItem;
 
     public AttachmentRecipe(ResourceLocation location) {
         super(location);
@@ -55,7 +67,7 @@ public class AttachmentRecipe extends CustomRecipe {
 
         tome = tome.copy();
 
-        return TomeItem.attach(tome, target);
+        return tomeItem.attach(tome, target);
     }
 
     @Override
@@ -66,23 +78,23 @@ public class AttachmentRecipe extends CustomRecipe {
     public boolean isTarget(ItemStack stack) {
         if (stack.isEmpty() || TomeItem.isTome(stack)) return false;
 
-        var mod = MOD_NAME.from(stack);
-        if (mod.equals(ModName.MINECRAFT)) return false;
+        var mod = modName.from(stack);
+        if (mod.equals("minecraft")) return false;
 
-        if (Cache.ALL_ITEMS) return true;
+        if (configuration.AllItems()) return true;
 
-        if (Cache.EXCLUDE.contains(mod)) return false;
+        if (configuration.Exclude().contains(mod)) return false;
 
-        var location = stack.getItem().getRegistryName();
+        var location = Registry.ITEM.getKey(stack.getItem());
         var locationString = location.toString();
         var locationDamage = locationString + ":" + stack.getDamageValue();
 
-        if (Cache.EXCLUDE_ITEMS.contains(locationString) || Cache.EXCLUDE_ITEMS.contains(locationDamage)) return false;
+        if (configuration.ExcludeItems().contains(locationString) || configuration.ExcludeItems().contains(locationDamage)) return false;
 
-        if (Cache.ITEMS.contains(locationString) || Cache.ITEMS.contains(locationDamage)) return true;
+        if (configuration.Items().contains(locationString) || configuration.Items().contains(locationDamage)) return true;
 
         var path = location.getPath();
-        for (var name : Cache.NAMES) {
+        for (var name : configuration.Names()) {
             if (path.contains(name)) return true;
         }
 
@@ -101,7 +113,7 @@ public class AttachmentRecipe extends CustomRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return EccentricTome.ATTACHMENT.get();
+        return serializer;
     }
 
 }
