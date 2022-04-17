@@ -76,6 +76,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
     implementation project(':common')
+    implementation 'com.google.inject:guice:5.1.0'
 
     if (is_testing) {
         runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
