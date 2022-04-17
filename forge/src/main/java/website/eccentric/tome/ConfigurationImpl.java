@@ -42,7 +42,7 @@ public class ConfigurationImpl implements Configuration {
     }
     
 
-    public static void Refresh() {
+    public void refresh() {
         allItems = CommonConfiguration.ALL_ITEMS.get();
         disableOverlay = CommonConfiguration.DISABLE_OVERLAY.get();
         items = CommonConfiguration.ITEMS.get();
