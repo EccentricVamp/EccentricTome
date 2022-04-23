@@ -1,8 +1,7 @@
 package website.eccentric.tome;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import com.google.common.collect.Lists;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -94,7 +93,7 @@ public class CommonConfiguration {
             .comment("Blacklisted mods")
             .defineListAllowEmpty(
                 List.of("exclude"),
-                () -> Lists.newArrayList(),
+                ArrayList<String>::new,
                 Validator::isString
             );
 

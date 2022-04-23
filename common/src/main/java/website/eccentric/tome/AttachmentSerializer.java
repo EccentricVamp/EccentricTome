@@ -1,7 +1,9 @@
 package website.eccentric.tome;
 
-import com.google.gson.JsonObject;
 import java.util.function.Function;
+
+import com.google.gson.JsonObject;
+
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
