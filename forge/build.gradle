@@ -1,5 +1,4 @@
 plugins {
-    id 'java'
     id 'eclipse'
     id 'net.minecraftforge.gradle' version '5.1.+'
     id 'com.matthewprenger.cursegradle' version '1.4.0'
@@ -77,7 +76,7 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    implementation project(':common')
+    compileOnly project(':common')
 
     if (is_testing) {
         runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
