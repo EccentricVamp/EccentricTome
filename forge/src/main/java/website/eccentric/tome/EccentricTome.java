@@ -25,11 +25,10 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import website.eccentric.tome.client.gui.RenderGameOverlayHandler;
+import website.eccentric.tome.network.RevertMessage;
 import website.eccentric.tome.network.TomeChannel;
 import website.eccentric.tome.proxy.ClientProxy;
 import website.eccentric.tome.proxy.Proxy;
-
-import static website.eccentric.tome.Services.CONFIGURATION;
 
 @Mod(EccentricTome.MODID)
 public class EccentricTome {
@@ -79,13 +78,13 @@ public class EccentricTome {
     }
 
     private void onModConfig(ModConfigEvent event) {
-        CONFIGURATION.refresh();
+        Services.load(Configuration.class).refresh();
     }
 
     private void onPlayerLeftClick(PlayerInteractEvent.LeftClickEmpty event) {
         var stack = event.getItemStack();
         if (TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
-            //CHANNEL.sendToServer(new RevertMessage());
+            CHANNEL.sendToServer(new RevertMessage());
         }
     }
 
@@ -94,10 +93,10 @@ public class EccentricTome {
 
         var entity = event.getEntityItem();
         var stack = entity.getItem();
-        var level = entity.getCommandSenderWorld();
 
         if (TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
             var detatchment = ((TomeItem)TOME.get()).revert(stack);
+            var level = entity.getCommandSenderWorld();
 
             if (!level.isClientSide) {
                 level.addFreshEntity(new ItemEntity(level, entity.getX(), entity.getY(), entity.getZ(), detatchment));

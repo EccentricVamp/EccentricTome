@@ -1,4 +1,4 @@
-package website.eccentric.tome.util;
+package website.eccentric.tome;
 
 import java.util.Map;
 import java.util.function.Consumer;

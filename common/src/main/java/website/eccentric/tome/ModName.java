@@ -1,4 +1,4 @@
-package website.eccentric.tome.util;
+package website.eccentric.tome;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;

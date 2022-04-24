@@ -7,19 +7,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fml.ModList;
-import website.eccentric.tome.util.ModName;
-
-import static website.eccentric.tome.Services.CONFIGURATION;
 
 public class ModNameImpl implements ModName {
+    private final Map<String, String> modNames;
 
-    public static final String MINECRAFT = "minecraft";
-    public static final String PATCHOULI = "patchouli";
-    public static final String PATCHOULI_BOOK = PATCHOULI + ":book";
-
-    private static final Map<String, String> modNames = new HashMap<String, String>();
-
-    static {
+    public ModNameImpl() {
+        modNames = new HashMap<>();
         for (var mod : ModList.get().getMods()) {
             modNames.put(mod.getModId(), mod.getDisplayName());
         }
@@ -30,11 +23,15 @@ public class ModNameImpl implements ModName {
     }
 
     public String from(ItemStack stack) {
-        if (stack.isEmpty()) return MINECRAFT;
+        var minecraft = "minecraft";
+        var patchouli = "patchouli";
+        var patchouliBook = patchouli + ":book";
+
+        if (stack.isEmpty()) return minecraft;
 
         var mod = stack.getItem().getCreatorModId(stack);
-        if (mod.equals(PATCHOULI)) {
-            var book = stack.getTag().getString(PATCHOULI_BOOK);
+        if (mod.equals(patchouli)) {
+            var book = stack.getTag().getString(patchouliBook);
             mod = new ResourceLocation(book).getNamespace();
         }
 
@@ -42,7 +39,7 @@ public class ModNameImpl implements ModName {
     }
 
     public String orAlias(String mod) {
-        return CONFIGURATION.aliases().getOrDefault(mod, mod);
+        return Services.load(Configuration.class).aliases().getOrDefault(mod, mod);
     }
 
     public String name(String mod) {

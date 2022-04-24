@@ -2,6 +2,7 @@ package website.eccentric.tome;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ServiceLoader;
 import java.util.stream.Collectors;
 
 import net.minecraft.ChatFormatting;
@@ -21,10 +22,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import website.eccentric.tome.util.Tag;
 
 public class TomeItem extends Item {
-    
     public TomeItem() {
         super(new Properties().stacksTo(1).tab(CreativeModeTab.TAB_TOOLS));
     }
@@ -36,7 +35,7 @@ public class TomeItem extends Item {
         var level = context.getLevel();
         var position = context.getClickedPos();
         var tome = player.getItemInHand(hand);
-        var mod = Services.MOD.from(level.getBlockState(position));
+        var mod = Services.load(ModName.class).from(level.getBlockState(position));
         var modsBooks = Tag.getModsBooks(tome);
 
         if (!player.isShiftKeyDown() || !modsBooks.containsKey(mod)) return InteractionResult.PASS;
@@ -60,10 +59,13 @@ public class TomeItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack tome, Level level, List<Component> tooltip, TooltipFlag advanced) {
+        var modName = ServiceLoader.load(ModName.class).findFirst();
+        if (!modName.isPresent()) return;
+
         var modsBooks = Tag.getModsBooks(tome);
         
         for (var mod : modsBooks.keySet()) {
-            tooltip.add(new TextComponent(Services.MOD.name(mod)));
+            tooltip.add(new TextComponent(modName.get().name(mod)));
             var books = modsBooks.get(mod);
             for (var book : books) {
                 if (book.is(Items.AIR)) continue;
@@ -93,10 +95,10 @@ public class TomeItem extends Item {
 
     public ItemStack convert(ItemStack tome, ItemStack book) {
         var modsBooks = Tag.getModsBooks(tome);
-        var mod = Services.MOD.from(book);
+        var mod = Services.load(ModName.class).from(book);
         var books = modsBooks.get(mod);
         var registry = Registry.ITEM.getKey(book.getItem());
-        books = books.stream().filter(b -> !Registry.ITEM.getKey(b.getItem()).equals(registry)).collect(Collectors.toList());
+        books = books.stream().filter(b -> Registry.ITEM.getKey(b.getItem()).equals(registry)).collect(Collectors.toList());
         modsBooks.put(mod, books);
         Tag.setModsBooks(tome, modsBooks);
 
@@ -120,7 +122,7 @@ public class TomeItem extends Item {
     }
 
     public ItemStack attach(ItemStack tome, ItemStack book) {
-        var mod = Services.MOD.from(book);
+        var mod = Services.load(ModName.class).from(book);
         var modsBooks = Tag.getModsBooks(tome);
 
         var books = modsBooks.getOrDefault(mod, new ArrayList<ItemStack>());

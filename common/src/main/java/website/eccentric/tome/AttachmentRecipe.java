@@ -9,9 +9,6 @@ import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
-import static website.eccentric.tome.Services.MOD;
-import static website.eccentric.tome.Services.CONFIGURATION;
-
 public class AttachmentRecipe extends CustomRecipe {
 
     public AttachmentRecipe(ResourceLocation location) {
@@ -65,25 +62,28 @@ public class AttachmentRecipe extends CustomRecipe {
     }
 
     public boolean isTarget(ItemStack stack) {
+        var configuration = Services.load(Configuration.class);
+        var modName = Services.load(ModName.class);
+
         if (stack.isEmpty() || TomeItem.isTome(stack)) return false;
 
-        var mod = MOD.from(stack);
+        var mod = modName.from(stack);
         if (mod.equals("minecraft")) return false;
 
-        if (CONFIGURATION.allItems()) return true;
+        if (configuration.allItems()) return true;
 
-        if (CONFIGURATION.exclude().contains(mod)) return false;
+        if (configuration.exclude().contains(mod)) return false;
 
         var location = Registry.ITEM.getKey(stack.getItem());
         var locationString = location.toString();
         var locationDamage = locationString + ":" + stack.getDamageValue();
 
-        if (CONFIGURATION.excludeItems().contains(locationString) || CONFIGURATION.excludeItems().contains(locationDamage)) return false;
+        if (configuration.excludeItems().contains(locationString) || configuration.excludeItems().contains(locationDamage)) return false;
 
-        if (CONFIGURATION.items().contains(locationString) || CONFIGURATION.items().contains(locationDamage)) return true;
+        if (configuration.items().contains(locationString) || configuration.items().contains(locationDamage)) return true;
 
         var path = location.getPath();
-        for (var name : CONFIGURATION.names()) {
+        for (var name : configuration.names()) {
             if (path.contains(name)) return true;
         }
 
