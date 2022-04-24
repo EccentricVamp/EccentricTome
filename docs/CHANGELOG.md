@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.4.0] - 2022-04-24
 ### Internal
-- Split common and forge into separate classes
+- Split common and forge into separate projects
 
 ## [1.3.1] - 2022-04-12
 ### Changed
