@@ -13,7 +13,10 @@ def baseProperties = is_testing ? [
 ] : [];
 
 def baseMods = {
-    eccentrictome.source sourceSets.main
+    eccentrictome {
+        source sourceSets.main
+        source project(':common').sourceSets.main
+    }
 }
 
 minecraft {
@@ -90,6 +93,10 @@ dependencies {
         runtimeOnly fg.deobf('curse.maven:placebo-283644:3725741')
         runtimeOnly fg.deobf('curse.maven:apotheosis-313970:3717791')
     }
+}
+
+tasks.withType(JavaCompile) {
+    source project(':common').sourceSets.main.allSource
 }
 
 jar.finalizedBy 'reobfJar'
