@@ -55,5 +55,4 @@ public class RenderGameOverlayHandler {
 		minecraft.font.drawShadow(event.getMatrixStack(), hoverName, x + 20, y + 4, 0xFFFFFFFF);
 		minecraft.font.drawShadow(event.getMatrixStack(), ChatFormatting.GRAY + convert, x + 25, y + 14, 0xFFFFFFFF);
 	}
-
 }

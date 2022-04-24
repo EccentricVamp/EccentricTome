@@ -32,6 +32,7 @@ import website.eccentric.tome.proxy.Proxy;
 
 @Mod(EccentricTome.MODID)
 public class EccentricTome {
+    
     public static final String MODID = "eccentrictome";
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 

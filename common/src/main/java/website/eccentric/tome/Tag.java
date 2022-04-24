@@ -95,5 +95,4 @@ public class Tag {
 
         tag.putBoolean(Tag.IS_TOME, isTome);
     }
-
 }

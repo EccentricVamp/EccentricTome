@@ -37,5 +37,4 @@ public class RevertMessage {
             context.get().setPacketHandled(true);
         });
     }
-
 }

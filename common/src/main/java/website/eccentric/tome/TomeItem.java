@@ -24,6 +24,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 
 public class TomeItem extends Item {
+    
     public TomeItem() {
         super(new Properties().stacksTo(1).tab(CreativeModeTab.TAB_TOOLS));
     }
@@ -141,5 +142,4 @@ public class TomeItem extends Item {
         var bookName = new TextComponent(name).setStyle(Style.EMPTY.applyFormats(ChatFormatting.GREEN));
         book.setHoverName(new TranslatableComponent("eccentrictome.name", bookName));
     }
-
 }

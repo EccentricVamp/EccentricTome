@@ -57,5 +57,4 @@ public class ConfigurationImpl implements Configuration {
         exclude = CommonConfiguration.EXCLUDE.get();
         excludeItems = CommonConfiguration.EXCLUDE_ITEMS.get();
     }
-    
 }

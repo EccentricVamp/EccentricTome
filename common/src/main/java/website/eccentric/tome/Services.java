@@ -3,6 +3,7 @@ package website.eccentric.tome;
 import java.util.ServiceLoader;
 
 public class Services {
+    
     public static <T> T load(Class<T> clazz) {
         return ServiceLoader
             .load(clazz)

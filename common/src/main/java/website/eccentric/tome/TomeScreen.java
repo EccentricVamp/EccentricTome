@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 public class TomeScreen extends Screen {
+    
     private static final int LEFT_CLICK = 0;
 
     private final ItemStack tome;
@@ -71,5 +72,4 @@ public class TomeScreen extends Screen {
             renderComponentTooltip(poseStack, getTooltipFromItem(this.book), mouseX, mouseY);
         }
     }
-
 }

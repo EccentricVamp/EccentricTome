@@ -10,5 +10,4 @@ public class ClientProxy extends Proxy {
     public void tomeScreen(ItemStack tome) {
         Minecraft.getInstance().setScreen(new TomeScreen(tome));
     }
-
 }

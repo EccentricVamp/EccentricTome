@@ -141,7 +141,7 @@ public class CommonConfiguration {
     }
 
     public static class Validator {
-
+        
         public static boolean isString(Object object) {
             return object instanceof String;
         }
@@ -149,7 +149,5 @@ public class CommonConfiguration {
         public static boolean isStringResource(Object object) {
             return isString(object) && ResourceLocation.isValidResourceLocation((String) object);
         }
-
     }
-    
 }

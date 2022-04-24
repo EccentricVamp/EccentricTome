@@ -104,5 +104,4 @@ public class AttachmentRecipe extends CustomRecipe {
     public RecipeSerializer<?> getSerializer() {
         return null; //return serializer;
     }
-
 }

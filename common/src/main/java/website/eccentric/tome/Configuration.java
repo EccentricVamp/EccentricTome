@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface Configuration {
+    
     public boolean allItems();
     public boolean disableOverlay();
     public List<? extends String> items();

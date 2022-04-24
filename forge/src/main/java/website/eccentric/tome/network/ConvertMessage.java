@@ -37,5 +37,4 @@ public class ConvertMessage {
             context.get().setPacketHandled(true);
         });
     }
-
 }

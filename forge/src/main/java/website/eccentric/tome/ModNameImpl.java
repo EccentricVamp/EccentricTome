@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fml.ModList;
 
 public class ModNameImpl implements ModName {
+    
     private final Map<String, String> modNames;
 
     public ModNameImpl() {

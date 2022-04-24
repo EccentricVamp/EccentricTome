@@ -54,5 +54,4 @@ public class Migration {
         }
         tag.put("eccentrictome:mods", mods);
     }
-
 }
