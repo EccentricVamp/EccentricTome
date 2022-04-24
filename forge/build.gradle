@@ -104,8 +104,8 @@ jar.finalizedBy 'reobfJar'
 curseforge {
     apiKey = System.getenv().CURSEFORGE_KEY
     project {
-        id = curseforge_id
-        releaseType = 'beta'
+        id = project_id
+        releaseType = release_type
         addGameVersion 'Forge'
         addGameVersion minecraft_version
         addGameVersion "Java ${java_version}"
