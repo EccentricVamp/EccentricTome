@@ -1,16 +1,11 @@
 package website.eccentric.tome;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
-import java.util.stream.Collectors;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -24,6 +19,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import website.eccentric.tome.services.ModName;
 import website.eccentric.tome.services.Services;
+import website.eccentric.tome.services.Tome;
 
 public class TomeItem extends Item {
     
@@ -46,7 +42,7 @@ public class TomeItem extends Item {
         var books = modsBooks.get(mod);
         var book = books.get(books.size() - 1);
         
-        player.setItemInHand(hand, convert(tome, book));
+        player.setItemInHand(hand, Services.load(Tome.class).convert(tome, book));
 
         return InteractionResult.SUCCESS;
     }
@@ -94,54 +90,5 @@ public class TomeItem extends Item {
         if (isTome(stack)) return hand;
 
         return null;
-    }
-
-    public ItemStack convert(ItemStack tome, ItemStack book) {
-        var modsBooks = Tag.getModsBooks(tome);
-        var mod = Services.load(ModName.class).from(book);
-        var books = modsBooks.get(mod);
-        var registry = Registry.ITEM.getKey(book.getItem());
-        books = books.stream().filter(b -> Registry.ITEM.getKey(b.getItem()).equals(registry)).collect(Collectors.toList());
-        modsBooks.put(mod, books);
-        Tag.setModsBooks(tome, modsBooks);
-
-        var name = book.getHoverName().getString();
-        Tag.copyMods(tome, book);
-        Tag.fill(book, true);
-
-        setHoverName(book, name);
-        
-        return book;
-    }
-
-    public ItemStack revert(ItemStack book) {
-        var tome = createStack();
-        Tag.copyMods(book, tome);
-        Tag.clear(book);
-
-        book.resetHoverName();
-
-        return tome;
-    }
-
-    public ItemStack attach(ItemStack tome, ItemStack book) {
-        var mod = Services.load(ModName.class).from(book);
-        var modsBooks = Tag.getModsBooks(tome);
-
-        var books = modsBooks.getOrDefault(mod, new ArrayList<ItemStack>());
-        books.add(book);
-        modsBooks.put(mod, books);
-        
-        Tag.setModsBooks(tome, modsBooks);
-        return tome;
-    }
-
-    private ItemStack createStack() {
-        return Tag.initialize(new ItemStack(this));
-    }
-
-    private void setHoverName(ItemStack book, String name) {
-        var bookName = new TextComponent(name).setStyle(Style.EMPTY.applyFormats(ChatFormatting.GREEN));
-        book.setHoverName(new TranslatableComponent("eccentrictome.name", bookName));
     }
 }

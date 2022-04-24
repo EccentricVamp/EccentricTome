@@ -31,6 +31,7 @@ import website.eccentric.tome.proxy.ClientProxy;
 import website.eccentric.tome.proxy.Proxy;
 import website.eccentric.tome.services.Configuration;
 import website.eccentric.tome.services.Services;
+import website.eccentric.tome.services.Tome;
 
 @Mod(EccentricTome.MODID)
 public class EccentricTome {
@@ -98,7 +99,7 @@ public class EccentricTome {
         var stack = entity.getItem();
 
         if (TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
-            var detatchment = ((TomeItem)TOME.get()).revert(stack);
+            var detatchment = Services.load(Tome.class).revert(stack);
             var level = entity.getCommandSenderWorld();
 
             if (!level.isClientSide) {

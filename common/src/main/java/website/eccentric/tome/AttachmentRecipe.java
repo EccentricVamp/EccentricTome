@@ -11,6 +11,7 @@ import net.minecraft.world.level.Level;
 import website.eccentric.tome.services.Configuration;
 import website.eccentric.tome.services.ModName;
 import website.eccentric.tome.services.Services;
+import website.eccentric.tome.services.Tome;
 
 public class AttachmentRecipe extends CustomRecipe {
 
@@ -56,7 +57,7 @@ public class AttachmentRecipe extends CustomRecipe {
 
         tome = tome.copy();
 
-        return ((TomeItem)tome.getItem()).attach(tome, target);
+        return Services.load(Tome.class).attach(tome, target);
     }
 
     @Override

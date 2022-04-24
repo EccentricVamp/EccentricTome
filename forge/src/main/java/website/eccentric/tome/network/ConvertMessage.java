@@ -6,6 +6,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 import website.eccentric.tome.TomeItem;
+import website.eccentric.tome.services.Services;
+import website.eccentric.tome.services.Tome;
 
 public class ConvertMessage {
 
@@ -31,7 +33,7 @@ public class ConvertMessage {
 
             if (hand != null) {
                 var tome = player.getItemInHand(hand);
-                player.setItemInHand(hand, ((TomeItem)tome.getItem()).convert(tome, message.book));
+                player.setItemInHand(hand, Services.load(Tome.class).convert(tome, message.book));
             }
     
             context.get().setPacketHandled(true);
