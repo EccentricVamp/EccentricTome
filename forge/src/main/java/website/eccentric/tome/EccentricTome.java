@@ -3,7 +3,6 @@ package website.eccentric.tome;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -25,7 +24,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import website.eccentric.tome.client.gui.RenderGameOverlayHandler;
-import website.eccentric.tome.events.OpenTomeEvent;
+import website.eccentric.tome.client.gui.TomeHandler;
 import website.eccentric.tome.network.RevertMessage;
 import website.eccentric.tome.network.TomeChannel;
 import website.eccentric.tome.services.Configuration;
@@ -66,9 +65,7 @@ public class EccentricTome {
 
     private void onClientSetup(final FMLClientSetupEvent event) {
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, RenderGameOverlayHandler::onRender);
-        MinecraftForge.EVENT_BUS.addListener((OpenTomeEvent open) -> {
-            Minecraft.getInstance().setScreen(new TomeScreen(open.tome));
-        });
+        MinecraftForge.EVENT_BUS.addListener(TomeHandler::onOpenTome);
     }
 
     private void onCommonSetup(final FMLCommonSetupEvent event) {
