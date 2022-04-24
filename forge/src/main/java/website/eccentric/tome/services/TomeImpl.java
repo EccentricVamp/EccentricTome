@@ -18,7 +18,7 @@ public class TomeImpl implements Tome {
         var mod = Services.load(ModName.class).from(book);
         var books = modsBooks.get(mod);
         var registry = book.getItem().getRegistryName();
-        books = books.stream().filter(b -> b.getItem().getRegistryName().equals(registry)).collect(Collectors.toList());
+        books = books.stream().filter(b -> !b.getItem().getRegistryName().equals(registry)).collect(Collectors.toList());
         modsBooks.put(mod, books);
         Tag.setModsBooks(tome, modsBooks);
 

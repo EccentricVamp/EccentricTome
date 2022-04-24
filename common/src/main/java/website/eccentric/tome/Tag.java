@@ -53,7 +53,7 @@ public class Tag {
                 var bookTag = booksList.get(i).save(new CompoundTag());
                 booksTag.put(key, bookTag);
             }
-            mods.put(mod, booksTag);
+            if (!booksList.isEmpty()) mods.put(mod, booksTag);
         }
 
         tag.put(MODS, mods);
