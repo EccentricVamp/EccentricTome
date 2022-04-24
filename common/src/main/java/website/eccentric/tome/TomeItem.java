@@ -17,6 +17,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import website.eccentric.tome.services.Dispatch;
 import website.eccentric.tome.services.ModName;
 import website.eccentric.tome.services.Services;
 import website.eccentric.tome.services.Tome;
@@ -51,7 +52,7 @@ public class TomeItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         var tome = player.getItemInHand(hand);
 
-        //if (level.isClientSide) EccentricTome.PROXY.tomeScreen(tome);
+        if (level.isClientSide) Services.load(Dispatch.class).openTome(tome);
 
         return InteractionResultHolder.sidedSuccess(tome, level.isClientSide);
     }

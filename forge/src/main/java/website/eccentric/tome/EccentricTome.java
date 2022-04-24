@@ -3,6 +3,7 @@ package website.eccentric.tome;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -11,7 +12,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -25,10 +25,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import website.eccentric.tome.client.gui.RenderGameOverlayHandler;
+import website.eccentric.tome.events.OpenTomeEvent;
 import website.eccentric.tome.network.RevertMessage;
 import website.eccentric.tome.network.TomeChannel;
-import website.eccentric.tome.proxy.ClientProxy;
-import website.eccentric.tome.proxy.Proxy;
 import website.eccentric.tome.services.Configuration;
 import website.eccentric.tome.services.Services;
 import website.eccentric.tome.services.Tome;
@@ -45,7 +44,6 @@ public class EccentricTome {
     public static final RegistryObject<RecipeSerializer<?>> ATTACHMENT = RECIPES.register("attachment", () -> new SimpleRecipeSerializer<>(AttachmentRecipe::new));
     public static final RegistryObject<Item> TOME = ITEMS.register("tome", TomeItem::new);
 
-    public static Proxy PROXY;
     public static SimpleChannel CHANNEL;
 
     public EccentricTome() {
@@ -59,8 +57,6 @@ public class EccentricTome {
         modEvent.addListener(this::onGatherData);
         modEvent.addListener(this::onModConfig);
 
-        PROXY = DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> Proxy::new);
-
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfiguration.SPEC);
 
         var minecraftEvent = MinecraftForge.EVENT_BUS;
@@ -70,6 +66,9 @@ public class EccentricTome {
 
     private void onClientSetup(final FMLClientSetupEvent event) {
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, RenderGameOverlayHandler::onRender);
+        MinecraftForge.EVENT_BUS.addListener((OpenTomeEvent open) -> {
+            Minecraft.getInstance().setScreen(new TomeScreen(open.tome));
+        });
     }
 
     private void onCommonSetup(final FMLCommonSetupEvent event) {

@@ -9,6 +9,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import website.eccentric.tome.services.Network;
+import website.eccentric.tome.services.Services;
 
 public class TomeScreen extends Screen {
     
@@ -27,7 +29,8 @@ public class TomeScreen extends Screen {
     public boolean mouseClicked(double x, double y, int button) {
         if (button != LEFT_CLICK || book == null) return super.mouseClicked(x, y, button);
 
-        //EccentricTome.CHANNEL.sendToServer(new ConvertMessage(book));
+        Services.load(Network.class).convert(book);
+        
         this.minecraft.setScreen(null);
         return true;
     }
