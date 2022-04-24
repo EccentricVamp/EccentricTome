@@ -10,10 +10,10 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import website.eccentric.tome.ModName;
-import website.eccentric.tome.Services;
 import website.eccentric.tome.Tag;
 import website.eccentric.tome.TomeItem;
+import website.eccentric.tome.services.ModName;
+import website.eccentric.tome.services.Services;
 
 public class RenderGameOverlayHandler {
 

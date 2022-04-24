@@ -22,6 +22,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import website.eccentric.tome.services.ModName;
+import website.eccentric.tome.services.Services;
 
 public class TomeItem extends Item {
     

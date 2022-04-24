@@ -29,6 +29,8 @@ import website.eccentric.tome.network.RevertMessage;
 import website.eccentric.tome.network.TomeChannel;
 import website.eccentric.tome.proxy.ClientProxy;
 import website.eccentric.tome.proxy.Proxy;
+import website.eccentric.tome.services.Configuration;
+import website.eccentric.tome.services.Services;
 
 @Mod(EccentricTome.MODID)
 public class EccentricTome {

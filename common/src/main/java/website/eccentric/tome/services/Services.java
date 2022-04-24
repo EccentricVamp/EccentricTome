@@ -1,4 +1,4 @@
-package website.eccentric.tome;
+package website.eccentric.tome.services;
 
 import java.util.ServiceLoader;
 

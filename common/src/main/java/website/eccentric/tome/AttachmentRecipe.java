@@ -8,6 +8,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import website.eccentric.tome.services.Configuration;
+import website.eccentric.tome.services.ModName;
+import website.eccentric.tome.services.Services;
 
 public class AttachmentRecipe extends CustomRecipe {
 

@@ -1,7 +1,9 @@
-package website.eccentric.tome;
+package website.eccentric.tome.services;
 
 import java.util.HashMap;
 import java.util.List;
+
+import website.eccentric.tome.CommonConfiguration;
 
 public class ConfigurationImpl implements Configuration {
 
