@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.1] - 2022-04-25
+### Added
+- Blacklist some books from the mods Ars Nouveau and Corail Tombstone (#14). Thanks [62832](https://github.com/62832)!
+
 ## [1.4.0] - 2022-04-24
 ### Internal
 - Split common and forge into separate projects
@@ -26,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.2.0] - 2022-04-08
 ### Added
-- Configurable item blacklist (#11)
+- Added configurable item blacklist (#11)
 
 ## [1.1.0] - 2022-04-06
 ### Changed
