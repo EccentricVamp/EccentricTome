@@ -112,6 +112,7 @@ public class CommonConfiguration {
                     "apotheosis:pickaxe_tome",
                     "apotheosis:scrap_tome",
                     "apotheosis:weapon_tome",
+                    "ars_nouveau:annotated_codex",
                     "darkutils:tome_enchanting",
                     "darkutils:tome_illager",
                     "darkutils:tome_pigpen",
@@ -130,7 +131,11 @@ public class CommonConfiguration {
                     "occultism:book_of_calling_djinni_manage_machine",
                     "occultism:book_of_calling_foliot_cleaner",
                     "occultism:book_of_calling_foliot_lumberjack",
-                    "occultism:book_of_calling_foliot_transport_items"
+                    "occultism:book_of_calling_foliot_transport_items",
+                    "tombstone:book_of_disenchantment",
+                    "tombstone:book_of_recycling",
+                    "tombstone:book_of_repairing",
+                    "tombstone:book_of_magic_impregnation"
                 ),
                 Validator::isStringResource
             );
