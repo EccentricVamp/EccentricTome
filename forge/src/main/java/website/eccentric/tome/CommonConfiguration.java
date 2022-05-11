@@ -49,7 +49,8 @@ public class CommonConfiguration {
                     "theoneprobe:probenote",
                     "compactmachines:personal_shrinking_device",
                     "draconicevolution:info_tablet",
-                    "iceandfire:bestiary"
+                    "iceandfire:bestiary",
+                    "rootsclassic:runic_tablet"
                 ),
                 Validator::isStringResource
             );
