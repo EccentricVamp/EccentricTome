@@ -42,11 +42,15 @@ public class CommonConfiguration {
                     "tconstruct:fantastic_foundry",
                     "tconstruct:tinkers_gadgetry",
                     "integrateddynamics:on_the_dynamics_of_integration",
+                    "evilcraft:origins_of_darkness",
                     "cookingforblockheads:no_filter_edition",
                     "alexsmobs:animal_dictionary",
                     "occultism:dictionary_of_spirits",
                     "theoneprobe:probenote",
-                    "compactmachines:personal_shrinking_device"
+                    "compactmachines:personal_shrinking_device",
+                    "draconicevolution:info_tablet",
+                    "iceandfire:bestiary",
+                    ""
                 ),
                 Validator::isStringResource
             );
@@ -67,7 +71,8 @@ public class CommonConfiguration {
                     "guide",
                     "codex",
                     "journal",
-                    "enchiridion"
+                    "enchiridion",
+                    "grimoire"
                 ),
                 Validator::isString
             );
@@ -77,14 +82,20 @@ public class CommonConfiguration {
             .defineListAllowEmpty(
                 List.of("aliases"),
                 () -> List.of(
-                    "thermalexpansion=thermalfoundation",
-                    "thermaldynamics=thermalfoundation",
-                    "thermalcultivation=thermalfoundation",
-                    "redstonearsenal=thermalfoundation",
-                    "rftoolsdim=rftools",
-                    "rftoolspower=rftools",
-                    "rftoolscontrol=rftools",
-                    "xnet=rftools"
+                    "mythicbotany:botania",
+                    "integratedtunnels:integrateddynamics",
+                    "integratedterminals:integrateddynamics",
+                    "integratedcrafting:integrateddynamics",
+                    "rftoolsbuilder:rftoolsbase",
+                    "rftoolscontrol:rftoolsbase",
+                    "rftoolsdim:rftoolsbase",
+                    "rftoolspower:rftoolsbase",
+                    "rftoolsstorage:rftoolsbase",
+                    "rftoolsutility:rftoolsbase",
+                    "rftoolspower:rftoolsbase",
+                    "deepresonance:rftoolsbase",
+                    "xnet:rftoolsbase",
+                    "mysticalaggraditions:mysticalagriculture"
                 ),
                 Validator::isString
             );
