@@ -4,12 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- New (and old) books to whitelist (#15). Thanks [62832](https://github.com/62832)!
+
+### Changed
+- Existing aliases (#15). Thanks [62832](https://github.com/62832)!
+
 ## [1.5.0] - 2022-04-25
 ### Added
 - Blacklist some books from the mods Ars Nouveau and Corail Tombstone (#14). Thanks [62832](https://github.com/62832)!
 
 ## [1.4.0] - 2022-04-24
-### Internal
+### Changed
 - Split common and forge into separate projects
 
 ## [1.3.1] - 2022-04-12
@@ -19,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.3.0] - 2022-04-11
 ### Added
 - Overlay for previewing tome conversion
-### Internal
+### Changed
 - Organized subpackages
 
 ## [1.2.1] - 2022-04-09
