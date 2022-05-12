@@ -4,9 +4,8 @@ on:
   push:
     branches: [ main ]
     paths-ignore:
-      - CHANGELOG
       - LICENSE
-      - README.md
+      - docs/**
       - .github/**
       - .gitignore
 
