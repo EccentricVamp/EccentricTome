@@ -82,20 +82,20 @@ public class CommonConfiguration {
             .defineListAllowEmpty(
                 List.of("aliases"),
                 () -> List.of(
-                    "mythicbotany:botania",
-                    "integratedtunnels:integrateddynamics",
-                    "integratedterminals:integrateddynamics",
-                    "integratedcrafting:integrateddynamics",
-                    "rftoolsbuilder:rftoolsbase",
-                    "rftoolscontrol:rftoolsbase",
-                    "rftoolsdim:rftoolsbase",
-                    "rftoolspower:rftoolsbase",
-                    "rftoolsstorage:rftoolsbase",
-                    "rftoolsutility:rftoolsbase",
-                    "rftoolspower:rftoolsbase",
-                    "deepresonance:rftoolsbase",
-                    "xnet:rftoolsbase",
-                    "mysticalaggraditions:mysticalagriculture"
+                    "mythicbotany=botania",
+                    "integratedtunnels=integrateddynamics",
+                    "integratedterminals=integrateddynamics",
+                    "integratedcrafting=integrateddynamics",
+                    "rftoolsbuilder=rftoolsbase",
+                    "rftoolscontrol=rftoolsbase",
+                    "rftoolsdim=rftoolsbase",
+                    "rftoolspower=rftoolsbase",
+                    "rftoolsstorage=rftoolsbase",
+                    "rftoolsutility=rftoolsbase",
+                    "rftoolspower=rftoolsbase",
+                    "deepresonance=rftoolsbase",
+                    "xnet=rftoolsbase",
+                    "mysticalaggraditions=mysticalagriculture"
                 ),
                 Validator::isString
             );
