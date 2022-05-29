@@ -1,7 +1,7 @@
 # Eccentric Tome
 [![Curse Forge](http://cf.way2muchnoise.eu/597522.svg)](https://www.curseforge.com/minecraft/mc-mods/eccentric-tome)
 [![Curse Forge](http://cf.way2muchnoise.eu/versions/597522.svg)](https://www.curseforge.com/minecraft/mc-mods/eccentric-tome)
-[![AGPL-3.0](https://img.shields.io/github/license/EccentricVamp/EccentricTome)](https://www.gnu.org/licenses/agpl-3.0)
+[![LGPL-3.0](https://img.shields.io/github/license/EccentricVamp/EccentricTome)](https://www.gnu.org/licenses/lgpl-3.0)
 
 This mod adds a single item: the Eccentric Tome.
 
