@@ -53,7 +53,7 @@ So, I closed the pull request and created this mod.
 This mod differs from Akashic Tome in that it actually works for 1.18.1 and it does not require AutoRegLib.
 Additionally, Vazkii also hasn't put a license on the GitHub repository for Akashic Tome, which means that
 it's "all rights reserved". I personally disagree with that choice, so I rewrote the Eccentric Tome from
-scratch and licensed it under the AGPL so that people can copy and learn from it.
+scratch and licensed it under the LGPL so that people can copy and learn from it.
 
 ## Credits
 
