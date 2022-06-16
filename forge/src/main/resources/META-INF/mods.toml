@@ -1,6 +1,6 @@
 modLoader = "javafml"
 loaderVersion = "[40,)"
-license = "AGPL-3.0"
+license = "LGPL-3.0"
 issueTrackerURL = "https://github.com/EccentricVamp/EccentricTome/issues"
 
 [[mods]]
