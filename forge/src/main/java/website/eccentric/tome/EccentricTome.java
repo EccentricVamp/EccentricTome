@@ -40,7 +40,7 @@ public class EccentricTome {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final DeferredRegister<RecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MODID);
 
-    public static final RegistryObject<RecipeSerializer<?>> ATTACHMENT = RECIPES.register("attachment", () -> new SimpleRecipeSerializer<>(AttachmentRecipe::new));
+    public static final RegistryObject<RecipeSerializer<?>> ATTACHMENT = RECIPES.register("attachment", EccentricTome::registerSerializer);
     public static final RegistryObject<Item> TOME = ITEMS.register("tome", TomeItem::new);
 
     public static SimpleChannel CHANNEL;
@@ -104,5 +104,10 @@ public class EccentricTome {
 
             entity.setItem(stack);
         }
+    }
+
+    private static RecipeSerializer<?> registerSerializer() {
+        AttachmentRecipe.SERIALIZER = new SimpleRecipeSerializer<>(AttachmentRecipe::new);
+        return AttachmentRecipe.SERIALIZER;
     }
 }

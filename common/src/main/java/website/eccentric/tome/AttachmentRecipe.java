@@ -7,6 +7,7 @@ import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraft.world.level.Level;
 import website.eccentric.tome.services.Configuration;
 import website.eccentric.tome.services.ModName;
@@ -14,6 +15,8 @@ import website.eccentric.tome.services.Services;
 import website.eccentric.tome.services.Tome;
 
 public class AttachmentRecipe extends CustomRecipe {
+
+    public static SimpleRecipeSerializer<AttachmentRecipe> SERIALIZER;
 
     public AttachmentRecipe(ResourceLocation location) {
         super(location);
@@ -106,6 +109,6 @@ public class AttachmentRecipe extends CustomRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return null; //return serializer;
+        return SERIALIZER;
     }
 }
