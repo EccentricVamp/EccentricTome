@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModNameImpl implements ModName {
     
@@ -20,7 +21,7 @@ public class ModNameImpl implements ModName {
     }
 
     public String from(BlockState state) {
-        return orAlias(state.getBlock().getRegistryName().getNamespace());
+        return orAlias(ForgeRegistries.BLOCKS.getKey(state.getBlock()).getNamespace());
     }
 
     public String from(ItemStack stack) {

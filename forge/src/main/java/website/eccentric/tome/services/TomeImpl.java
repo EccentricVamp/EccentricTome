@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 import website.eccentric.tome.EccentricTome;
 import website.eccentric.tome.Tag;
 
@@ -17,8 +17,8 @@ public class TomeImpl implements Tome {
         var modsBooks = Tag.getModsBooks(tome);
         var mod = Services.load(ModName.class).from(book);
         var books = modsBooks.get(mod);
-        var registry = book.getItem().getRegistryName();
-        books = books.stream().filter(b -> !b.getItem().getRegistryName().equals(registry)).collect(Collectors.toList());
+        var registry = ForgeRegistries.ITEMS.getKey(book.getItem());
+        books = books.stream().filter(b -> !ForgeRegistries.ITEMS.getKey(b.getItem()).equals(registry)).collect(Collectors.toList());
         modsBooks.put(mod, books);
         Tag.setModsBooks(tome, modsBooks);
 
@@ -58,7 +58,7 @@ public class TomeImpl implements Tome {
     }
 
     private void setHoverName(ItemStack book, String name) {
-        var bookName = new TextComponent(name).setStyle(Style.EMPTY.applyFormats(ChatFormatting.GREEN));
-        book.setHoverName(new TranslatableComponent("eccentrictome.name", bookName));
+        var bookName = Component.literal(name).setStyle(Style.EMPTY.applyFormats(ChatFormatting.GREEN));
+        book.setHoverName(Component.translatable("eccentrictome.name", bookName));
     }
 }

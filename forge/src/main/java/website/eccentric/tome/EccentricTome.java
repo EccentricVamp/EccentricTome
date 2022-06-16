@@ -74,7 +74,7 @@ public class EccentricTome {
 
     private void onGatherData(GatherDataEvent event) {
         var generator = event.getGenerator();
-        generator.addProvider(new TomeRecipe(generator));
+        generator.addProvider(event.includeServer(), new TomeRecipe(generator));
     }
 
     private void onModConfig(ModConfigEvent event) {

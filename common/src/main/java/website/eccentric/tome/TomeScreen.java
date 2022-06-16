@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import website.eccentric.tome.services.Network;
@@ -21,7 +21,7 @@ public class TomeScreen extends Screen {
     private ItemStack book;
 
     public TomeScreen(ItemStack tome) {
-        super(new TextComponent(""));
+        super(Component.empty());
         this.tome = tome;
     }
 

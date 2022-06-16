@@ -5,7 +5,6 @@ import java.util.ServiceLoader;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -65,12 +64,12 @@ public class TomeItem extends Item {
         var modsBooks = Tag.getModsBooks(tome);
         
         for (var mod : modsBooks.keySet()) {
-            tooltip.add(new TextComponent(modName.get().name(mod)));
+            tooltip.add(Component.literal(modName.get().name(mod)));
             var books = modsBooks.get(mod);
             for (var book : books) {
                 if (book.is(Items.AIR)) continue;
                 var name = book.getHoverName().getString();
-                tooltip.add(new TextComponent("  " + ChatFormatting.GRAY + name));
+                tooltip.add(Component.literal("  " + ChatFormatting.GRAY + name));
             }
         }
     }
