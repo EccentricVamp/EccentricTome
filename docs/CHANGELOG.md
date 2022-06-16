@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - New (and old) books to whitelist (#15). Thanks [62832](https://github.com/62832)!
+- Russian translation. Thanks to [DEV14NCE](https://www.curseforge.com/members/dev14nce)!
 
 ### Changed
 - Existing aliases (#15). Thanks [62832](https://github.com/62832)!
