@@ -1,7 +1,6 @@
 package website.eccentric.tome;
 
 import java.util.List;
-import java.util.ServiceLoader;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -17,9 +16,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import website.eccentric.tome.services.Dispatch;
+import net.minecraftforge.common.MinecraftForge;
+import website.eccentric.tome.events.OpenTomeEvent;
 import website.eccentric.tome.services.ModName;
-import website.eccentric.tome.services.Services;
 import website.eccentric.tome.services.Tome;
 
 public class TomeItem extends Item {
@@ -35,7 +34,7 @@ public class TomeItem extends Item {
         var level = context.getLevel();
         var position = context.getClickedPos();
         var tome = player.getItemInHand(hand);
-        var mod = Services.load(ModName.class).from(level.getBlockState(position));
+        var mod = ModName.from(level.getBlockState(position));
         var modsBooks = Tag.getModsBooks(tome);
 
         if (!player.isShiftKeyDown() || !modsBooks.containsKey(mod)) return InteractionResult.PASS;
@@ -43,7 +42,7 @@ public class TomeItem extends Item {
         var books = modsBooks.get(mod);
         var book = books.get(books.size() - 1);
         
-        player.setItemInHand(hand, Services.load(Tome.class).convert(tome, book));
+        player.setItemInHand(hand, Tome.convert(tome, book));
 
         return InteractionResult.SUCCESS;
     }
@@ -52,20 +51,17 @@ public class TomeItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         var tome = player.getItemInHand(hand);
 
-        if (level.isClientSide) Services.load(Dispatch.class).openTome(tome);
+        if (level.isClientSide) MinecraftForge.EVENT_BUS.post(new OpenTomeEvent(tome));
 
         return InteractionResultHolder.sidedSuccess(tome, level.isClientSide);
     }
 
     @Override
     public void appendHoverText(ItemStack tome, Level level, List<Component> tooltip, TooltipFlag advanced) {
-        var modName = ServiceLoader.load(ModName.class).findFirst();
-        if (!modName.isPresent()) return;
-
         var modsBooks = Tag.getModsBooks(tome);
         
         for (var mod : modsBooks.keySet()) {
-            tooltip.add(new TextComponent(modName.get().name(mod)));
+            tooltip.add(new TextComponent(ModName.name(mod)));
             var books = modsBooks.get(mod);
             for (var book : books) {
                 if (book.is(Items.AIR)) continue;

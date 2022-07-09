@@ -8,12 +8,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fml.ModList;
 
-public class ModNameImpl implements ModName {
-    
-    private final Map<String, String> modNames;
+public class ModName {
+    private static final Map<String, String> modNames = new HashMap<>();
 
-    public ModNameImpl() {
-        modNames = new HashMap<>();
+    static {
         for (var mod : ModList.get().getMods()) {
             modNames.put(mod.getModId(), mod.getDisplayName());
         }
@@ -23,7 +21,7 @@ public class ModNameImpl implements ModName {
         return orAlias(state.getBlock().getRegistryName().getNamespace());
     }
 
-    public String from(ItemStack stack) {
+    public static String from(ItemStack stack) {
         var minecraft = "minecraft";
         var patchouli = "patchouli";
         var patchouliBook = patchouli + ":book";
@@ -39,11 +37,11 @@ public class ModNameImpl implements ModName {
         return orAlias(mod);
     }
 
-    public String orAlias(String mod) {
-        return Services.load(Configuration.class).aliases().getOrDefault(mod, mod);
+    public static String orAlias(String mod) {
+        return Configuration.aliases().getOrDefault(mod, mod);
     }
 
-    public String name(String mod) {
+    public static String name(String mod) {
         return modNames.getOrDefault(mod, mod);
     }
 }

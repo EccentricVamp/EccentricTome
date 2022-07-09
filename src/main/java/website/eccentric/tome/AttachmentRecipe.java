@@ -11,7 +11,6 @@ import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraft.world.level.Level;
 import website.eccentric.tome.services.Configuration;
 import website.eccentric.tome.services.ModName;
-import website.eccentric.tome.services.Services;
 import website.eccentric.tome.services.Tome;
 
 public class AttachmentRecipe extends CustomRecipe {
@@ -60,7 +59,7 @@ public class AttachmentRecipe extends CustomRecipe {
 
         tome = tome.copy();
 
-        return Services.load(Tome.class).attach(tome, target);
+        return Tome.attach(tome, target);
     }
 
     @Override
@@ -69,28 +68,25 @@ public class AttachmentRecipe extends CustomRecipe {
     }
 
     public boolean isTarget(ItemStack stack) {
-        var configuration = Services.load(Configuration.class);
-        var modName = Services.load(ModName.class);
-
         if (stack.isEmpty() || TomeItem.isTome(stack)) return false;
 
-        var mod = modName.from(stack);
+        var mod = ModName.from(stack);
         if (mod.equals("minecraft")) return false;
 
-        if (configuration.allItems()) return true;
+        if (Configuration.allItems()) return true;
 
-        if (configuration.exclude().contains(mod)) return false;
+        if (Configuration.exclude().contains(mod)) return false;
 
         var location = Registry.ITEM.getKey(stack.getItem());
         var locationString = location.toString();
         var locationDamage = locationString + ":" + stack.getDamageValue();
 
-        if (configuration.excludeItems().contains(locationString) || configuration.excludeItems().contains(locationDamage)) return false;
+        if (Configuration.excludeItems().contains(locationString) || Configuration.excludeItems().contains(locationDamage)) return false;
 
-        if (configuration.items().contains(locationString) || configuration.items().contains(locationDamage)) return true;
+        if (Configuration.items().contains(locationString) || Configuration.items().contains(locationDamage)) return true;
 
         var path = location.getPath();
-        for (var name : configuration.names()) {
+        for (var name : Configuration.names()) {
             if (path.contains(name)) return true;
         }
 

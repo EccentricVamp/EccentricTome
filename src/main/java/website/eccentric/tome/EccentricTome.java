@@ -28,7 +28,6 @@ import website.eccentric.tome.client.gui.TomeHandler;
 import website.eccentric.tome.network.RevertMessage;
 import website.eccentric.tome.network.TomeChannel;
 import website.eccentric.tome.services.Configuration;
-import website.eccentric.tome.services.Services;
 import website.eccentric.tome.services.Tome;
 
 @Mod(EccentricTome.MODID)
@@ -78,7 +77,7 @@ public class EccentricTome {
     }
 
     private void onModConfig(ModConfigEvent event) {
-        Services.load(Configuration.class).refresh();
+        Configuration.refresh();
     }
 
     private void onPlayerLeftClick(PlayerInteractEvent.LeftClickEmpty event) {
@@ -95,7 +94,7 @@ public class EccentricTome {
         var stack = entity.getItem();
 
         if (TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
-            var detatchment = Services.load(Tome.class).revert(stack);
+            var detatchment = Tome.revert(stack);
             var level = entity.getCommandSenderWorld();
 
             if (!level.isClientSide) {
