@@ -19,6 +19,6 @@ credits = "Vazkii for the original idea"
 [[dependencies.eccentrictome]]
 modId = "forge"
 mandatory = true
-versionRange = "[40.0.0,)"
+versionRange = "[40.1.0,)"
 ordering = "NONE"
 side = "BOTH"
