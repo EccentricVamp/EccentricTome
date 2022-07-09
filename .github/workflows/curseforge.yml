@@ -15,7 +15,7 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Make gradlew executable
+      - name: Make gradle wrapper executable
         run: chmod +x ./gradlew
 
       - uses: gradle/gradle-build-action@v2
