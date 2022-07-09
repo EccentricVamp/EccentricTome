@@ -6,7 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 import website.eccentric.tome.TomeItem;
-import website.eccentric.tome.services.Services;
 import website.eccentric.tome.services.Tome;
 
 public class RevertMessage {
@@ -27,10 +26,9 @@ public class RevertMessage {
             var hand = TomeItem.inHand(player);
 
             if (hand != null) {
-                var tomeService = Services.load(Tome.class);
                 var stack = player.getItemInHand(hand);
-                var tome = tomeService.revert(stack);
-                player.setItemInHand(hand, tomeService.attach(tome, stack));
+                var tome = Tome.revert(stack);
+                player.setItemInHand(hand, Tome.attach(tome, stack));
 
                 if (player.level.isClientSide) {
                     Minecraft.getInstance().gameRenderer.itemInHandRenderer.itemUsed(hand);

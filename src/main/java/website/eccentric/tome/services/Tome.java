@@ -11,11 +11,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 import website.eccentric.tome.EccentricTome;
 import website.eccentric.tome.Tag;
 
-public class TomeImpl implements Tome {
-
-    public ItemStack convert(ItemStack tome, ItemStack book) {
+public class Tome {
+    public static ItemStack convert(ItemStack tome, ItemStack book) {
         var modsBooks = Tag.getModsBooks(tome);
-        var mod = Services.load(ModName.class).from(book);
+        var mod = ModName.from(book);
         var books = modsBooks.get(mod);
         var registry = ForgeRegistries.ITEMS.getKey(book.getItem());
         books = books.stream().filter(b -> !ForgeRegistries.ITEMS.getKey(b.getItem()).equals(registry)).collect(Collectors.toList());
@@ -31,7 +30,7 @@ public class TomeImpl implements Tome {
         return book;
     }
 
-    public ItemStack revert(ItemStack book) {
+    public static ItemStack revert(ItemStack book) {
         var tome = createStack();
         Tag.copyMods(book, tome);
         Tag.clear(book);
@@ -41,8 +40,8 @@ public class TomeImpl implements Tome {
         return tome;
     }
 
-    public ItemStack attach(ItemStack tome, ItemStack book) {
-        var mod = Services.load(ModName.class).from(book);
+    public static ItemStack attach(ItemStack tome, ItemStack book) {
+        var mod = ModName.from(book);
         var modsBooks = Tag.getModsBooks(tome);
 
         var books = modsBooks.getOrDefault(mod, new ArrayList<ItemStack>());
@@ -53,11 +52,11 @@ public class TomeImpl implements Tome {
         return tome;
     }
 
-    private ItemStack createStack() {
+    private static ItemStack createStack() {
         return Tag.initialize(new ItemStack(EccentricTome.TOME.get()));
     }
 
-    private void setHoverName(ItemStack book, String name) {
+    private static void setHoverName(ItemStack book, String name) {
         var bookName = Component.literal(name).setStyle(Style.EMPTY.applyFormats(ChatFormatting.GREEN));
         book.setHoverName(Component.translatable("eccentrictome.name", bookName));
     }

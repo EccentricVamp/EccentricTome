@@ -5,8 +5,7 @@ import java.util.List;
 
 import website.eccentric.tome.CommonConfiguration;
 
-public class ConfigurationImpl implements Configuration {
-
+public class Configuration {
     private static boolean allItems;
     private static boolean disableOverlay;
     private static List<? extends String> items;
@@ -15,36 +14,36 @@ public class ConfigurationImpl implements Configuration {
     private static List<? extends String> exclude;
     private static List<? extends String> excludeItems;
         
-    public boolean allItems() {
+    public static boolean allItems() {
         return allItems;
     }
 
-    public boolean disableOverlay() {
+    public static boolean disableOverlay() {
         return disableOverlay;
     }
 
-    public List<? extends String> items() {
+    public static List<? extends String> items() {
         return items;
     }
 
-    public List<? extends String> names() {
+    public static List<? extends String> names() {
         return names;
     }
 
-    public HashMap<String, String> aliases() {
+    public static HashMap<String, String> aliases() {
         return aliases;
     }
 
-    public List<? extends String> exclude() {
+    public static List<? extends String> exclude() {
         return exclude;
     }
 
-    public List<? extends String> excludeItems() {
+    public static List<? extends String> excludeItems() {
         return excludeItems;
     }
     
 
-    public void refresh() {
+    public static void refresh() {
         allItems = CommonConfiguration.ALL_ITEMS.get();
         disableOverlay = CommonConfiguration.DISABLE_OVERLAY.get();
         items = CommonConfiguration.ITEMS.get();
