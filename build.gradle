@@ -2,6 +2,8 @@ plugins {
     id 'eclipse'
     id 'net.minecraftforge.gradle' version '5.1.+'
     id 'com.matthewprenger.cursegradle' version '1.4.0'
+    id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
+    id 'com.modrinth.minotaur' version '2.+'
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of java_version
@@ -10,15 +12,13 @@ version = "${minecraft_version}-${mod_version}"
 group = mod_group
 archivesBaseName = mod_id
 
-sourceSets.main.resources.srcDirs += 'src/generated/resources'
-
 // def mixinProperties = [
 //     'mixin.env.remapRefMap'        : 'true',
 //     'mixin.env.refMapRemappingFile': file('build/createSrgToMcp/output.srg')
 // ]
 
 def baseMods = {
-    eccentrictome {
+    "${mod_id}" {
         source sourceSets.main
     }
 }
@@ -27,17 +27,23 @@ minecraft {
     mappings channel: 'official', version: minecraft_version
     runs {
         client {
+            taskName "Client"
             workingDirectory file('run')
+            // properties mixinProperties
             mods baseMods
         }
 
         server {
+            taskName "Server"
             workingDirectory file('run')
+            // properties mixinProperties
             mods baseMods
         }
 
         data {
+            taskName "Data"
             workingDirectory file('run')
+            // properties mixinProperties
             mods baseMods
             args(
                 '--mod', mod_id,
@@ -75,6 +81,8 @@ repositories {
     // }
 }
 
+sourceSets.main.resources.srcDirs += 'src/generated/resources'
+
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
@@ -84,8 +92,8 @@ dependencies {
     // runtimeOnly fg.deobf('curse.maven:cucumber-272335:3686400')
     // runtimeOnly fg.deobf('curse.maven:mystical-agriculture-246640:3686412')
 
-    // runtimeOnly fg.deobf("net.blay09.mods:balm:${balm_version}")
-    // runtimeOnly fg.deobf("net.blay09.mods:cookingforblockheads-forge:${cfb_version}")
+    // compileOnly fg.deobf("net.blay09.mods:balm:${balm_version}")
+    // compileOnly fg.deobf("net.blay09.mods:cookingforblockheads-forge:${cfb_version}")
 
     // runtimeOnly fg.deobf('curse.maven:placebo-283644:3725741')
     // runtimeOnly fg.deobf('curse.maven:apotheosis-313970:3717791')
@@ -106,11 +114,19 @@ jar.finalizedBy 'reobfJar'
 curseforge {
     apiKey = System.getenv().CURSEFORGE_KEY
     project {
-        id = project_id
-        releaseType = release_type
+        id = curseforge_project_id
+        releaseType = curseforge_release_type
         addGameVersion 'Forge'
         addGameVersion minecraft_version
         addGameVersion "Java ${java_version}"
         mainArtifact jar
     }
+}
+
+modrinth {
+    token = System.getenv().MODRINTH_TOKEN
+    projectId = modrinth_project_id
+    versionType = modrinth_release_type
+    gameVersions = [minecraft_version]
+    uploadFile = jar
 }
