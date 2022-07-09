@@ -1,7 +1,6 @@
 package website.eccentric.tome;
 
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
@@ -9,6 +8,7 @@ import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 import website.eccentric.tome.services.Configuration;
 import website.eccentric.tome.services.ModName;
 import website.eccentric.tome.services.Tome;
@@ -77,7 +77,7 @@ public class AttachmentRecipe extends CustomRecipe {
 
         if (Configuration.exclude().contains(mod)) return false;
 
-        var location = Registry.ITEM.getKey(stack.getItem());
+        var location = ForgeRegistries.ITEMS.getKey(stack.getItem());
         var locationString = location.toString();
         var locationDamage = locationString + ":" + stack.getDamageValue();
 
