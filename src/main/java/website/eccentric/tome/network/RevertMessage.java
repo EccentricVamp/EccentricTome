@@ -9,7 +9,6 @@ import website.eccentric.tome.TomeItem;
 import website.eccentric.tome.services.Tome;
 
 public class RevertMessage {
-
     public static RevertMessage decode(final FriendlyByteBuf buffer) {
         buffer.readByte();
         return new RevertMessage();

@@ -7,7 +7,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class CommonConfiguration {
-
     public static final ForgeConfigSpec.BooleanValue ALL_ITEMS;
     public static final ForgeConfigSpec.BooleanValue DISABLE_OVERLAY;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> ITEMS;

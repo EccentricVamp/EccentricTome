@@ -14,7 +14,6 @@ import website.eccentric.tome.services.ModName;
 import website.eccentric.tome.services.Tome;
 
 public class AttachmentRecipe extends CustomRecipe {
-
     public static SimpleRecipeSerializer<AttachmentRecipe> SERIALIZER;
 
     public AttachmentRecipe(ResourceLocation location) {

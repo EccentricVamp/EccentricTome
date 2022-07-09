@@ -9,7 +9,6 @@ import website.eccentric.tome.TomeItem;
 import website.eccentric.tome.services.Tome;
 
 public class ConvertMessage {
-
     public ItemStack book;
 
     public ConvertMessage(ItemStack book) {
