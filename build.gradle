@@ -2,8 +2,13 @@ plugins {
     id 'eclipse'
     id 'net.minecraftforge.gradle' version '5.1.+'
     id 'com.matthewprenger.cursegradle' version '1.4.0'
-    id 'eccentric-tome.mod-conventions'
 }
+
+java.toolchain.languageVersion = JavaLanguageVersion.of java_version
+
+version = "${minecraft_version}-${mod_version}"
+group = mod_group
+archivesBaseName = mod_id
 
 sourceSets.main.resources.srcDirs += 'src/generated/resources'
 
@@ -15,7 +20,6 @@ sourceSets.main.resources.srcDirs += 'src/generated/resources'
 def baseMods = {
     eccentrictome {
         source sourceSets.main
-        source project(':common').sourceSets.main
     }
 }
 
@@ -74,8 +78,6 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    compileOnly project(':common')
-
     // Testing
     // runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
 
@@ -89,9 +91,15 @@ dependencies {
     // runtimeOnly fg.deobf('curse.maven:apotheosis-313970:3717791')
 }
 
-tasks.withType(JavaCompile) {
-    source project(':common').sourceSets.main.allSource
-}
+jar.manifest.attributes = [
+    'Specification-Title'     : mod_id,
+    'Specification-Vendor'    : mod_author,
+    'Specification-Version'   : '1',
+    'Implementation-Title'    : project.name,
+    'Implementation-Version'  : mod_version,
+    'Implementation-Vendor'   : mod_author,
+    'Implementation-Timestamp': new Date().format('yyyy-MM-dd\'T\'HH:mm:ssZ'),
+]
 
 jar.finalizedBy 'reobfJar'
 

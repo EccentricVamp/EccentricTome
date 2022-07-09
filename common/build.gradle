@@ -1,6 +1,0 @@
-plugins {
-    id 'java'
-    id 'org.spongepowered.gradle.vanilla' version "${sponge_version}"
-}
-
-minecraft.version minecraft_version
