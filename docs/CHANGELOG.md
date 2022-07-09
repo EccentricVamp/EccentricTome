@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.7.0-beta] - 2022-07-09
 
-## Added
+### Added
 
 - Chinese translation. Thanks to [ZHAY10086](https://github.com/ZHAY10086)!
 
