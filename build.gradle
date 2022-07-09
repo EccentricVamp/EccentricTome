@@ -112,7 +112,7 @@ jar.manifest.attributes = [
 jar.finalizedBy 'reobfJar'
 
 curseforge {
-    apiKey = System.getenv().CURSEFORGE_KEY
+    apiKey = System.getenv().CURSEFORGE_KEY ?: 'none'
     project {
         id = curseforge_project_id
         releaseType = curseforge_release_type
@@ -124,7 +124,7 @@ curseforge {
 }
 
 modrinth {
-    token = System.getenv().MODRINTH_TOKEN
+    token = System.getenv().MODRINTH_TOKEN ?: 'none'
     projectId = modrinth_project_id
     versionType = modrinth_release_type
     gameVersions = [minecraft_version]
