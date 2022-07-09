@@ -7,7 +7,6 @@ import java.util.function.Consumer;
 import net.minecraft.nbt.CompoundNBT;
 
 public class Migration {
-
     public static final String VERSION = "eccentrictome:version";
     public static final int CURRENT_VERSION = 1;
 
@@ -59,5 +58,4 @@ public class Migration {
         }
         tag.put("eccentrictome:mods", mods);
     }
-
 }

@@ -9,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 
 public class Tag {
-
     public static final String MODS = "eccentrictome:mods";
     public static final String IS_TOME = "eccentrictome:is_tome";
 
@@ -53,7 +52,7 @@ public class Tag {
                 CompoundNBT bookTag = booksList.get(i).save(new CompoundNBT());
                 booksTag.put(key, bookTag);
             }
-            mods.put(mod, booksTag);
+            if (!booksList.isEmpty()) mods.put(mod, booksTag);
         }
 
         tag.put(MODS, mods);
@@ -95,5 +94,4 @@ public class Tag {
 
         tag.putBoolean(Tag.IS_TOME, isTome);
     }
-
 }

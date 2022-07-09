@@ -11,14 +11,17 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.text.StringTextComponent;
+import website.eccentric.tome.services.Network;
 
 public class TomeScreen extends Screen {
+    
     private static final int LEFT_CLICK = 0;
 
     private final ItemStack tome;
+    
     private ItemStack book;
 
-    protected TomeScreen(ItemStack tome) {
+    public TomeScreen(ItemStack tome) {
         super(new StringTextComponent(""));
         this.tome = tome;
     }
@@ -27,7 +30,8 @@ public class TomeScreen extends Screen {
     public boolean mouseClicked(double x, double y, int button) {
         if (button != LEFT_CLICK || book == null) return super.mouseClicked(x, y, button);
 
-        EccentricTome.CHANNEL.sendToServer(new ConvertMessage(book));
+        Network.convert(book);
+        
         this.minecraft.setScreen(null);
         return true;
     }
@@ -72,5 +76,4 @@ public class TomeScreen extends Screen {
             renderComponentTooltip(poseStack, getTooltipFromItem(this.book), mouseX, mouseY);
         }
     }
-
 }

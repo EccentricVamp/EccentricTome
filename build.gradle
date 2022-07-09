@@ -2,63 +2,61 @@ plugins {
     id 'eclipse'
     id 'net.minecraftforge.gradle' version '5.1.+'
     id 'com.matthewprenger.cursegradle' version '1.4.0'
+    id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
+    id 'com.modrinth.minotaur' version '2.+'
 }
+
+java.toolchain.languageVersion = JavaLanguageVersion.of java_version
 
 version = "${minecraft_version}-${mod_version}"
 group = mod_group
 archivesBaseName = mod_id
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(java_version)
+// def mixinProperties = [
+//     'mixin.env.remapRefMap'        : 'true',
+//     'mixin.env.refMapRemappingFile': file('build/createSrgToMcp/output.srg')
+// ]
+
+def baseMods = {
+    "${mod_id}" {
+        source sourceSets.main
+    }
+}
 
 minecraft {
     mappings channel: 'official', version: minecraft_version
     runs {
         client {
-            workingDirectory project.file('run')
-
-            // property 'mixin.env.remapRefMap', 'true'
-            // property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
-            mods {
-                eccentrictome {
-                    source sourceSets.main
-                }
-            }
+            taskName "Client"
+            workingDirectory file('run')
+            // properties mixinProperties
+            mods baseMods
         }
 
         server {
-            workingDirectory project.file('run')
-
-            // property 'mixin.env.remapRefMap', 'true'
-            // property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
-            mods {
-                eccentrictome {
-                    source sourceSets.main
-                }
-            }
+            taskName "Server"
+            workingDirectory file('run')
+            // properties mixinProperties
+            mods baseMods
         }
 
         data {
-            workingDirectory project.file('run')
-
-            // property 'mixin.env.remapRefMap', 'true'
-            // property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
-            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-
-            mods {
-                eccentrictome {
-                    source sourceSets.main
-                }
-            }
+            taskName "Data"
+            workingDirectory file('run')
+            // properties mixinProperties
+            mods baseMods
+            args(
+                '--mod', mod_id,
+                '--all',
+                '--output', file('src/generated/resources/'),
+                '--existing', file('src/main/resources/')
+            )
         }
     }
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
-
 repositories {
+    // Testing
     // maven { url 'https://maven.blamejared.com' }
     // maven { url 'https://dvs1.progwml6.com/files/maven' }
     // maven {
@@ -69,39 +67,46 @@ repositories {
     // }
 }
 
+sourceSets.main.resources.srcDirs += 'src/generated/resources'
+
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
+    // Testing
     // runtimeOnly fg.deobf('curse.maven:cucumber-272335:3507886')
     // runtimeOnly fg.deobf('curse.maven:mystical-agriculture-246640:3562127')
 
     // runtimeOnly fg.deobf("curse.maven:cfb-231484:3445172")
 }
 
-jar {
-    manifest {
-        attributes([
-            "Specification-Title"     : mod_id,
-            "Specification-Vendor"    : mod_author,
-            "Specification-Version"   : "1",
-            "Implementation-Title"    : project.name,
-            "Implementation-Version"  : mod_version,
-            "Implementation-Vendor"   : mod_author,
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-        ])
-    }
-}
+jar.manifest.attributes = [
+    'Specification-Title'     : mod_id,
+    'Specification-Vendor'    : mod_author,
+    'Specification-Version'   : '1',
+    'Implementation-Title'    : project.name,
+    'Implementation-Version'  : mod_version,
+    'Implementation-Vendor'   : mod_author,
+    'Implementation-Timestamp': new Date().format('yyyy-MM-dd\'T\'HH:mm:ssZ'),
+]
 
-jar.finalizedBy('reobfJar')
+jar.finalizedBy 'reobfJar'
 
 curseforge {
     apiKey = System.getenv().CURSEFORGE_KEY
     project {
-        id = curseforge_id
-        releaseType = 'release'
+        id = curseforge_project_id
+        releaseType = curseforge_release_type
         addGameVersion 'Forge'
         addGameVersion minecraft_version
         addGameVersion "Java ${java_version}"
-        mainArtifact(jar)
+        mainArtifact jar
     }
+}
+
+modrinth {
+    token = System.getenv().MODRINTH_TOKEN
+    projectId = modrinth_project_id
+    versionType = modrinth_release_type
+    gameVersions = [minecraft_version]
+    uploadFile = jar
 }

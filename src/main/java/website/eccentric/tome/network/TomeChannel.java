@@ -1,11 +1,11 @@
-package website.eccentric.tome;
+package website.eccentric.tome.network;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
+import website.eccentric.tome.EccentricTome;
 
 public class TomeChannel {
-
     public static final ResourceLocation name = new ResourceLocation(EccentricTome.MODID, "general");
     public static final String version = new ResourceLocation(EccentricTome.MODID, "1").toString();
 
@@ -21,5 +21,4 @@ public class TomeChannel {
 
         return channel;
     }
-    
 }

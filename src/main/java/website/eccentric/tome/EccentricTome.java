@@ -13,33 +13,38 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.config.ModConfig.ModConfigEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import website.eccentric.tome.client.gui.RenderGameOverlayHandler;
+import website.eccentric.tome.client.gui.TomeHandler;
+import website.eccentric.tome.network.RevertMessage;
+import website.eccentric.tome.network.TomeChannel;
+import website.eccentric.tome.services.Configuration;
+import website.eccentric.tome.services.Tome;
 
 @Mod(EccentricTome.MODID)
 public class EccentricTome {
-
     public static final String MODID = "eccentrictome";
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final DeferredRegister<IRecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MODID);
 
-    public static final RegistryObject<IRecipeSerializer<?>> ATTACHMENT = RECIPES.register("attachment", () -> new SpecialRecipeSerializer<>(AttachmentRecipe::new));
+    public static final RegistryObject<IRecipeSerializer<?>> ATTACHMENT = RECIPES.register("attachment", EccentricTome::registerSerializer);
     public static final RegistryObject<Item> TOME = ITEMS.register("tome", TomeItem::new);
 
-    public static Proxy PROXY;
     public static SimpleChannel CHANNEL;
 
     public EccentricTome() {
@@ -48,17 +53,21 @@ public class EccentricTome {
         ITEMS.register(modEvent);
         RECIPES.register(modEvent);
 
+        modEvent.addListener(this::onClientSetup);
         modEvent.addListener(this::onCommonSetup);
         modEvent.addListener(this::onGatherData);
         modEvent.addListener(this::onModConfig);
-
-        PROXY = DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> Proxy::new);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfiguration.SPEC);
 
         IEventBus minecraftEvent = MinecraftForge.EVENT_BUS;
         minecraftEvent.addListener(this::onPlayerLeftClick);
-        minecraftEvent.addListener(this::onItemDropped);
+        minecraftEvent.addListener(EventPriority.LOW, this::onItemDropped);
+    }
+
+    private void onClientSetup(final FMLClientSetupEvent event) {
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, RenderGameOverlayHandler::onRender);
+        MinecraftForge.EVENT_BUS.addListener(TomeHandler::onOpenTome);
     }
 
     private void onCommonSetup(final FMLCommonSetupEvent event) {
@@ -71,7 +80,7 @@ public class EccentricTome {
     }
 
     private void onModConfig(ModConfigEvent event) {
-        CommonConfiguration.Cache.Refresh();
+        Configuration.refresh();
     }
 
     private void onPlayerLeftClick(PlayerInteractEvent.LeftClickEmpty event) {
@@ -86,10 +95,10 @@ public class EccentricTome {
 
         ItemEntity entity = event.getEntityItem();
         ItemStack stack = entity.getItem();
-        World level = entity.getCommandSenderWorld();
 
         if (TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
-            ItemStack detatchment = TomeItem.revert(stack);
+            ItemStack detatchment = Tome.revert(stack);
+            World level = entity.getCommandSenderWorld();
 
             if (!level.isClientSide) {
                 level.addFreshEntity(new ItemEntity(level, entity.getX(), entity.getY(), entity.getZ(), detatchment));
@@ -99,4 +108,8 @@ public class EccentricTome {
         }
     }
 
+    private static IRecipeSerializer<?> registerSerializer() {
+        AttachmentRecipe.SERIALIZER = new SpecialRecipeSerializer<>(AttachmentRecipe::new);
+        return AttachmentRecipe.SERIALIZER;
+    }
 }

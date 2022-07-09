@@ -1,6 +1,6 @@
 package website.eccentric.tome;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.collect.Lists;
@@ -10,8 +10,8 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.Builder;
 
 public class CommonConfiguration {
-
     public static final ForgeConfigSpec.BooleanValue ALL_ITEMS;
+    public static final ForgeConfigSpec.BooleanValue DISABLE_OVERLAY;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> ITEMS;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> NAMES;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> ALIASES;
@@ -29,6 +29,10 @@ public class CommonConfiguration {
             .comment("Allow all items to be added")
             .define("allitems", false);
 
+        DISABLE_OVERLAY = BUILDER
+            .comment("Disable overlay previewing tome conversion")
+            .define("disable_overlay", false);
+
         ITEMS = BUILDER
             .comment("Whitelisted items")
             .defineListAllowEmpty(
@@ -40,11 +44,15 @@ public class CommonConfiguration {
                     "tconstruct:fantastic_foundry",
                     "tconstruct:tinkers_gadgetry",
                     "integrateddynamics:on_the_dynamics_of_integration",
+                    "evilcraft:origins_of_darkness",
                     "cookingforblockheads:no_filter_edition",
                     "alexsmobs:animal_dictionary",
                     "occultism:dictionary_of_spirits",
                     "theoneprobe:probenote",
-                    "compactmachines:personal_shrinking_device"
+                    "compactmachines:personal_shrinking_device",
+                    "draconicevolution:info_tablet",
+                    "iceandfire:bestiary",
+                    "rootsclassic:runic_tablet"
                 ),
                 Validator::isStringResource
             );
@@ -65,7 +73,8 @@ public class CommonConfiguration {
                     "guide",
                     "codex",
                     "journal",
-                    "enchiridion"
+                    "enchiridion",
+                    "grimoire"
                 ),
                 Validator::isString
             );
@@ -75,14 +84,19 @@ public class CommonConfiguration {
             .defineListAllowEmpty(
                 Lists.newArrayList("aliases"),
                 () -> Lists.newArrayList(
-                    "thermalexpansion=thermalfoundation",
-                    "thermaldynamics=thermalfoundation",
-                    "thermalcultivation=thermalfoundation",
-                    "redstonearsenal=thermalfoundation",
+                    "mysticalaggraditions=mysticalagriculture",
+                    "mythicbotany=botania",
+                    "integratedtunnels=integrateddynamics",
+                    "integratedterminals=integrateddynamics",
+                    "integratedcrafting=integrateddynamics",
                     "rftoolsdim=rftools",
                     "rftoolspower=rftools",
                     "rftoolscontrol=rftools",
-                    "xnet=rftools"
+                    "xnet=rftools",
+                    "thermalexpansion=thermalfoundation",
+                    "thermaldynamics=thermalfoundation",
+                    "thermalcultivation=thermalfoundation",
+                    "redstonearsenal=thermalfoundation"
                 ),
                 Validator::isString
             );
@@ -91,7 +105,7 @@ public class CommonConfiguration {
             .comment("Blacklisted mods")
             .defineListAllowEmpty(
                 Lists.newArrayList("exclude"),
-                () -> Lists.newArrayList(),
+                ArrayList<String>::new,
                 Validator::isString
             );
 
@@ -110,6 +124,7 @@ public class CommonConfiguration {
                     "apotheosis:pickaxe_tome",
                     "apotheosis:scrap_tome",
                     "apotheosis:weapon_tome",
+                    "ars_nouveau:annotated_codex",
                     "darkutils:tome_enchanting",
                     "darkutils:tome_illager",
                     "darkutils:tome_pigpen",
@@ -128,7 +143,11 @@ public class CommonConfiguration {
                     "occultism:book_of_calling_djinni_manage_machine",
                     "occultism:book_of_calling_foliot_cleaner",
                     "occultism:book_of_calling_foliot_lumberjack",
-                    "occultism:book_of_calling_foliot_transport_items"
+                    "occultism:book_of_calling_foliot_transport_items",
+                    "tombstone:book_of_disenchantment",
+                    "tombstone:book_of_recycling",
+                    "tombstone:book_of_repairing",
+                    "tombstone:book_of_magic_impregnation"
                 ),
                 Validator::isStringResource
             );
@@ -139,7 +158,7 @@ public class CommonConfiguration {
     }
 
     public static class Validator {
-
+        
         public static boolean isString(Object object) {
             return object instanceof String;
         }
@@ -147,33 +166,5 @@ public class CommonConfiguration {
         public static boolean isStringResource(Object object) {
             return isString(object) && ResourceLocation.isValidResourceLocation((String) object);
         }
-
     }
-
-    public static class Cache {
-        
-        public static boolean ALL_ITEMS;
-        public static List<? extends String> ITEMS;
-        public static List<? extends String> NAMES;
-        public static HashMap<String, String> ALIASES;
-        public static List<? extends String> EXCLUDE;
-        public static List<? extends String> EXCLUDE_ITEMS;
-
-        public static void Refresh() {
-            ALL_ITEMS = CommonConfiguration.ALL_ITEMS.get();
-            ITEMS = CommonConfiguration.ITEMS.get();
-            NAMES = CommonConfiguration.NAMES.get();
-
-            ALIASES = new HashMap<String, String>();
-            for (String alias : CommonConfiguration.ALIASES.get()) {
-                String[] tokens = alias.split("=");
-                ALIASES.put(tokens[0], tokens[1]);
-            }
-
-            EXCLUDE = CommonConfiguration.EXCLUDE.get();
-            EXCLUDE_ITEMS = CommonConfiguration.EXCLUDE_ITEMS.get();
-        }
-        
-    }
-    
 }

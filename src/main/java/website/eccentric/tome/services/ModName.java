@@ -1,4 +1,4 @@
-package website.eccentric.tome;
+package website.eccentric.tome.services;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,13 +9,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.moddiscovery.ModInfo;
 
-public final class Mod {
-
-    private static final Map<String, String> modNames = new HashMap<String, String>();
-
-    public static final String MINECRAFT = "minecraft";
-    public static final String PATCHOULI = "patchouli";
-    public static final String PATCHOULI_BOOK = PATCHOULI + ":book";
+public class ModName {
+    private static final Map<String, String> modNames = new HashMap<>();
 
     static {
         for (ModInfo mod : ModList.get().getMods()) {
@@ -23,28 +18,31 @@ public final class Mod {
         }
     }
 
-    public static final String from(BlockState state) {
+    public static String from(BlockState state) {
         return orAlias(state.getBlock().getRegistryName().getNamespace());
     }
 
-    public static final String from(ItemStack stack) {
-        if (stack.isEmpty()) return MINECRAFT;
+    public static String from(ItemStack stack) {
+        String minecraft = "minecraft";
+        String patchouli = "patchouli";
+        String patchouliBook = patchouli + ":book";
+
+        if (stack.isEmpty()) return minecraft;
 
         String mod = stack.getItem().getCreatorModId(stack);
-        if (mod.equals(PATCHOULI)) {
-            String book = stack.getTag().getString(PATCHOULI_BOOK);
+        if (mod.equals(patchouli)) {
+            String book = stack.getTag().getString(patchouliBook);
             mod = new ResourceLocation(book).getNamespace();
         }
 
         return orAlias(mod);
     }
 
-    public static final String orAlias(String mod) {
-        return CommonConfiguration.Cache.ALIASES.getOrDefault(mod, mod);
+    public static String orAlias(String mod) {
+        return Configuration.aliases().getOrDefault(mod, mod);
     }
 
     public static String name(String mod) {
         return modNames.getOrDefault(mod, mod);
     }
-    
 }

@@ -4,6 +4,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0-beta] - 2022-07-09
+
+## Added
+
+- Chinese translation. Thanks to [ZHAY10086](https://github.com/ZHAY10086)!
+
+## [1.6.0] - 2022-06-16
+
+### Added
+- New (and old) books to whitelist (#15). Thanks [62832](https://github.com/62832)!
+- Russian translation. Thanks to [DEV14NCE](https://www.curseforge.com/members/dev14nce)!
+
+### Changed
+- Existing aliases (#15). Thanks [62832](https://github.com/62832)!
+
+## [1.5.0] - 2022-04-25
+### Added
+- Blacklist some books from the mods Ars Nouveau and Corail Tombstone (#14). Thanks [62832](https://github.com/62832)!
+
+## [1.4.0] - 2022-04-24
+### Changed
+- Split common and forge into separate projects
+
+## [1.3.1] - 2022-04-12
+### Changed
+- Moved client event registration into separate method (#12)
+
+## [1.3.0] - 2022-04-11
+### Added
+- Overlay for previewing tome conversion
+### Changed
+- Organized subpackages
+
 ## [1.2.1] - 2022-04-09
 ### Added
 - Default item blacklist thanks to @jeremiahwinsley (#11)
@@ -12,7 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.2.0] - 2022-04-08
 ### Added
-- Configurable item blacklist (#11)
+- Added configurable item blacklist (#11)
 
 ## [1.1.0] - 2022-04-06
 ### Changed

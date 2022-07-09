@@ -1,4 +1,4 @@
-package website.eccentric.tome;
+package website.eccentric.tome.network;
 
 import java.util.function.Supplier;
 
@@ -7,9 +7,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Hand;
 import net.minecraftforge.fml.network.NetworkEvent;
+import website.eccentric.tome.TomeItem;
+import website.eccentric.tome.services.Tome;
 
 public class ConvertMessage {
-
     public ItemStack book;
 
     public ConvertMessage(ItemStack book) {
@@ -28,22 +29,14 @@ public class ConvertMessage {
     public static void handle(final ConvertMessage message, final Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
             ServerPlayerEntity player = context.get().getSender();
-            ItemStack stack = player.getMainHandItem();
-            Hand hand = Hand.MAIN_HAND;
+            Hand hand = TomeItem.inHand(player);
 
-            boolean hasTome = !stack.isEmpty() && stack.getItem() instanceof TomeItem;
-            if (!hasTome) {
-                stack = player.getOffhandItem();
-                hasTome = !stack.isEmpty() && stack.getItem() instanceof TomeItem;
-                hand = Hand.OFF_HAND;
-            }
-
-            if (hasTome) {
-                player.setItemInHand(hand, TomeItem.convert(stack, message.book));
+            if (hand != null) {
+                ItemStack tome = player.getItemInHand(hand);
+                player.setItemInHand(hand, Tome.convert(tome, message.book));
             }
     
             context.get().setPacketHandled(true);
         });
     }
-
 }

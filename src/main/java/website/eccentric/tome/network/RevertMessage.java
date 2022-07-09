@@ -1,4 +1,4 @@
-package website.eccentric.tome;
+package website.eccentric.tome.network;
 
 import java.util.function.Supplier;
 
@@ -8,9 +8,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Hand;
 import net.minecraftforge.fml.network.NetworkEvent;
+import website.eccentric.tome.TomeItem;
+import website.eccentric.tome.services.Tome;
 
 public class RevertMessage {
-
     public static RevertMessage decode(final PacketBuffer buffer) {
         buffer.readByte();
         return new RevertMessage();
@@ -23,20 +24,13 @@ public class RevertMessage {
     @SuppressWarnings("resource")
     public static void handle(final RevertMessage message, final Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
-            ServerPlayerEntity player = context.get().getSender();            
-            ItemStack stack = player.getMainHandItem();
-            Hand hand = Hand.MAIN_HAND;
+            ServerPlayerEntity player = context.get().getSender();
+            Hand hand = TomeItem.inHand(player);
 
-            boolean hasTome = TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem);
-            if (!hasTome) {
-                stack = player.getOffhandItem();
-                hasTome = TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem);
-                hand = Hand.OFF_HAND;
-            }
-
-            if (hasTome) {
-                ItemStack tome = TomeItem.revert(stack);
-                player.setItemInHand(hand, TomeItem.attach(tome, stack));
+            if (hand != null) {
+                ItemStack stack = player.getItemInHand(hand);
+                ItemStack tome = Tome.revert(stack);
+                player.setItemInHand(hand, Tome.attach(tome, stack));
 
                 if (player.level.isClientSide) {
                     Minecraft.getInstance().gameRenderer.itemInHandRenderer.itemUsed(hand);
@@ -46,5 +40,4 @@ public class RevertMessage {
             context.get().setPacketHandled(true);
         });
     }
-
 }

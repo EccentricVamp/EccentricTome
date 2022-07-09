@@ -1,16 +1,10 @@
-name: Build
+name: Curse Forge
 
 on:
-  push:
-    branches: [ main ]
-    paths-ignore:
-      - LICENSE
-      - docs/**
-      - .github/**
-      - .gitignore
+  workflow_dispatch:
 
 jobs:
-  build:
+  curseforge:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -21,7 +15,11 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Make gradlew executable
+      - name: Make gradle wrapper executable
         run: chmod +x ./gradlew
 
       - uses: gradle/gradle-build-action@v2
+        env:
+          CURSEFORGE_KEY: ${{ secrets.CURSEFORGE_KEY }}
+        with:
+          arguments: curseforge

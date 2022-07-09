@@ -7,9 +7,12 @@ import net.minecraft.item.crafting.SpecialRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import website.eccentric.tome.CommonConfiguration.Cache;
+import website.eccentric.tome.services.Configuration;
+import website.eccentric.tome.services.ModName;
+import website.eccentric.tome.services.Tome;
 
 public class AttachmentRecipe extends SpecialRecipe {
+    public static IRecipeSerializer<?> SERIALIZER;
 
     public AttachmentRecipe(ResourceLocation location) {
         super(location);
@@ -53,7 +56,7 @@ public class AttachmentRecipe extends SpecialRecipe {
 
         tome = tome.copy();
 
-        return TomeItem.attach(tome, target);
+        return Tome.attach(tome, target);
     }
 
     @Override
@@ -64,23 +67,23 @@ public class AttachmentRecipe extends SpecialRecipe {
     public boolean isTarget(ItemStack stack) {
         if (stack.isEmpty() || TomeItem.isTome(stack)) return false;
 
-        String mod = Mod.from(stack);
-        if (mod.equals(Mod.MINECRAFT)) return false;
+        String mod = ModName.from(stack);
+        if (mod.equals("minecraft")) return false;
 
-        if (Cache.ALL_ITEMS) return true;
+        if (Configuration.allItems()) return true;
 
-        if (Cache.EXCLUDE.contains(mod)) return false;
+        if (Configuration.exclude().contains(mod)) return false;
 
         ResourceLocation location = stack.getItem().getRegistryName();
         String locationString = location.toString();
         String locationDamage = locationString + ":" + stack.getDamageValue();
 
-        if (Cache.EXCLUDE_ITEMS.contains(locationString) || Cache.EXCLUDE_ITEMS.contains(locationDamage)) return false;
+        if (Configuration.excludeItems().contains(locationString) || Configuration.excludeItems().contains(locationDamage)) return false;
 
-        if (Cache.ITEMS.contains(locationString) || Cache.ITEMS.contains(locationDamage)) return true;
+        if (Configuration.items().contains(locationString) || Configuration.items().contains(locationDamage)) return true;
 
         String path = location.getPath();
-        for (String name : Cache.NAMES) {
+        for (String name : Configuration.names()) {
             if (path.contains(name)) return true;
         }
 
@@ -99,7 +102,6 @@ public class AttachmentRecipe extends SpecialRecipe {
 
     @Override
     public IRecipeSerializer<?> getSerializer() {
-        return EccentricTome.ATTACHMENT.get();
+        return SERIALIZER;
     }
-
 }
