@@ -20,8 +20,4 @@ pluginManagement {
             url 'https://repo.spongepowered.org/repository/maven-public/'
         }
     }
-    includeBuild('eng')
 }
-
-rootProject.name = 'eccentric-tome'
-include 'common', 'forge'
