@@ -6,7 +6,6 @@ import java.util.function.Consumer;
 import net.minecraft.nbt.CompoundTag;
 
 public class Migration {
-
     public static final String VERSION = "eccentrictome:version";
     public static final int CURRENT_VERSION = 1;
 

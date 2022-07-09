@@ -9,7 +9,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 
 public class Tag {
-
     public static final String MODS = "eccentrictome:mods";
     public static final String IS_TOME = "eccentrictome:is_tome";
 

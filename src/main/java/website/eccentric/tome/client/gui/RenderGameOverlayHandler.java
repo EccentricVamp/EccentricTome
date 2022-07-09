@@ -15,7 +15,6 @@ import website.eccentric.tome.TomeItem;
 import website.eccentric.tome.services.ModName;
 
 public class RenderGameOverlayHandler {
-
 	public static void onRender(RenderGameOverlayEvent.Post event) {
 		if (event.getType() != ElementType.ALL) return;
 
