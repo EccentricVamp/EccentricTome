@@ -17,7 +17,7 @@ public class ModName {
         }
     }
 
-    public String from(BlockState state) {
+    public static String from(BlockState state) {
         return orAlias(state.getBlock().getRegistryName().getNamespace());
     }
 

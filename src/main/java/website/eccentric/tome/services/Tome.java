@@ -56,7 +56,7 @@ public class Tome {
         return Tag.initialize(new ItemStack(EccentricTome.TOME.get()));
     }
 
-    private void setHoverName(ItemStack book, String name) {
+    private static void setHoverName(ItemStack book, String name) {
         var bookName = new TextComponent(name).setStyle(Style.EMPTY.applyFormats(ChatFormatting.GREEN));
         book.setHoverName(new TranslatableComponent("eccentrictome.name", bookName));
     }
