@@ -8,16 +8,13 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import website.eccentric.tome.Tag;
 import website.eccentric.tome.TomeItem;
 import website.eccentric.tome.services.ModName;
 
-public class RenderGameOverlayHandler {
-	public static void onRender(RenderGameOverlayEvent.Post event) {
-		if (event.getType() != ElementType.ALL) return;
-
+public class RenderGuiOverlayHandler {
+	public static void onRender(RenderGuiOverlayEvent.Post event) {
 		var minecraft = Minecraft.getInstance();
 		var hit = minecraft.hitResult;
 		if (!(hit instanceof BlockHitResult)) return;
