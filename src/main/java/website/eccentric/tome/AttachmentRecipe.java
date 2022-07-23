@@ -1,6 +1,8 @@
 package website.eccentric.tome;
 
 import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.SpecialRecipe;
@@ -26,14 +28,18 @@ public class AttachmentRecipe extends SpecialRecipe {
         for (int i = 0; i < crafting.getContainerSize(); i++) {
             ItemStack stack = crafting.getItem(i);
             if (stack.isEmpty()) continue;
-            
-            if (isTarget(stack)) {
-                if (foundTarget) return false;
-                foundTarget = true;
-            }
-            else if (stack.getItem() instanceof TomeItem) {
+
+            Item item = stack.getItem();
+            if (item instanceof BlockItem) {
+                return false;
+            }            
+            if (item instanceof TomeItem) {
                 if (foundTome) return false;
                 foundTome = true;
+            }
+            else if (isTarget(stack)) {
+                if (foundTarget) return false;
+                foundTarget = true;
             }
             else return false;
         }
@@ -65,8 +71,6 @@ public class AttachmentRecipe extends SpecialRecipe {
     }
 
     public boolean isTarget(ItemStack stack) {
-        if (stack.isEmpty() || TomeItem.isTome(stack)) return false;
-
         String mod = ModName.from(stack);
         if (mod.equals("minecraft")) return false;
 
