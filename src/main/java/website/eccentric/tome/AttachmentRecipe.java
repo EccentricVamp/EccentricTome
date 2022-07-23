@@ -3,6 +3,7 @@ package website.eccentric.tome;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -28,14 +29,18 @@ public class AttachmentRecipe extends CustomRecipe {
         for (var i = 0; i < crafting.getContainerSize(); i++) {
             var stack = crafting.getItem(i);
             if (stack.isEmpty()) continue;
-            
-            if (isTarget(stack)) {
-                if (foundTarget) return false;
-                foundTarget = true;
-            }
-            else if (stack.getItem() instanceof TomeItem) {
+
+            var item = stack.getItem();
+            if (item instanceof BlockItem) {
+                return false;
+            }            
+            if (item instanceof TomeItem) {
                 if (foundTome) return false;
                 foundTome = true;
+            }
+            else if (isTarget(stack)) {
+                if (foundTarget) return false;
+                foundTarget = true;
             }
             else return false;
         }
@@ -67,8 +72,6 @@ public class AttachmentRecipe extends CustomRecipe {
     }
 
     public boolean isTarget(ItemStack stack) {
-        if (stack.isEmpty() || TomeItem.isTome(stack)) return false;
-
         var mod = ModName.from(stack);
         if (mod.equals("minecraft")) return false;
 
