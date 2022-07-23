@@ -55,17 +55,17 @@ minecraft {
     }
 }
 
-repositories {
-    // Testing
-    // maven { url 'https://maven.blamejared.com' }
-    // maven { url 'https://dvs1.progwml6.com/files/maven' }
-    // maven {
-    //     url 'https://cursemaven.com'
-    //     content {
-    //         includeGroup 'curse.maven'
-    //     }
-    // }
-}
+// Testing
+// repositories {
+//     maven { url 'https://maven.blamejared.com' }
+//     maven { url 'https://dvs1.progwml6.com/files/maven' }
+//     maven {
+//         url 'https://cursemaven.com'
+//         content {
+//             includeGroup 'curse.maven'
+//         }
+//     }
+// }
 
 sourceSets.main.resources.srcDirs += 'src/generated/resources'
 
