@@ -52,7 +52,8 @@ public class CommonConfiguration {
                     "compactmachines:personal_shrinking_device",
                     "draconicevolution:info_tablet",
                     "iceandfire:bestiary",
-                    "rootsclassic:runic_tablet"
+                    "rootsclassic:runic_tablet",
+                    "enigmaticlegacy:the_acknowledgment"
                 ),
                 Validator::isStringResource
             );
@@ -125,6 +126,9 @@ public class CommonConfiguration {
                     "apotheosis:scrap_tome",
                     "apotheosis:weapon_tome",
                     "ars_nouveau:annotated_codex",
+                    "darkutils:book_galactic",
+                    "darkutils:book_runelic",
+                    "darkutils:book_restore",
                     "darkutils:tome_enchanting",
                     "darkutils:tome_illager",
                     "darkutils:tome_pigpen",
@@ -132,6 +136,7 @@ public class CommonConfiguration {
                     "darkutils:tome_sga",
                     "darkutils:tome_shadows",
                     "minecolonies:ancienttome",
+                    "minecraft:enchanted_book",
                     "occultism:book_of_binding_afrit",
                     "occultism:book_of_binding_bound_afrit",
                     "occultism:book_of_binding_bound_djinni",
@@ -144,6 +149,8 @@ public class CommonConfiguration {
                     "occultism:book_of_calling_foliot_cleaner",
                     "occultism:book_of_calling_foliot_lumberjack",
                     "occultism:book_of_calling_foliot_transport_items",
+                    "projecte:tome",
+                    "quark:ancient_tome",
                     "tombstone:book_of_disenchantment",
                     "tombstone:book_of_recycling",
                     "tombstone:book_of_repairing",
