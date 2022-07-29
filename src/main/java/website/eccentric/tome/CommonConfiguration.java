@@ -52,7 +52,8 @@ public class CommonConfiguration {
                     "compactmachines:personal_shrinking_device",
                     "draconicevolution:info_tablet",
                     "iceandfire:bestiary",
-                    "rootsclassic:runic_tablet"
+                    "rootsclassic:runic_tablet",
+                    "enigmaticlegacy:the_acknowledgment"
                 ),
                 Validator::isStringResource
             );
@@ -128,6 +129,7 @@ public class CommonConfiguration {
                     "darkutils:book_runelic",
                     "darkutils:book_restore",
                     "minecolonies:ancienttome",
+                    "minecraft:enchanted_book",
                     "occultism:book_of_binding_afrit",
                     "occultism:book_of_binding_bound_afrit",
                     "occultism:book_of_binding_bound_djinni",
@@ -140,6 +142,8 @@ public class CommonConfiguration {
                     "occultism:book_of_calling_foliot_cleaner",
                     "occultism:book_of_calling_foliot_lumberjack",
                     "occultism:book_of_calling_foliot_transport_items",
+                    "projecte:tome",
+                    "quark:ancient_tome",
                     "tombstone:book_of_disenchantment",
                     "tombstone:book_of_recycling",
                     "tombstone:book_of_repairing",
