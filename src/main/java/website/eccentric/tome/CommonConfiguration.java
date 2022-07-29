@@ -124,7 +124,6 @@ public class CommonConfiguration {
                     "apotheosis:pickaxe_tome",
                     "apotheosis:scrap_tome",
                     "apotheosis:weapon_tome",
-                    "ars_nouveau:annotated_codex",
                     "darkutils:book_galactic",
                     "darkutils:book_runelic",
                     "darkutils:book_restore",
