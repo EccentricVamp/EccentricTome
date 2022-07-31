@@ -55,31 +55,31 @@ minecraft {
     }
 }
 
-repositories {
-    // Testing
-    // maven { url 'https://maven.blamejared.com' }
-    // maven { url 'https://dvs1.progwml6.com/files/maven' }
-    // maven {
-    //     url 'https://cursemaven.com'
-    //     content {
-    //         includeGroup 'curse.maven'
-    //     }
-    // }
-    // maven {
-    //     url 'https://maven.pkg.github.com/ModdingForBlockheads/Balm'
-    //     credentials {
-    //         username System.getenv('GITHUB_ACTOR')
-    //         password System.getenv('GITHUB_TOKEN')
-    //     }
-    // }
-    // maven {
-    //     url "https://maven.pkg.github.com/ModdingForBlockheads/CookingForBlockheads"
-    //     credentials {
-    //         username System.getenv('GITHUB_ACTOR')
-    //         password System.getenv('GITHUB_TOKEN')
-    //     }
-    // }
-}
+// Testing
+// repositories {
+//     maven { url 'https://maven.blamejared.com' }
+//     maven { url 'https://dvs1.progwml6.com/files/maven' }
+//     maven {
+//         url 'https://cursemaven.com'
+//         content {
+//             includeGroup 'curse.maven'
+//         }
+//     }
+//     maven {
+//         url 'https://maven.pkg.github.com/ModdingForBlockheads/Balm'
+//         credentials {
+//             username System.getenv('GITHUB_ACTOR')
+//             password System.getenv('GITHUB_TOKEN')
+//         }
+//     }
+//     maven {
+//         url "https://maven.pkg.github.com/ModdingForBlockheads/CookingForBlockheads"
+//         credentials {
+//             username System.getenv('GITHUB_ACTOR')
+//             password System.getenv('GITHUB_TOKEN')
+//         }
+//     }
+// }
 
 sourceSets.main.resources.srcDirs += 'src/generated/resources'
 
