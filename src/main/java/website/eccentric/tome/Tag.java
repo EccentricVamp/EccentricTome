@@ -22,7 +22,7 @@ public class Tag {
     public static Map<String, List<ItemStack>> getModsBooks(ItemStack stack) {
         var tag = getOrSetTag(stack);
 
-        Migration.Apply(tag);
+        Migration.apply(tag);
 
         var books = new HashMap<String, List<ItemStack>>();
         var mods = tag.getCompound(MODS);
@@ -41,7 +41,7 @@ public class Tag {
     public static void setModsBooks(ItemStack stack, Map<String, List<ItemStack>> modsBooks) {
         var tag = getOrSetTag(stack);
 
-        Migration.Apply(tag);
+        Migration.apply(tag);
 
         var mods = new CompoundTag();
         for (var mod : modsBooks.keySet()) {
