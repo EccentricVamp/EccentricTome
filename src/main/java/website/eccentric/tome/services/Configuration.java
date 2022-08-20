@@ -41,7 +41,6 @@ public class Configuration {
     public static List<? extends String> excludeItems() {
         return excludeItems;
     }
-    
 
     public static void refresh() {
         allItems = CommonConfiguration.ALL_ITEMS.get();

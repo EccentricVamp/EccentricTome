@@ -9,10 +9,10 @@ public class Migration {
     public static final String VERSION = "eccentrictome:version";
     public static final int CURRENT_VERSION = 1;
 
-    public static void Apply(CompoundTag tag) {
+    public static void apply(CompoundTag tag) {
         while (getVersion(tag) < CURRENT_VERSION) {
             var version = getVersion(tag) + 1;
-            Steps.get(version).accept(tag);
+            steps.get(version).accept(tag);
             setVersion(tag, version);
         }
     }
@@ -29,11 +29,11 @@ public class Migration {
         tag.putInt(VERSION, CURRENT_VERSION);
     }
 
-    public static Map<Integer, Consumer<CompoundTag>> Steps = Map.of(
-        Integer.valueOf(1), Migration::One
+    public static Map<Integer, Consumer<CompoundTag>> steps = Map.of(
+        Integer.valueOf(1), Migration::one
     );
 
-    public static void One(CompoundTag tag) {
+    public static void one(CompoundTag tag) {
         // Remove unused tags
         tag.remove("eccentrictome:name");
         tag.remove("eccentrictome:mod");
