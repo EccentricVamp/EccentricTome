@@ -22,7 +22,7 @@ public class Tag {
     public static Map<String, List<ItemStack>> getModsBooks(ItemStack stack) {
         CompoundNBT tag = getOrSetTag(stack);
 
-        Migration.Apply(tag);
+        Migration.apply(tag);
 
         Map<String, List<ItemStack>> books = new HashMap<String, List<ItemStack>>();
         CompoundNBT mods = tag.getCompound(MODS);
@@ -41,7 +41,7 @@ public class Tag {
     public static void setModsBooks(ItemStack stack, Map<String, List<ItemStack>> modsBooks) {
         CompoundNBT tag = getOrSetTag(stack);
 
-        Migration.Apply(tag);
+        Migration.apply(tag);
 
         CompoundNBT mods = new CompoundNBT();
         for (String mod : modsBooks.keySet()) {

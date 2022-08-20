@@ -10,10 +10,10 @@ public class Migration {
     public static final String VERSION = "eccentrictome:version";
     public static final int CURRENT_VERSION = 1;
 
-    public static void Apply(CompoundNBT tag) {
+    public static void apply(CompoundNBT tag) {
         while (getVersion(tag) < CURRENT_VERSION) {
             int version = getVersion(tag) + 1;
-            Steps.get(version).accept(tag);
+            steps.get(version).accept(tag);
             setVersion(tag, version);
         }
     }
@@ -30,15 +30,15 @@ public class Migration {
         tag.putInt(VERSION, CURRENT_VERSION);
     }
 
-    public static Map<Integer, Consumer<CompoundNBT>> Steps;
+    public static Map<Integer, Consumer<CompoundNBT>> steps;
     static {
-    Steps = new HashMap<>();
-    Steps.put(
-        Integer.valueOf(1), Migration::One
+    steps = new HashMap<>();
+    steps.put(
+        Integer.valueOf(1), Migration::one
     );
     }
 
-    public static void One(CompoundNBT tag) {
+    public static void one(CompoundNBT tag) {
         // Remove unused tags
         tag.remove("eccentrictome:name");
         tag.remove("eccentrictome:mod");
