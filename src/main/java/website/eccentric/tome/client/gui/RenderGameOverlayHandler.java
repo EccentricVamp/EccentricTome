@@ -21,7 +21,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import website.eccentric.tome.Tag;
 import website.eccentric.tome.TomeItem;
-import website.eccentric.tome.services.ModName;
+import website.eccentric.tome.ModName;
 
 public class RenderGameOverlayHandler {
 	public static void onRender(RenderGameOverlayEvent.Post event) {

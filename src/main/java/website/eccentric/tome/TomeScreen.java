@@ -11,7 +11,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.text.StringTextComponent;
-import website.eccentric.tome.services.Network;
+import website.eccentric.tome.network.ConvertMessage;
 
 public class TomeScreen extends Screen {
     
