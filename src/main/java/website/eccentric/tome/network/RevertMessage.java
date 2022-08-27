@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 import website.eccentric.tome.TomeItem;
-import website.eccentric.tome.services.Tome;
+import website.eccentric.tome.Tome;
 
 public class RevertMessage {
     public static RevertMessage decode(final FriendlyByteBuf buffer) {

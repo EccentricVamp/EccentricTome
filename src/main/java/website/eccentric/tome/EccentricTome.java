@@ -27,8 +27,6 @@ import website.eccentric.tome.client.gui.RenderGameOverlayHandler;
 import website.eccentric.tome.client.gui.TomeHandler;
 import website.eccentric.tome.network.RevertMessage;
 import website.eccentric.tome.network.TomeChannel;
-import website.eccentric.tome.services.Configuration;
-import website.eccentric.tome.services.Tome;
 
 @Mod(EccentricTome.MODID)
 public class EccentricTome {
