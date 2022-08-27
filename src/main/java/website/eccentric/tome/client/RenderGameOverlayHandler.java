@@ -1,4 +1,4 @@
-package website.eccentric.tome.client.gui;
+package website.eccentric.tome.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
