@@ -20,8 +20,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import website.eccentric.tome.events.OpenTomeEvent;
-import website.eccentric.tome.services.ModName;
-import website.eccentric.tome.services.Tome;
 
 public class TomeItem extends Item {
     public TomeItem() {

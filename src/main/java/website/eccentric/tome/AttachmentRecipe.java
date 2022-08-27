@@ -9,9 +9,6 @@ import net.minecraft.item.crafting.SpecialRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import website.eccentric.tome.services.Configuration;
-import website.eccentric.tome.services.ModName;
-import website.eccentric.tome.services.Tome;
 
 public class AttachmentRecipe extends SpecialRecipe {
     public static IRecipeSerializer<?> SERIALIZER;

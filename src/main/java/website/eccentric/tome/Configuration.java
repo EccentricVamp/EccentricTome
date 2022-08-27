@@ -1,9 +1,7 @@
-package website.eccentric.tome.services;
+package website.eccentric.tome;
 
 import java.util.HashMap;
 import java.util.List;
-
-import website.eccentric.tome.CommonConfiguration;
 
 public class Configuration {
     private static boolean allItems;

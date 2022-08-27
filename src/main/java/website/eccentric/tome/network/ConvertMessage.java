@@ -8,7 +8,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Hand;
 import net.minecraftforge.fml.network.NetworkEvent;
 import website.eccentric.tome.TomeItem;
-import website.eccentric.tome.services.Tome;
+import website.eccentric.tome.Tome;
 
 public class ConvertMessage {
     public ItemStack book;

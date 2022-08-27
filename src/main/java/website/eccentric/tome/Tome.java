@@ -1,4 +1,4 @@
-package website.eccentric.tome.services;
+package website.eccentric.tome;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +12,6 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import website.eccentric.tome.EccentricTome;
-import website.eccentric.tome.Tag;
 
 public class Tome {
     public static ItemStack convert(ItemStack tome, ItemStack book) {
