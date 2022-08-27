@@ -1,4 +1,4 @@
-package website.eccentric.tome.client.gui;
+package website.eccentric.tome.client;
 
 import net.minecraft.client.Minecraft;
 import website.eccentric.tome.TomeScreen;
