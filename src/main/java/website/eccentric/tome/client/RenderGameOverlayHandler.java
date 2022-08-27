@@ -40,6 +40,8 @@ public class RenderGameOverlayHandler {
 		if (state.isAir(minecraft.level, blockHit.getBlockPos())) return;
 
 		ItemStack tome = minecraft.player.getItemInHand(hand);
+		if (!(tome.getItem() instanceof TomeItem)) return;
+		
 		String mod = ModName.from(state);
 		Map<String, List<ItemStack>> modsBooks = Tag.getModsBooks(tome);
 		if (!modsBooks.containsKey(mod)) return;
