@@ -1,4 +1,4 @@
-package website.eccentric.tome;
+package website.eccentric.tome.client;
 
 import java.util.Collection;
 import java.util.List;
@@ -11,6 +11,8 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.text.StringTextComponent;
+import website.eccentric.tome.EccentricTome;
+import website.eccentric.tome.Tag;
 import website.eccentric.tome.network.ConvertMessage;
 
 public class TomeScreen extends Screen {

@@ -1,7 +1,6 @@
 package website.eccentric.tome.client;
 
 import net.minecraft.client.Minecraft;
-import website.eccentric.tome.TomeScreen;
 import website.eccentric.tome.events.OpenTomeEvent;
 
 public class TomeHandler {
