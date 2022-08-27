@@ -31,6 +31,8 @@ public class RenderGameOverlayHandler {
 		if (state.isAir()) return;
 
 		var tome = minecraft.player.getItemInHand(hand);
+		if (!(tome.getItem() instanceof TomeItem)) return;
+
 		var mod = ModName.from(state);
 		var modsBooks = Tag.getModsBooks(tome);
 		if (!modsBooks.containsKey(mod)) return;
