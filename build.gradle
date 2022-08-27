@@ -57,8 +57,12 @@ minecraft {
 
 // Testing
 // repositories {
-//     maven { url 'https://maven.blamejared.com' }
-//     maven { url 'https://dvs1.progwml6.com/files/maven' }
+//     maven {
+//         url 'https://maven.blamejared.com'
+//         content {
+//             includeGroup 'vazkii.patchouli'
+//         }
+//     }
 //     maven {
 //         url 'https://cursemaven.com'
 //         content {
@@ -67,13 +71,30 @@ minecraft {
 //     }
 //     maven {
 //         url 'https://maven.pkg.github.com/ModdingForBlockheads/Balm'
+//         content {
+//             includeGroup 'net.blay09.mods'
+//         }
 //         credentials {
 //             username System.getenv('GITHUB_ACTOR')
 //             password System.getenv('GITHUB_TOKEN')
 //         }
 //     }
 //     maven {
-//         url "https://maven.pkg.github.com/ModdingForBlockheads/CookingForBlockheads"
+//         url 'https://maven.pkg.github.com/ModdingForBlockheads/CookingForBlockheads'
+//         content {
+//             includeGroup 'net.blay09.mods'
+//         }
+//         credentials {
+//             username System.getenv('GITHUB_ACTOR')
+//             password System.getenv('GITHUB_TOKEN')
+//         }
+//     }
+//     maven {
+//         url 'https://maven.pkg.github.com/CyclopsMC/packages'
+//         content {
+//             includeGroup 'org.cyclops.cyclopscore'
+//             includeGroup 'org.cyclops.evilcraft'
+//         }
 //         credentials {
 //             username System.getenv('GITHUB_ACTOR')
 //             password System.getenv('GITHUB_TOKEN')
@@ -97,6 +118,9 @@ dependencies {
 
     // runtimeOnly fg.deobf('curse.maven:placebo-283644:3725741')
     // runtimeOnly fg.deobf('curse.maven:apotheosis-313970:3717791')
+
+    // compileOnly fg.deobf("org.cyclops.cyclopscore:cyclopscore:${minecraft_version}-${cyclopscore_version}")
+    // compileOnly fg.deobf("org.cyclops.evilcraft:evilcraft:${minecraft_version}-${evilcraft_version}")
 }
 
 jar.manifest.attributes = [
