@@ -30,7 +30,7 @@ public class TomeScreen extends Screen {
     public boolean mouseClicked(double x, double y, int button) {
         if (button != LEFT_CLICK || book == null) return super.mouseClicked(x, y, button);
 
-        Network.convert(book);
+        EccentricTome.CHANNEL.sendToServer(new ConvertMessage(book));
         
         this.minecraft.setScreen(null);
         return true;
