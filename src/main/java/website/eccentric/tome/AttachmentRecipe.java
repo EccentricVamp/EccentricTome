@@ -10,9 +10,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
-import website.eccentric.tome.services.Configuration;
-import website.eccentric.tome.services.ModName;
-import website.eccentric.tome.services.Tome;
 
 public class AttachmentRecipe extends CustomRecipe {
     public static SimpleRecipeSerializer<AttachmentRecipe> SERIALIZER;

@@ -6,7 +6,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 import website.eccentric.tome.TomeItem;
-import website.eccentric.tome.services.Tome;
+import website.eccentric.tome.Tome;
 
 public class ConvertMessage {
     public ItemStack book;

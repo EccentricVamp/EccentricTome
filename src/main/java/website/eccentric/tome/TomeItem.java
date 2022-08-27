@@ -17,8 +17,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 import website.eccentric.tome.events.OpenTomeEvent;
-import website.eccentric.tome.services.ModName;
-import website.eccentric.tome.services.Tome;
 
 public class TomeItem extends Item {
     

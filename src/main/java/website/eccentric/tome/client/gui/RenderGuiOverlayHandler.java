@@ -11,7 +11,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import website.eccentric.tome.Tag;
 import website.eccentric.tome.TomeItem;
-import website.eccentric.tome.services.ModName;
+import website.eccentric.tome.ModName;
 
 public class RenderGuiOverlayHandler {
 	public static void onRender(RenderGuiOverlayEvent.Post event) {
