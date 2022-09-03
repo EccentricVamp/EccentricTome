@@ -72,20 +72,22 @@ public class AttachmentRecipe extends CustomRecipe {
         var mod = ModName.from(stack);
         if (mod.equals("minecraft")) return false;
 
-        if (Configuration.allItems()) return true;
+        if (Configuration.ALL_ITEMS.get()) return true;
 
-        if (Configuration.exclude().contains(mod)) return false;
+        if (Configuration.EXCLUDE.get().contains(mod)) return false;
 
         var location = ForgeRegistries.ITEMS.getKey(stack.getItem());
         var locationString = location.toString();
         var locationDamage = locationString + ":" + stack.getDamageValue();
 
-        if (Configuration.excludeItems().contains(locationString) || Configuration.excludeItems().contains(locationDamage)) return false;
+        var excludeItems = Configuration.EXCLUDE_ITEMS.get();
+        if (excludeItems.contains(locationString) || excludeItems.contains(locationDamage)) return false;
 
-        if (Configuration.items().contains(locationString) || Configuration.items().contains(locationDamage)) return true;
+        var items = Configuration.ITEMS.get();
+        if (items.contains(locationString) || items.contains(locationDamage)) return true;
 
         var path = location.getPath();
-        for (var name : Configuration.names()) {
+        for (var name : Configuration.NAMES.get()) {
             if (path.contains(name)) return true;
         }
 

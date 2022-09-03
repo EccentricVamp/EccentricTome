@@ -37,7 +37,7 @@ public class ModName {
     }
 
     public static String orAlias(String mod) {
-        return Configuration.aliases().getOrDefault(mod, mod);
+        return Configuration.ALIAS_MAP.getOrDefault(mod, mod);
     }
 
     public static String name(String mod) {
