@@ -53,7 +53,7 @@ public class Tome {
     }
 
     public static Map<String, List<ItemStack>> getModsBooks(ItemStack stack) {
-        return Tag.deserialize(stack.getTagElement(Tag.MODS));
+        return Tag.deserialize(stack.getOrCreateTagElement(Tag.MODS));
     }
 
     public static void setModsBooks(ItemStack stack, Map<String, List<ItemStack>> modsBooks) {
