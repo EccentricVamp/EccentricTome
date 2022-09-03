@@ -53,7 +53,7 @@ public class EccentricTome {
         modEvent.addListener(this::onGatherData);
         modEvent.addListener(this::onModConfig);
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfiguration.SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Configuration.SPEC);
 
         var minecraftEvent = MinecraftForge.EVENT_BUS;
         minecraftEvent.addListener(this::onPlayerLeftClick);
@@ -75,7 +75,11 @@ public class EccentricTome {
     }
 
     private void onModConfig(ModConfigEvent event) {
-        Configuration.refresh();
+        Configuration.ALIAS_MAP.clear();
+        for (var alias : Configuration.ALIASES.get()) {
+            var tokens = alias.split("=");
+            Configuration.ALIAS_MAP.put(tokens[0], tokens[1]);
+        }
     }
 
     private void onPlayerLeftClick(PlayerInteractEvent.LeftClickEmpty event) {
