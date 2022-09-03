@@ -12,6 +12,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ModName {
     private static final Map<String, String> modNames = new HashMap<>();
 
+    public static final String MINECRAFT = "minecraft";
+    public static final String PATCHOULI = "patchouli";
+
     static {
         for (var mod : ModList.get().getMods()) {
             modNames.put(mod.getModId(), mod.getDisplayName());
@@ -23,15 +26,11 @@ public class ModName {
     }
 
     public static String from(ItemStack stack) {
-        var minecraft = "minecraft";
-        var patchouli = "patchouli";
-        var patchouliBook = patchouli + ":book";
-
-        if (stack.isEmpty()) return minecraft;
+        if (stack.isEmpty()) return MINECRAFT;
 
         var mod = stack.getItem().getCreatorModId(stack);
-        if (mod.equals(patchouli)) {
-            var book = stack.getTag().getString(patchouliBook);
+        if (mod.equals(PATCHOULI)) {
+            var book = stack.getTag().getString(Tag.Patchouli.BOOK);
             mod = new ResourceLocation(book).getNamespace();
         }
 
