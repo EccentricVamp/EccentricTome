@@ -39,19 +39,6 @@ minecraft {
             // properties mixinProperties
             mods baseMods
         }
-
-        data {
-            taskName "Data"
-            workingDirectory file('run')
-            // properties mixinProperties
-            mods baseMods
-            args(
-                '--mod', mod_id,
-                '--all',
-                '--output', file('src/generated/resources/'),
-                '--existing', file('src/main/resources/')
-            )
-        }
     }
 }
 
@@ -101,8 +88,6 @@ minecraft {
 //         }
 //     }
 // }
-
-sourceSets.main.resources.srcDirs += 'src/generated/resources'
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"

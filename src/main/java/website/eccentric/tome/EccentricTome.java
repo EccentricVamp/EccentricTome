@@ -50,7 +50,6 @@ public class EccentricTome {
 
         modEvent.addListener(this::onClientSetup);
         modEvent.addListener(this::onCommonSetup);
-        modEvent.addListener(this::onGatherData);
         modEvent.addListener(this::onModConfig);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Configuration.SPEC);
@@ -67,11 +66,6 @@ public class EccentricTome {
 
     private void onCommonSetup(final FMLCommonSetupEvent event) {
         CHANNEL = TomeChannel.register();
-    }
-
-    private void onGatherData(GatherDataEvent event) {
-        var generator = event.getGenerator();
-        generator.addProvider(new TomeRecipe(generator));
     }
 
     private void onModConfig(ModConfigEvent event) {
