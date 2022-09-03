@@ -3,7 +3,6 @@ package website.eccentric.tome;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.data.DataGenerator;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,7 +21,6 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.config.ModConfig.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import net.minecraftforge.registries.DeferredRegister;
@@ -53,7 +51,6 @@ public class EccentricTome {
 
         modEvent.addListener(this::onClientSetup);
         modEvent.addListener(this::onCommonSetup);
-        modEvent.addListener(this::onGatherData);
         modEvent.addListener(this::onModConfig);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Configuration.SPEC);
@@ -70,11 +67,6 @@ public class EccentricTome {
 
     private void onCommonSetup(final FMLCommonSetupEvent event) {
         CHANNEL = TomeChannel.register();
-    }
-
-    private void onGatherData(GatherDataEvent event) {
-        DataGenerator generator = event.getGenerator();
-        generator.addProvider(new TomeRecipe(generator));
     }
 
     private void onModConfig(ModConfigEvent event) {
