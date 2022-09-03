@@ -10,7 +10,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import website.eccentric.tome.Tag;
+import website.eccentric.tome.Tome;
 import website.eccentric.tome.TomeItem;
 import website.eccentric.tome.ModName;
 
@@ -24,7 +24,7 @@ public class RenderGameOverlayHandler {
 
 		var blockHit = (BlockHitResult)hit;
 
-		var hand = TomeItem.inHand(minecraft.player);
+		var hand = Tome.inHand(minecraft.player);
 		if (hand == null) return;
 
 		var state = minecraft.level.getBlockState(blockHit.getBlockPos());
@@ -34,7 +34,7 @@ public class RenderGameOverlayHandler {
 		if (!(tome.getItem() instanceof TomeItem)) return;
 
 		var mod = ModName.from(state);
-		var modsBooks = Tag.getModsBooks(tome);
+		var modsBooks = Tome.getModsBooks(tome);
 		if (!modsBooks.containsKey(mod)) return;
 
 		var books = modsBooks.get(mod);

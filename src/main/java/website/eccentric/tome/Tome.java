@@ -1,61 +1,95 @@
 package website.eccentric.tome;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Map;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 
 public class Tome {
     public static ItemStack convert(ItemStack tome, ItemStack book) {
-        var modsBooks = Tag.getModsBooks(tome);
+        var modsBooks = getModsBooks(tome);
         var mod = ModName.from(book);
         var books = modsBooks.get(mod);
         var registry = book.getItem().getRegistryName();
-        books = books.stream().filter(b -> !b.getItem().getRegistryName().equals(registry)).collect(Collectors.toList());
-        modsBooks.put(mod, books);
-        Tag.setModsBooks(tome, modsBooks);
+        books.removeIf(b -> b.getItem().getRegistryName().equals(registry));
 
-        var name = book.getHoverName().getString();
-        Tag.copyMods(tome, book);
-        Tag.fill(book, true);
-
-        setHoverName(book, name);
+        setModsBooks(book, modsBooks);
+        Migration.setVersion(book);
+        book.getTag().putBoolean(Tag.IS_TOME, true);
+        setHoverName(book);
         
         return book;
     }
 
     public static ItemStack revert(ItemStack book) {
-        var tome = createStack();
-        Tag.copyMods(book, tome);
-        Tag.clear(book);
+        Migration.apply(book);
 
-        book.resetHoverName();
+        var tome = new ItemStack(EccentricTome.TOME.get());
+        copyMods(book, tome);
+        Migration.setVersion(tome);
+        clear(book);
 
         return tome;
     }
 
     public static ItemStack attach(ItemStack tome, ItemStack book) {
         var mod = ModName.from(book);
-        var modsBooks = Tag.getModsBooks(tome);
+        var modsBooks = getModsBooks(tome);
 
         var books = modsBooks.getOrDefault(mod, new ArrayList<ItemStack>());
         books.add(book);
         modsBooks.put(mod, books);
         
-        Tag.setModsBooks(tome, modsBooks);
+        setModsBooks(tome, modsBooks);
         return tome;
     }
 
-    private static ItemStack createStack() {
-        return Tag.initialize(new ItemStack(EccentricTome.TOME.get()));
+    public static Map<String, List<ItemStack>> getModsBooks(ItemStack stack) {
+        return Tag.deserialize(stack.getTagElement(Tag.MODS));
     }
 
-    private static void setHoverName(ItemStack book, String name) {
-        var bookName = new TextComponent(name).setStyle(Style.EMPTY.applyFormats(ChatFormatting.GREEN));
-        book.setHoverName(new TranslatableComponent("eccentrictome.name", bookName));
+    public static void setModsBooks(ItemStack stack, Map<String, List<ItemStack>> modsBooks) {
+        stack.getOrCreateTag().put(Tag.MODS, Tag.serialize(modsBooks));
+    }
+
+    public static boolean isTome(ItemStack stack) {
+        if (stack.isEmpty()) return false;
+        else if (stack.getItem() instanceof TomeItem) return true;
+        else return stack.hasTag() && stack.getTag().getBoolean(Tag.IS_TOME);
+    }
+
+    public static InteractionHand inHand(Player player) {
+        var hand = InteractionHand.MAIN_HAND;
+        var stack = player.getItemInHand(hand);
+        if (isTome(stack)) return hand;
+        
+        hand = InteractionHand.OFF_HAND;
+        stack = player.getItemInHand(hand);
+        if (isTome(stack)) return hand;
+
+        return null;
+    }
+
+    private static void copyMods(ItemStack source, ItemStack target) {
+        var targetTag = target.getOrCreateTag();
+        targetTag.put(Tag.MODS, source.getTagElement(Tag.MODS));
+    }
+
+    private static void clear(ItemStack stack) {
+        var tag = stack.getTag();
+        tag.remove(Tag.MODS);
+        tag.remove(Tag.IS_TOME);
+        tag.remove(Tag.VERSION);
+        stack.resetHoverName();
+    }
+
+    private static void setHoverName(ItemStack book) {
+        var name = book.getHoverName().copy().withStyle(ChatFormatting.GREEN);
+        book.setHoverName(new TranslatableComponent("eccentrictome.name", name));
     }
 }

@@ -29,11 +29,10 @@ public class TomeItem extends Item {
     public InteractionResult useOn(UseOnContext context) {
         var player = context.getPlayer();
         var hand = context.getHand();
-        var level = context.getLevel();
         var position = context.getClickedPos();
-        var tome = player.getItemInHand(hand);
-        var mod = ModName.from(level.getBlockState(position));
-        var modsBooks = Tag.getModsBooks(tome);
+        var tome = context.getItemInHand();
+        var mod = ModName.from(context.getLevel().getBlockState(position));
+        var modsBooks = Tome.getModsBooks(tome);
 
         if (!player.isShiftKeyDown() || !modsBooks.containsKey(mod)) return InteractionResult.PASS;
 
@@ -56,34 +55,17 @@ public class TomeItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack tome, Level level, List<Component> tooltip, TooltipFlag advanced) {
-        var modsBooks = Tag.getModsBooks(tome);
+        var modsBooks = Tome.getModsBooks(tome);
         
         for (var mod : modsBooks.keySet()) {
             tooltip.add(new TextComponent(ModName.name(mod)));
             var books = modsBooks.get(mod);
+            
             for (var book : books) {
                 if (book.is(Items.AIR)) continue;
                 var name = book.getHoverName().getString();
                 tooltip.add(new TextComponent("  " + ChatFormatting.GRAY + name));
             }
         }
-    }
-
-    public static boolean isTome(ItemStack stack) {
-        if (stack.isEmpty()) return false;
-        else if (stack.getItem() instanceof TomeItem) return true;
-        else return Tag.isTome(stack);
-    }
-
-    public static InteractionHand inHand(Player player) {
-        var hand = InteractionHand.MAIN_HAND;
-        var stack = player.getItemInHand(hand);
-        if (isTome(stack)) return hand;
-        
-        hand = InteractionHand.OFF_HAND;
-        stack = player.getItemInHand(hand);
-        if (isTome(stack)) return hand;
-
-        return null;
     }
 }
