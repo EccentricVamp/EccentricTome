@@ -12,6 +12,9 @@ import net.minecraftforge.fml.loading.moddiscovery.ModInfo;
 public class ModName {
     private static final Map<String, String> modNames = new HashMap<>();
 
+    public static final String MINECRAFT = "minecraft";
+    public static final String PATCHOULI = "patchouli";
+
     static {
         for (ModInfo mod : ModList.get().getMods()) {
             modNames.put(mod.getModId(), mod.getDisplayName());
@@ -30,8 +33,8 @@ public class ModName {
         if (stack.isEmpty()) return minecraft;
 
         String mod = stack.getItem().getCreatorModId(stack);
-        if (mod.equals(patchouli)) {
-            String book = stack.getTag().getString(patchouliBook);
+        if (mod.equals(PATCHOULI)) {
+            String book = stack.getTag().getString(Tag.Patchouli.BOOK);
             mod = new ResourceLocation(book).getNamespace();
         }
 

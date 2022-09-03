@@ -7,7 +7,6 @@ import java.util.function.Consumer;
 import net.minecraft.nbt.CompoundNBT;
 
 public class Migration {
-    public static final String VERSION = "eccentrictome:version";
     public static final int CURRENT_VERSION = 1;
 
     public static void apply(CompoundNBT tag) {
@@ -19,15 +18,15 @@ public class Migration {
     }
 
     public static int getVersion(CompoundNBT tag) {
-        return tag.contains(VERSION) ? tag.getInt(VERSION) : 0;
+        return tag.contains(Tag.VERSION) ? tag.getInt(Tag.VERSION) : 0;
     }
 
     public static void setVersion(CompoundNBT tag, int version) {
-        tag.putInt(VERSION, version);
+        tag.putInt(Tag.VERSION, version);
     }
 
     public static void setCurrentVersion(CompoundNBT tag) {
-        tag.putInt(VERSION, CURRENT_VERSION);
+        tag.putInt(Tag.VERSION, CURRENT_VERSION);
     }
 
     public static Map<Integer, Consumer<CompoundNBT>> steps;
@@ -40,11 +39,11 @@ public class Migration {
 
     public static void one(CompoundNBT tag) {
         // Remove unused tags
-        tag.remove("eccentrictome:name");
-        tag.remove("eccentrictome:mod");
+        tag.remove(Tag.key("name"));
+        tag.remove(Tag.key("mod"));
 
         // Get old mods (books) tag
-        String books = "eccentrictome:books";
+        String books = Tag.key("books");
         CompoundNBT oldMods = tag.getCompound(books);
         if (oldMods == null) oldMods = new CompoundNBT();
         tag.remove(books);
@@ -56,6 +55,6 @@ public class Migration {
             modTag.put(Integer.toString(0), oldMods.get(modName));
             mods.put(modName, modTag);
         }
-        tag.put("eccentrictome:mods", mods);
+        tag.put(Tag.MODS, mods);
     }
 }
