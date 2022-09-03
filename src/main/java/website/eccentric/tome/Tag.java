@@ -9,8 +9,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 
 public class Tag {
-    public static final String MODS = "eccentrictome:mods";
-    public static final String IS_TOME = "eccentrictome:is_tome";
+    public static final String MODS = key("mods");
+    public static final String IS_TOME = key("is_tome");
+    public static final String VERSION = key("version");
+
+    public class Patchouli {
+        public static final String BOOK = key(ModName.PATCHOULI, "book");
+    }
 
     public static ItemStack initialize(ItemStack stack) {
         var tag = getOrSetTag(stack);
@@ -86,6 +91,7 @@ public class Tag {
 
         tag.remove(MODS);
         tag.remove(IS_TOME);
+        tag.remove(VERSION);
         if (tag.isEmpty()) stack.setTag(null);
     }
 
@@ -93,5 +99,13 @@ public class Tag {
         var tag = stack.getTag();
 
         tag.putBoolean(Tag.IS_TOME, isTome);
+    }
+
+    public static String key(String path) {
+        return key(EccentricTome.ID, path);
+    }
+
+    public static String key(String namespace, String path) {
+        return namespace + ":" + path;
     }
 }
