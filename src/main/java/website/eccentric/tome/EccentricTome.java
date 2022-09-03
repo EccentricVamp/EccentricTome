@@ -84,7 +84,7 @@ public class EccentricTome {
 
     private void onPlayerLeftClick(PlayerInteractEvent.LeftClickEmpty event) {
         var stack = event.getItemStack();
-        if (TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
+        if (Tome.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
             CHANNEL.sendToServer(new RevertMessage());
         }
     }
@@ -95,7 +95,7 @@ public class EccentricTome {
         var entity = event.getEntity();
         var stack = entity.getItem();
 
-        if (TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
+        if (Tome.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
             var detatchment = Tome.revert(stack);
             var level = entity.getCommandSenderWorld();
 

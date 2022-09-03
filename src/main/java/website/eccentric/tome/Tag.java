@@ -17,88 +17,40 @@ public class Tag {
         public static final String BOOK = key(ModName.PATCHOULI, "book");
     }
 
-    public static ItemStack initialize(ItemStack stack) {
-        var tag = getOrSetTag(stack);
-        Migration.setCurrentVersion(tag);
-        tag.put(MODS, new CompoundTag());
-        return stack;
-    }
+    public static CompoundTag serialize(Map<String, List<ItemStack>> modsBooks) {
+        var tag = new CompoundTag();
 
-    public static Map<String, List<ItemStack>> getModsBooks(ItemStack stack) {
-        var tag = getOrSetTag(stack);
-
-        Migration.apply(tag);
-
-        var books = new HashMap<String, List<ItemStack>>();
-        var mods = tag.getCompound(MODS);
-        for (var mod : mods.getAllKeys()) {
-            var booksTag = mods.getCompound(mod);
-            var booksList = books.getOrDefault(mod, new ArrayList<ItemStack>());
-            for (var book : booksTag.getAllKeys()) {
-                booksList.add(ItemStack.of(booksTag.getCompound(book)));
-            }
-            books.put(mod, booksList);
-        }
-
-        return books;
-    }
-
-    public static void setModsBooks(ItemStack stack, Map<String, List<ItemStack>> modsBooks) {
-        var tag = getOrSetTag(stack);
-
-        Migration.apply(tag);
-
-        var mods = new CompoundTag();
         for (var mod : modsBooks.keySet()) {
             var booksTag = new CompoundTag();
             var booksList = modsBooks.get(mod);
+
             for (var i = 0; i < booksList.size(); i++) {
                 var key = Integer.toString(i);
                 var bookTag = booksList.get(i).save(new CompoundTag());
                 booksTag.put(key, bookTag);
             }
-            if (!booksList.isEmpty()) mods.put(mod, booksTag);
+
+            if (!booksList.isEmpty()) tag.put(mod, booksTag);
         }
 
-        tag.put(MODS, mods);
+        return tag;
     }
 
-    public static CompoundTag getOrSetTag(ItemStack stack) {
-        if (!stack.hasTag()) stack.setTag(new CompoundTag());
-        return stack.getTag();
-    }
+    public static Map<String, List<ItemStack>> deserialize(CompoundTag mods) {
+        var modsBooks = new HashMap<String, List<ItemStack>>();
 
-    public static CompoundTag getOrSetMods(CompoundTag tag) {
-        if (!tag.contains(MODS)) tag.put(MODS, new CompoundTag());
-        return tag.getCompound(MODS);
-    }
+        for (var mod : mods.getAllKeys()) {
+            var booksTag = mods.getCompound(mod);
+            var books = modsBooks.getOrDefault(mod, new ArrayList<ItemStack>());
 
-    public static void setMods(ItemStack stack, CompoundTag mods) {
-        getOrSetTag(stack).put(MODS, mods);
-    }
+            for (var book : booksTag.getAllKeys()) {
+                books.add(ItemStack.of(booksTag.getCompound(book)));
+            }
+            
+            modsBooks.put(mod, books);
+        }
 
-    public static void copyMods(ItemStack source, ItemStack target) {
-        var mods = getOrSetMods(getOrSetTag(source)).copy();
-        getOrSetTag(target).put(MODS, mods);
-    }
-
-    public static boolean isTome(ItemStack stack) {
-        return stack.hasTag() && stack.getTag().getBoolean(IS_TOME);
-    }
-
-    public static void clear(ItemStack stack) {
-        var tag = stack.getTag();
-
-        tag.remove(MODS);
-        tag.remove(IS_TOME);
-        tag.remove(VERSION);
-        if (tag.isEmpty()) stack.setTag(null);
-    }
-
-    public static void fill(ItemStack stack, boolean isTome) {
-        var tag = stack.getTag();
-
-        tag.putBoolean(Tag.IS_TOME, isTome);
+        return modsBooks;
     }
 
     public static String key(String path) {

@@ -5,7 +5,6 @@ import java.util.function.Supplier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
-import website.eccentric.tome.TomeItem;
 import website.eccentric.tome.Tome;
 
 public class RevertMessage {
@@ -22,7 +21,7 @@ public class RevertMessage {
     public static void handle(final RevertMessage message, final Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
             var player = context.get().getSender();
-            var hand = TomeItem.inHand(player);
+            var hand = Tome.inHand(player);
 
             if (hand != null) {
                 var stack = player.getItemInHand(hand);
