@@ -1,5 +1,7 @@
 package website.eccentric.tome;
 
+import java.util.List;
+
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -71,20 +73,22 @@ public class AttachmentRecipe extends SpecialRecipe {
         String mod = ModName.from(stack);
         if (mod.equals("minecraft")) return false;
 
-        if (Configuration.allItems()) return true;
+        if (Configuration.ALL_ITEMS.get()) return true;
 
-        if (Configuration.exclude().contains(mod)) return false;
+        if (Configuration.EXCLUDE.get().contains(mod)) return false;
 
         ResourceLocation location = stack.getItem().getRegistryName();
         String locationString = location.toString();
         String locationDamage = locationString + ":" + stack.getDamageValue();
 
-        if (Configuration.excludeItems().contains(locationString) || Configuration.excludeItems().contains(locationDamage)) return false;
+        List<? extends String> excludeItems = Configuration.EXCLUDE_ITEMS.get();
+        if (excludeItems.contains(locationString) || excludeItems.contains(locationDamage)) return false;
 
-        if (Configuration.items().contains(locationString) || Configuration.items().contains(locationDamage)) return true;
+        List<? extends String> items = Configuration.ITEMS.get();
+        if (items.contains(locationString) || items.contains(locationDamage)) return true;
 
         String path = location.getPath();
-        for (String name : Configuration.names()) {
+        for (String name : Configuration.NAMES.get()) {
             if (path.contains(name)) return true;
         }
 
