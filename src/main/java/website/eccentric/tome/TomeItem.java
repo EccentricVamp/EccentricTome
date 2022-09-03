@@ -34,7 +34,7 @@ public class TomeItem extends Item {
         BlockPos position = context.getClickedPos();
         ItemStack tome = player.getItemInHand(hand);
         String mod = ModName.from(level.getBlockState(position));
-        Map<String, List<ItemStack>> modsBooks = Tag.getModsBooks(tome);
+        Map<String, List<ItemStack>> modsBooks = Tome.getModsBooks(tome);
 
         if (!player.isShiftKeyDown() || !modsBooks.containsKey(mod)) return ActionResultType.PASS;
 
@@ -57,34 +57,17 @@ public class TomeItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack tome, World level, List<ITextComponent> tooltip, ITooltipFlag advanced) {
-        Map<String, List<ItemStack>> modsBooks = Tag.getModsBooks(tome);
+        Map<String, List<ItemStack>> modsBooks = Tome.getModsBooks(tome);
         
         for (String mod : modsBooks.keySet()) {
             tooltip.add(new StringTextComponent(ModName.name(mod)));
             List<ItemStack> books = modsBooks.get(mod);
+            
             for (ItemStack book : books) {
                 if (book.getItem() == Items.AIR) continue;
                 String name = book.getHoverName().getString();
                 tooltip.add(new StringTextComponent("  " + TextFormatting.GRAY + name));
             }
         }
-    }
-
-    public static boolean isTome(ItemStack stack) {
-        if (stack.isEmpty()) return false;
-        else if (stack.getItem() instanceof TomeItem) return true;
-        else return Tag.isTome(stack);
-    }
-
-    public static Hand inHand(PlayerEntity player) {
-        Hand hand = Hand.MAIN_HAND;
-        ItemStack stack = player.getItemInHand(hand);
-        if (isTome(stack)) return hand;
-        
-        hand = Hand.OFF_HAND;
-        stack = player.getItemInHand(hand);
-        if (isTome(stack)) return hand;
-
-        return null;
     }
 }

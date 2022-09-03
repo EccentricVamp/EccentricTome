@@ -26,11 +26,7 @@ public class ModName {
     }
 
     public static String from(ItemStack stack) {
-        String minecraft = "minecraft";
-        String patchouli = "patchouli";
-        String patchouliBook = patchouli + ":book";
-
-        if (stack.isEmpty()) return minecraft;
+        if (stack.isEmpty()) return MINECRAFT;
 
         String mod = stack.getItem().getCreatorModId(stack);
         if (mod.equals(PATCHOULI)) {

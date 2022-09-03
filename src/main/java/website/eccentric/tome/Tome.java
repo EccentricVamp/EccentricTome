@@ -3,63 +3,96 @@ package website.eccentric.tome;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class Tome {
     public static ItemStack convert(ItemStack tome, ItemStack book) {
-        Map<String, List<ItemStack>> modsBooks = Tag.getModsBooks(tome);
+        Map<String, List<ItemStack>> modsBooks = getModsBooks(tome);
         String mod = ModName.from(book);
         List<ItemStack> books = modsBooks.get(mod);
         ResourceLocation registry = book.getItem().getRegistryName();
-        books = books.stream().filter(b -> !b.getItem().getRegistryName().equals(registry)).collect(Collectors.toList());
-        modsBooks.put(mod, books);
-        Tag.setModsBooks(tome, modsBooks);
+        books.removeIf(b -> b.getItem().getRegistryName().equals(registry));
 
-        String name = book.getHoverName().getString();
-        Tag.copyMods(tome, book);
-        Tag.fill(book, true);
-
-        setHoverName(book, name);
+        setModsBooks(book, modsBooks);
+        Migration.setVersion(book);
+        book.getTag().putBoolean(Tag.IS_TOME, true);
+        setHoverName(book);
         
         return book;
     }
 
     public static ItemStack revert(ItemStack book) {
-        ItemStack tome = createStack();
-        Tag.copyMods(book, tome);
-        Tag.clear(book);
+        Migration.apply(book);
 
-        book.resetHoverName();
+        ItemStack tome = new ItemStack(EccentricTome.TOME.get());
+        copyMods(book, tome);
+        Migration.setVersion(tome);
+        clear(book);
 
         return tome;
     }
 
     public static ItemStack attach(ItemStack tome, ItemStack book) {
         String mod = ModName.from(book);
-        Map<String, List<ItemStack>> modsBooks = Tag.getModsBooks(tome);
+        Map<String, List<ItemStack>> modsBooks = getModsBooks(tome);
 
         List<ItemStack> books = modsBooks.getOrDefault(mod, new ArrayList<ItemStack>());
         books.add(book);
         modsBooks.put(mod, books);
         
-        Tag.setModsBooks(tome, modsBooks);
+        setModsBooks(tome, modsBooks);
         return tome;
     }
 
-    private static ItemStack createStack() {
-        return Tag.initialize(new ItemStack(EccentricTome.TOME.get()));
+    public static Map<String, List<ItemStack>> getModsBooks(ItemStack stack) {
+        return Tag.deserialize(stack.getTagElement(Tag.MODS));
     }
 
-    private static void setHoverName(ItemStack book, String name) {
-        IFormattableTextComponent bookName = new StringTextComponent(name).setStyle(Style.EMPTY.applyFormats(TextFormatting.GREEN));
-        book.setHoverName(new TranslationTextComponent("eccentrictome.name", bookName));
+    public static void setModsBooks(ItemStack stack, Map<String, List<ItemStack>> modsBooks) {
+        stack.getOrCreateTag().put(Tag.MODS, Tag.serialize(modsBooks));
+    }
+
+    public static boolean isTome(ItemStack stack) {
+        if (stack.isEmpty()) return false;
+        else if (stack.getItem() instanceof TomeItem) return true;
+        else return stack.hasTag() && stack.getTag().getBoolean(Tag.IS_TOME);
+    }
+
+    public static Hand inHand(PlayerEntity player) {
+        Hand hand = Hand.MAIN_HAND;
+        ItemStack stack = player.getItemInHand(hand);
+        if (isTome(stack)) return hand;
+        
+        hand = Hand.OFF_HAND;
+        stack = player.getItemInHand(hand);
+        if (isTome(stack)) return hand;
+
+        return null;
+    }
+
+    private static void copyMods(ItemStack source, ItemStack target) {
+        CompoundNBT targetTag = target.getOrCreateTag();
+        targetTag.put(Tag.MODS, source.getTagElement(Tag.MODS));
+    }
+
+    private static void clear(ItemStack stack) {
+        CompoundNBT tag = stack.getTag();
+        tag.remove(Tag.MODS);
+        tag.remove(Tag.IS_TOME);
+        tag.remove(Tag.VERSION);
+        stack.resetHoverName();
+    }
+
+    private static void setHoverName(ItemStack book) {
+        IFormattableTextComponent name = book.getHoverName().copy().withStyle(TextFormatting.GREEN);
+        book.setHoverName(new TranslationTextComponent("eccentrictome.name", name));
     }
 }

@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.text.StringTextComponent;
 import website.eccentric.tome.EccentricTome;
-import website.eccentric.tome.Tag;
+import website.eccentric.tome.Tome;
 import website.eccentric.tome.network.ConvertMessage;
 
 public class TomeScreen extends Screen {
@@ -47,7 +47,9 @@ public class TomeScreen extends Screen {
     public void render(MatrixStack poseStack, int mouseX, int mouseY, float ticks) { 
         super.render(poseStack, mouseX, mouseY, ticks);
 
-        List<ItemStack> books = Tag.getModsBooks(tome).values().stream().flatMap(Collection::stream).collect(Collectors.toList());
+        List<ItemStack> books = Tome.getModsBooks(tome).values().stream()
+            .flatMap(Collection::stream)
+            .collect(Collectors.toList());
 
         MainWindow window = minecraft.getWindow();
         int booksPerRow = 6;

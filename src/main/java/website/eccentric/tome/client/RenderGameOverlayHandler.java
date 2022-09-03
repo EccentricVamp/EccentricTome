@@ -19,7 +19,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import website.eccentric.tome.Tag;
+import website.eccentric.tome.Tome;
 import website.eccentric.tome.TomeItem;
 import website.eccentric.tome.ModName;
 
@@ -33,7 +33,7 @@ public class RenderGameOverlayHandler {
 
 		BlockRayTraceResult blockHit = (BlockRayTraceResult)hit;
 
-		Hand hand = TomeItem.inHand(minecraft.player);
+		Hand hand = Tome.inHand(minecraft.player);
 		if (hand == null) return;
 
 		BlockState state = minecraft.level.getBlockState(blockHit.getBlockPos());
@@ -43,7 +43,7 @@ public class RenderGameOverlayHandler {
 		if (!(tome.getItem() instanceof TomeItem)) return;
 		
 		String mod = ModName.from(state);
-		Map<String, List<ItemStack>> modsBooks = Tag.getModsBooks(tome);
+		Map<String, List<ItemStack>> modsBooks = Tome.getModsBooks(tome);
 		if (!modsBooks.containsKey(mod)) return;
 
 		List<ItemStack> books = modsBooks.get(mod);

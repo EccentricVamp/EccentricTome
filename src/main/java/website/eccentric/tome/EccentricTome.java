@@ -87,7 +87,7 @@ public class EccentricTome {
 
     private void onPlayerLeftClick(PlayerInteractEvent.LeftClickEmpty event) {
         ItemStack stack = event.getItemStack();
-        if (TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
+        if (Tome.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
             CHANNEL.sendToServer(new RevertMessage());
         }
     }
@@ -98,7 +98,7 @@ public class EccentricTome {
         ItemEntity entity = event.getEntityItem();
         ItemStack stack = entity.getItem();
 
-        if (TomeItem.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
+        if (Tome.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
             ItemStack detatchment = Tome.revert(stack);
             World level = entity.getCommandSenderWorld();
 

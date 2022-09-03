@@ -5,31 +5,38 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.item.ItemStack;
 
 public class Migration {
     public static final int CURRENT_VERSION = 1;
 
-    public static void apply(CompoundNBT tag) {
-        while (getVersion(tag) < CURRENT_VERSION) {
-            int version = getVersion(tag) + 1;
-            steps.get(version).accept(tag);
-            setVersion(tag, version);
+    public static void apply(ItemStack stack) {
+        while (getVersion(stack) < CURRENT_VERSION) {
+            int version = getVersion(stack) + 1;
+            steps.get(version).accept(stack);
+            setVersion(stack, version);
         }
     }
 
-    public static int getVersion(CompoundNBT tag) {
-        return tag.contains(Tag.VERSION) ? tag.getInt(Tag.VERSION) : 0;
+    public static int getVersion(ItemStack stack) {
+        if (!stack.hasTag()) return 0;
+        CompoundNBT tag = stack.getTag();
+
+        if (!tag.contains(Tag.VERSION)) return 0;
+
+        return tag.getInt(Tag.VERSION);
     }
 
-    public static void setVersion(CompoundNBT tag, int version) {
+    public static void setVersion(ItemStack stack, int version) {
+        CompoundNBT tag = stack.getOrCreateTag();
         tag.putInt(Tag.VERSION, version);
     }
 
-    public static void setCurrentVersion(CompoundNBT tag) {
-        tag.putInt(Tag.VERSION, CURRENT_VERSION);
+    public static void setVersion(ItemStack stack) {
+        setVersion(stack, CURRENT_VERSION);
     }
 
-    public static Map<Integer, Consumer<CompoundNBT>> steps;
+    public static Map<Integer, Consumer<ItemStack>> steps;
     static {
     steps = new HashMap<>();
     steps.put(
@@ -37,7 +44,9 @@ public class Migration {
     );
     }
 
-    public static void one(CompoundNBT tag) {
+    public static void one(ItemStack stack) {
+        CompoundNBT tag = stack.getOrCreateTag();
+
         // Remove unused tags
         tag.remove(Tag.key("name"));
         tag.remove(Tag.key("mod"));
