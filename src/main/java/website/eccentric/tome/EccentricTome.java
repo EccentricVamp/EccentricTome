@@ -32,13 +32,13 @@ import website.eccentric.tome.client.TomeHandler;
 import website.eccentric.tome.network.RevertMessage;
 import website.eccentric.tome.network.TomeChannel;
 
-@Mod(EccentricTome.MODID)
+@Mod(EccentricTome.ID)
 public class EccentricTome {
-    public static final String MODID = "eccentrictome";
-    public static final Logger LOGGER = LogManager.getLogger(MODID);
+    public static final String ID = "eccentrictome";
+    public static final Logger LOGGER = LogManager.getLogger(ID);
 
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
-    public static final DeferredRegister<IRecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MODID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ID);
+    public static final DeferredRegister<IRecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, ID);
 
     public static final RegistryObject<IRecipeSerializer<?>> ATTACHMENT = RECIPES.register("attachment", EccentricTome::registerSerializer);
     public static final RegistryObject<Item> TOME = ITEMS.register("tome", TomeItem::new);
