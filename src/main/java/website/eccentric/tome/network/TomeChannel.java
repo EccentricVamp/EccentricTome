@@ -6,8 +6,8 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import website.eccentric.tome.EccentricTome;
 
 public class TomeChannel {
-    public static final ResourceLocation name = new ResourceLocation(EccentricTome.MODID, "general");
-    public static final String version = new ResourceLocation(EccentricTome.MODID, "1").toString();
+    public static final ResourceLocation name = new ResourceLocation(EccentricTome.ID, "general");
+    public static final String version = new ResourceLocation(EccentricTome.ID, "1").toString();
 
     public static SimpleChannel register() {
         final var channel = NetworkRegistry.ChannelBuilder.named(name)
