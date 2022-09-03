@@ -8,7 +8,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -50,7 +49,6 @@ public class EccentricTome {
 
         modEvent.addListener(this::onClientSetup);
         modEvent.addListener(this::onCommonSetup);
-        modEvent.addListener(this::onGatherData);
         modEvent.addListener(this::onModConfig);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Configuration.SPEC);
@@ -67,11 +65,6 @@ public class EccentricTome {
 
     private void onCommonSetup(final FMLCommonSetupEvent event) {
         CHANNEL = TomeChannel.register();
-    }
-
-    private void onGatherData(GatherDataEvent event) {
-        var generator = event.getGenerator();
-        generator.addProvider(event.includeServer(), new TomeRecipe(generator));
     }
 
     private void onModConfig(ModConfigEvent event) {
