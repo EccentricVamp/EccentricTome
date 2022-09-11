@@ -15,6 +15,8 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class Tome {
     public static ItemStack convert(ItemStack tome, ItemStack book) {
+        EccentricTome.LOGGER.debug("Converting. Tag: " + tome.getTag().toString());
+
         Map<String, List<ItemStack>> modsBooks = getModsBooks(tome);
         String mod = ModName.from(book);
         List<ItemStack> books = modsBooks.get(mod);
@@ -30,6 +32,8 @@ public class Tome {
     }
 
     public static ItemStack revert(ItemStack book) {
+        EccentricTome.LOGGER.debug("Reverting. Tag: " + book.getTag().toString());
+
         Migration.apply(book);
 
         ItemStack tome = new ItemStack(EccentricTome.TOME.get());

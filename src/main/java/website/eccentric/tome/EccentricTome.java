@@ -56,7 +56,7 @@ public class EccentricTome {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Configuration.SPEC);
 
         IEventBus minecraftEvent = MinecraftForge.EVENT_BUS;
-        minecraftEvent.addListener(this::onPlayerLeftClick);
+        minecraftEvent.addListener(this::onLeftClickEmpty);
         minecraftEvent.addListener(EventPriority.LOW, this::onItemDropped);
     }
 
@@ -77,15 +77,20 @@ public class EccentricTome {
         }
     }
 
-    private void onPlayerLeftClick(PlayerInteractEvent.LeftClickEmpty event) {
+    private void onLeftClickEmpty(PlayerInteractEvent.LeftClickEmpty event) {
+        LOGGER.debug("Empty left-click");
+        
         ItemStack stack = event.getItemStack();
         if (Tome.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
+            LOGGER.debug("Sending revert message. Tag: " + stack.getTag().toString());
             CHANNEL.sendToServer(new RevertMessage());
         }
     }
 
     private void onItemDropped(ItemTossEvent event) {
         if (!event.getPlayer().isShiftKeyDown()) return;
+
+        LOGGER.debug("Item dropped and shift key is down.");
 
         ItemEntity entity = event.getEntityItem();
         ItemStack stack = entity.getItem();

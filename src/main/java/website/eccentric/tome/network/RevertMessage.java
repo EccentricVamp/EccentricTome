@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Hand;
 import net.minecraftforge.fml.network.NetworkEvent;
+import website.eccentric.tome.EccentricTome;
 import website.eccentric.tome.Tome;
 
 public class RevertMessage {
@@ -22,6 +23,8 @@ public class RevertMessage {
     
     @SuppressWarnings("resource")
     public static void handle(final RevertMessage message, final Supplier<NetworkEvent.Context> context) {
+        EccentricTome.LOGGER.debug("Received revert message.");
+        
         context.get().enqueueWork(() -> {
             ServerPlayerEntity player = context.get().getSender();
             Hand hand = Tome.inHand(player);
