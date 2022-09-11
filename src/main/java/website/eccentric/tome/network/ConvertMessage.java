@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
+import website.eccentric.tome.EccentricTome;
 import website.eccentric.tome.Tome;
 
 public class ConvertMessage {
@@ -24,6 +25,8 @@ public class ConvertMessage {
     }
 
     public static void handle(final ConvertMessage message, final Supplier<NetworkEvent.Context> context) {
+        EccentricTome.LOGGER.debug("Received convert message.");
+
         context.get().enqueueWork(() -> {
             var player = context.get().getSender();
             var hand = Tome.inHand(player);
