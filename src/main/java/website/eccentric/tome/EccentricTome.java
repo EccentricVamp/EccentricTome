@@ -54,13 +54,14 @@ public class EccentricTome {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Configuration.SPEC);
 
         var minecraftEvent = MinecraftForge.EVENT_BUS;
-        minecraftEvent.addListener(this::onPlayerLeftClick);
         minecraftEvent.addListener(EventPriority.LOW, this::onItemDropped);
     }
 
     private void onClientSetup(final FMLClientSetupEvent event) {
-        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, RenderGuiOverlayHandler::onRender);
-        MinecraftForge.EVENT_BUS.addListener(TomeHandler::onOpenTome);
+        var minecraftEvent = MinecraftForge.EVENT_BUS;
+        minecraftEvent.addListener(this::onLeftClickEmpty);
+        minecraftEvent.addListener(EventPriority.LOW, RenderGuiOverlayHandler::onRender);
+        minecraftEvent.addListener(TomeHandler::onOpenTome);
     }
 
     private void onCommonSetup(final FMLCommonSetupEvent event) {
