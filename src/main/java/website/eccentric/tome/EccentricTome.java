@@ -75,15 +75,20 @@ public class EccentricTome {
         }
     }
 
-    private void onPlayerLeftClick(PlayerInteractEvent.LeftClickEmpty event) {
+    private void onLeftClickEmpty(PlayerInteractEvent.LeftClickEmpty event) {
+        LOGGER.debug("Empty left-click");
+        
         var stack = event.getItemStack();
         if (Tome.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
+            LOGGER.debug("Sending revert message. Tag: " + stack.getTag().toString());
             CHANNEL.sendToServer(new RevertMessage());
         }
     }
 
     private void onItemDropped(ItemTossEvent event) {
         if (!event.getPlayer().isShiftKeyDown()) return;
+
+        LOGGER.debug("Item dropped and shift key is down.");
 
         var entity = event.getEntity();
         var stack = entity.getItem();

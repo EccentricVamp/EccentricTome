@@ -13,6 +13,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class Tome {
     public static ItemStack convert(ItemStack tome, ItemStack book) {
+        EccentricTome.LOGGER.debug("Converting. Tag: " + tome.getTag().toString());
+
         var modsBooks = getModsBooks(tome);
         var mod = ModName.from(book);
         var books = modsBooks.get(mod);
@@ -28,6 +30,8 @@ public class Tome {
     }
 
     public static ItemStack revert(ItemStack book) {
+        EccentricTome.LOGGER.debug("Reverting. Tag: " + book.getTag().toString());
+
         Migration.apply(book);
 
         var tome = new ItemStack(EccentricTome.TOME.get());

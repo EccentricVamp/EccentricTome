@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
+import website.eccentric.tome.EccentricTome;
 import website.eccentric.tome.Tome;
 
 public class RevertMessage {
@@ -19,6 +20,8 @@ public class RevertMessage {
     
     @SuppressWarnings("resource")
     public static void handle(final RevertMessage message, final Supplier<NetworkEvent.Context> context) {
+        EccentricTome.LOGGER.debug("Received revert message.");
+        
         context.get().enqueueWork(() -> {
             var player = context.get().getSender();
             var hand = Tome.inHand(player);
