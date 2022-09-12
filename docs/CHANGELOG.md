@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Check if tome is converted before showing overlay (#26)
 
+### Fixed
+
+- Pack format
+
 ## [1.8.0] - 2022-07-31
 
 Thanks [NyanMC](https://github.com/NyanMC) for the following additions to the default config
