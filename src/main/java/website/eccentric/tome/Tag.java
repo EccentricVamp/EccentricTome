@@ -13,7 +13,7 @@ public class Tag {
     public static final String IS_TOME = key("is_tome");
     public static final String VERSION = key("version");
 
-    public class Patchouli {
+    public static class Patchouli {
         public static final String BOOK = key(ModName.PATCHOULI, "book");
     }
 
