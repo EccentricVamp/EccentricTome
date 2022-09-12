@@ -1,10 +1,10 @@
-name: Modrinth
+name: Publish
 
 on:
   workflow_dispatch:
 
 jobs:
-  modrinth:
+  curseforge:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -18,8 +18,16 @@ jobs:
       - name: Make gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - uses: gradle/gradle-build-action@v2
+      - name: Modrinth
+        uses: gradle/gradle-build-action@v2
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
         with:
           arguments: modrinth
+
+      - name: CurseForge
+        uses: gradle/gradle-build-action@v2
+        env:
+          CURSEFORGE_KEY: ${{ secrets.CURSEFORGE_KEY }}
+        with:
+          arguments: curseforge
