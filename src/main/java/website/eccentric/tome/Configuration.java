@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.Builder;
 
@@ -58,7 +57,7 @@ public class Configuration {
                     "rootsclassic:runic_tablet",
                     "enigmaticlegacy:the_acknowledgment"
                 ),
-                Validator::isStringResource
+                Validator::isString
             );
 
         NAMES = BUILDER
@@ -160,7 +159,7 @@ public class Configuration {
                     "tombstone:book_of_repairing",
                     "tombstone:book_of_magic_impregnation"
                 ),
-                Validator::isStringResource
+                Validator::isString
             );
 
         BUILDER.pop();
@@ -172,10 +171,6 @@ public class Configuration {
         
         public static boolean isString(Object object) {
             return object instanceof String;
-        }
-
-        public static boolean isStringResource(Object object) {
-            return isString(object) && ResourceLocation.isValidResourceLocation((String) object);
         }
     }
 }
