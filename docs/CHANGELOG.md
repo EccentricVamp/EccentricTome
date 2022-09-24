@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Pack format
-- Config validation
+- Config validation (#27)
 
 ## [1.8.0] - 2022-07-31
 
