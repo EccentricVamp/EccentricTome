@@ -92,8 +92,8 @@ public class Tome {
     }
 
     private static void copyMods(ItemStack source, ItemStack target) {
-        CompoundNBT targetTag = target.getOrCreateTag();
-        targetTag.put(Tag.MODS, source.getTagElement(Tag.MODS));
+        CompoundNBT tag = target.getOrCreateTag();
+        tag.put(Tag.MODS, source.getTagElement(Tag.MODS));
     }
 
     private static void clear(ItemStack stack) {
