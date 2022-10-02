@@ -16,7 +16,8 @@ import website.eccentric.tome.ModName;
 
 public class RenderGameOverlayHandler {
 	public static void onRender(RenderGameOverlayEvent.Post event) {
-		if (event.getType() != ElementType.ALL) return;
+		if (event.getType() != ElementType.ALL)
+			return;
 
 		var minecraft = Minecraft.getInstance();
 
