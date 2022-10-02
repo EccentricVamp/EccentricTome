@@ -86,6 +86,9 @@ public class AttachmentRecipe extends SpecialRecipe {
             return false;
 
         ResourceLocation location = stack.getItem().getRegistryName();
+        if (location == null)
+            return false;
+
         String locationString = location.toString();
         String locationDamage = locationString + ":" + stack.getDamageValue();
 
