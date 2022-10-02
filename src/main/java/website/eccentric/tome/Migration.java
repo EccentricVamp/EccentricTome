@@ -18,8 +18,9 @@ public class Migration {
     }
 
     public static int getVersion(ItemStack stack) {
-        if (!stack.hasTag()) return 0;
         var tag = stack.getTag();
+        if (tag == null)
+            return 0;
 
         if (!tag.contains(Tag.VERSION)) return 0;
 

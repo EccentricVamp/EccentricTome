@@ -30,7 +30,11 @@ public class ModName {
 
         var mod = stack.getItem().getCreatorModId(stack);
         if (mod.equals(PATCHOULI)) {
-            var book = stack.getTag().getString(Tag.Patchouli.BOOK);
+            var tag = stack.getTag();
+            if (tag == null)
+                return PATCHOULI;
+
+            var book = tag.getString(Tag.Patchouli.BOOK);
             mod = new ResourceLocation(book).getNamespace();
         }
 

@@ -42,7 +42,11 @@ public class TomeScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float ticks) { 
+    public void render(PoseStack poseStack, int mouseX, int mouseY, float ticks) {
+        var minecraft = this.minecraft;
+        if (minecraft == null)
+            return;
+
         super.render(poseStack, mouseX, mouseY, ticks);
 
         var books = Tome.getModsBooks(tome).values().stream()
