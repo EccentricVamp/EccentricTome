@@ -20,11 +20,11 @@ public class RevertMessage {
     public static void encode(final RevertMessage message, final PacketBuffer buffer) {
         buffer.writeByte(0);
     }
-    
+
     @SuppressWarnings("resource")
     public static void handle(final RevertMessage message, final Supplier<NetworkEvent.Context> context) {
         EccentricTome.LOGGER.debug("Received revert message.");
-        
+
         context.get().enqueueWork(() -> {
             ServerPlayerEntity player = context.get().getSender();
             Hand hand = Tome.inHand(player);

@@ -29,7 +29,9 @@ public class Tag {
                 CompoundNBT bookTag = booksList.get(i).save(new CompoundNBT());
                 booksTag.put(key, bookTag);
             }
-            if (!booksList.isEmpty()) tag.put(mod, booksTag);
+
+            if (!booksList.isEmpty())
+                tag.put(mod, booksTag);
         }
 
         return tag;
@@ -45,7 +47,7 @@ public class Tag {
             for (String book : booksTag.getAllKeys()) {
                 books.add(ItemStack.of(booksTag.getCompound(book)));
             }
-            
+
             modsBooks.put(mod, books);
         }
 

@@ -17,7 +17,6 @@ import website.eccentric.tome.Tome;
 import website.eccentric.tome.network.ConvertMessage;
 
 public class TomeScreen extends Screen {
-
     private static final int LEFT_CLICK = 0;
 
     private final ItemStack tome;

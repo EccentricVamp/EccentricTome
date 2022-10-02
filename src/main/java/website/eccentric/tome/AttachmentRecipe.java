@@ -26,21 +26,23 @@ public class AttachmentRecipe extends SpecialRecipe {
 
         for (int i = 0; i < crafting.getContainerSize(); i++) {
             ItemStack stack = crafting.getItem(i);
-            if (stack.isEmpty()) continue;
+            if (stack.isEmpty())
+                continue;
 
             Item item = stack.getItem();
             if (item instanceof BlockItem) {
                 return false;
-            }            
+            }
             if (item instanceof TomeItem) {
-                if (foundTome) return false;
+                if (foundTome)
+                    return false;
                 foundTome = true;
-            }
-            else if (isTarget(stack)) {
-                if (foundTarget) return false;
+            } else if (isTarget(stack)) {
+                if (foundTarget)
+                    return false;
                 foundTarget = true;
-            }
-            else return false;
+            } else
+                return false;
         }
 
         return foundTome && foundTarget;
@@ -53,10 +55,13 @@ public class AttachmentRecipe extends SpecialRecipe {
 
         for (int i = 0; i < crafting.getContainerSize(); i++) {
             ItemStack stack = crafting.getItem(i);
-            if (stack.isEmpty()) continue;
-            
-            if (stack.getItem() instanceof TomeItem) tome = stack;
-            else target = stack;
+            if (stack.isEmpty())
+                continue;
+
+            if (stack.getItem() instanceof TomeItem)
+                tome = stack;
+            else
+                target = stack;
         }
 
         tome = tome.copy();
@@ -71,25 +76,31 @@ public class AttachmentRecipe extends SpecialRecipe {
 
     public boolean isTarget(ItemStack stack) {
         String mod = ModName.from(stack);
-        if (mod.equals("minecraft")) return false;
+        if (mod.equals("minecraft"))
+            return false;
 
-        if (Configuration.ALL_ITEMS.get()) return true;
+        if (Configuration.ALL_ITEMS.get())
+            return true;
 
-        if (Configuration.EXCLUDE.get().contains(mod)) return false;
+        if (Configuration.EXCLUDE.get().contains(mod))
+            return false;
 
         ResourceLocation location = stack.getItem().getRegistryName();
         String locationString = location.toString();
         String locationDamage = locationString + ":" + stack.getDamageValue();
 
         List<? extends String> excludeItems = Configuration.EXCLUDE_ITEMS.get();
-        if (excludeItems.contains(locationString) || excludeItems.contains(locationDamage)) return false;
+        if (excludeItems.contains(locationString) || excludeItems.contains(locationDamage))
+            return false;
 
         List<? extends String> items = Configuration.ITEMS.get();
-        if (items.contains(locationString) || items.contains(locationDamage)) return true;
+        if (items.contains(locationString) || items.contains(locationDamage))
+            return true;
 
         String path = location.getPath();
         for (String name : Configuration.NAMES.get()) {
-            if (path.contains(name)) return true;
+            if (path.contains(name))
+                return true;
         }
 
         return false;

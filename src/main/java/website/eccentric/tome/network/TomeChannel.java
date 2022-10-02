@@ -11,13 +11,15 @@ public class TomeChannel {
 
     public static SimpleChannel register() {
         final SimpleChannel channel = NetworkRegistry.ChannelBuilder.named(name)
-            .clientAcceptedVersions(version -> true)
-            .serverAcceptedVersions(version -> true)
-            .networkProtocolVersion(() -> version)
-            .simpleChannel();
-        
-        channel.registerMessage(1, ConvertMessage.class, ConvertMessage::encode, ConvertMessage::decode, ConvertMessage::handle);
-        channel.registerMessage(2, RevertMessage.class, RevertMessage::encode, RevertMessage::decode, RevertMessage::handle);
+                .clientAcceptedVersions(version -> true)
+                .serverAcceptedVersions(version -> true)
+                .networkProtocolVersion(() -> version)
+                .simpleChannel();
+
+        channel.registerMessage(1, ConvertMessage.class, ConvertMessage::encode, ConvertMessage::decode,
+                ConvertMessage::handle);
+        channel.registerMessage(2, RevertMessage.class, RevertMessage::encode, RevertMessage::decode,
+                RevertMessage::handle);
 
         return channel;
     }
