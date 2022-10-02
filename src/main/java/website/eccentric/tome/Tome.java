@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -15,8 +17,6 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class Tome {
     public static ItemStack convert(ItemStack tome, ItemStack book) {
-        EccentricTome.LOGGER.debug("Converting. Tag: " + tome.getTag().toString());
-
         Map<String, List<ItemStack>> modsBooks = getModsBooks(tome);
         String mod = ModName.from(book);
         List<ItemStack> books = modsBooks.get(mod);
@@ -25,15 +25,13 @@ public class Tome {
 
         setModsBooks(book, modsBooks);
         Migration.setVersion(book);
-        book.getTag().putBoolean(Tag.IS_TOME, true);
+        book.getOrCreateTag().putBoolean(Tag.IS_TOME, true);
         setHoverName(book);
-        
+
         return book;
     }
 
     public static ItemStack revert(ItemStack book) {
-        EccentricTome.LOGGER.debug("Reverting. Tag: " + book.getTag().toString());
-
         Migration.apply(book);
 
         ItemStack tome = new ItemStack(EccentricTome.TOME.get());
@@ -51,7 +49,7 @@ public class Tome {
         List<ItemStack> books = modsBooks.getOrDefault(mod, new ArrayList<ItemStack>());
         books.add(book);
         modsBooks.put(mod, books);
-        
+
         setModsBooks(tome, modsBooks);
         return tome;
     }
@@ -65,19 +63,30 @@ public class Tome {
     }
 
     public static boolean isTome(ItemStack stack) {
-        if (stack.isEmpty()) return false;
-        else if (stack.getItem() instanceof TomeItem) return true;
-        else return stack.hasTag() && stack.getTag().getBoolean(Tag.IS_TOME);
+        if (stack.isEmpty())
+            return false;
+        else if (stack.getItem() instanceof TomeItem)
+            return true;
+        else {
+            CompoundNBT tag = stack.getTag();
+            if (tag == null)
+                return false;
+
+            return tag.getBoolean(Tag.IS_TOME);
+        }
     }
 
+    @Nullable
     public static Hand inHand(PlayerEntity player) {
         Hand hand = Hand.MAIN_HAND;
         ItemStack stack = player.getItemInHand(hand);
-        if (isTome(stack)) return hand;
-        
+        if (isTome(stack))
+            return hand;
+
         hand = Hand.OFF_HAND;
         stack = player.getItemInHand(hand);
-        if (isTome(stack)) return hand;
+        if (isTome(stack))
+            return hand;
 
         return null;
     }
@@ -89,6 +98,9 @@ public class Tome {
 
     private static void clear(ItemStack stack) {
         CompoundNBT tag = stack.getTag();
+        if (tag == null)
+            return;
+
         tag.remove(Tag.MODS);
         tag.remove(Tag.IS_TOME);
         tag.remove(Tag.VERSION);

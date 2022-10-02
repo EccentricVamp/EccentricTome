@@ -10,7 +10,9 @@ import org.lwjgl.opengl.GL11;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -25,29 +27,45 @@ import website.eccentric.tome.ModName;
 
 public class RenderGameOverlayHandler {
 	public static void onRender(RenderGameOverlayEvent.Post event) {
-		if (event.getType() != ElementType.ALL) return;
+		if (event.getType() != ElementType.ALL)
+			return;
 
 		Minecraft minecraft = Minecraft.getInstance();
-		RayTraceResult hit = minecraft.hitResult;
-		if (!(hit instanceof BlockRayTraceResult)) return;
 
-		BlockRayTraceResult blockHit = (BlockRayTraceResult)hit;
+		ClientPlayerEntity player = minecraft.player;
+		if (player == null)
+			return;
+
+		ClientWorld level = minecraft.level;
+		if (level == null)
+			return;
+
+		RayTraceResult hit = minecraft.hitResult;
+		if (!(hit instanceof BlockRayTraceResult))
+			return;
+
+		BlockRayTraceResult blockHit = (BlockRayTraceResult) hit;
 
 		Hand hand = Tome.inHand(minecraft.player);
-		if (hand == null) return;
+		if (hand == null)
+			return;
 
-		BlockState state = minecraft.level.getBlockState(blockHit.getBlockPos());
-		if (state.isAir(minecraft.level, blockHit.getBlockPos())) return;
+		BlockState state = level.getBlockState(blockHit.getBlockPos());
+		if (state.isAir(minecraft.level, blockHit.getBlockPos()))
+			return;
 
-		ItemStack tome = minecraft.player.getItemInHand(hand);
-		if (!(tome.getItem() instanceof TomeItem)) return;
-		
+		ItemStack tome = player.getItemInHand(hand);
+		if (!(tome.getItem() instanceof TomeItem))
+			return;
+
 		String mod = ModName.from(state);
 		Map<String, List<ItemStack>> modsBooks = Tome.getModsBooks(tome);
-		if (!modsBooks.containsKey(mod)) return;
+		if (!modsBooks.containsKey(mod))
+			return;
 
 		List<ItemStack> books = modsBooks.get(mod);
-		if (books.isEmpty()) return;
+		if (books.isEmpty())
+			return;
 
 		ItemStack book = books.get(books.size() - 1);
 		ITextComponent hoverName = book.getHoverName();

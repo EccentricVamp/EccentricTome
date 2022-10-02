@@ -36,9 +36,11 @@ public class EccentricTome {
     public static final Logger LOGGER = LogManager.getLogger(ID);
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ID);
-    public static final DeferredRegister<IRecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, ID);
+    public static final DeferredRegister<IRecipeSerializer<?>> RECIPES = DeferredRegister
+            .create(ForgeRegistries.RECIPE_SERIALIZERS, ID);
 
-    public static final RegistryObject<IRecipeSerializer<?>> ATTACHMENT = RECIPES.register("attachment", EccentricTome::registerSerializer);
+    public static final RegistryObject<IRecipeSerializer<?>> ATTACHMENT = RECIPES.register("attachment",
+            EccentricTome::registerSerializer);
     public static final RegistryObject<Item> TOME = ITEMS.register("tome", TomeItem::new);
 
     public static SimpleChannel CHANNEL;
@@ -79,19 +81,15 @@ public class EccentricTome {
     }
 
     private void onLeftClickEmpty(PlayerInteractEvent.LeftClickEmpty event) {
-        LOGGER.debug("Empty left-click");
-        
         ItemStack stack = event.getItemStack();
         if (Tome.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
-            LOGGER.debug("Sending revert message. Tag: " + stack.getTag().toString());
             CHANNEL.sendToServer(new RevertMessage());
         }
     }
 
     private void onItemDropped(ItemTossEvent event) {
-        if (!event.getPlayer().isShiftKeyDown()) return;
-
-        LOGGER.debug("Item dropped and shift key is down.");
+        if (!event.getPlayer().isShiftKeyDown())
+            return;
 
         ItemEntity entity = event.getEntityItem();
         ItemStack stack = entity.getItem();

@@ -19,10 +19,12 @@ public class Migration {
     }
 
     public static int getVersion(ItemStack stack) {
-        if (!stack.hasTag()) return 0;
         CompoundNBT tag = stack.getTag();
+        if (tag == null)
+            return 0;
 
-        if (!tag.contains(Tag.VERSION)) return 0;
+        if (!tag.contains(Tag.VERSION))
+            return 0;
 
         return tag.getInt(Tag.VERSION);
     }
@@ -38,10 +40,9 @@ public class Migration {
 
     public static Map<Integer, Consumer<ItemStack>> steps;
     static {
-    steps = new HashMap<>();
-    steps.put(
-        Integer.valueOf(1), Migration::one
-    );
+        steps = new HashMap<>();
+        steps.put(
+                Integer.valueOf(1), Migration::one);
     }
 
     public static void one(ItemStack stack) {
@@ -54,7 +55,8 @@ public class Migration {
         // Get old mods (books) tag
         String books = Tag.key("books");
         CompoundNBT oldMods = tag.getCompound(books);
-        if (oldMods == null) oldMods = new CompoundNBT();
+        if (oldMods == null)
+            oldMods = new CompoundNBT();
         tag.remove(books);
 
         // Convert to new format and preserve existing books

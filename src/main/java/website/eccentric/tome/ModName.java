@@ -5,6 +5,7 @@ import java.util.Map;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.moddiscovery.ModInfo;
@@ -26,11 +27,16 @@ public class ModName {
     }
 
     public static String from(ItemStack stack) {
-        if (stack.isEmpty()) return MINECRAFT;
+        if (stack.isEmpty())
+            return MINECRAFT;
 
         String mod = stack.getItem().getCreatorModId(stack);
         if (mod.equals(PATCHOULI)) {
-            String book = stack.getTag().getString(Tag.Patchouli.BOOK);
+            CompoundNBT tag = stack.getTag();
+            if (tag == null)
+                return PATCHOULI;
+
+            String book = tag.getString(Tag.Patchouli.BOOK);
             mod = new ResourceLocation(book).getNamespace();
         }
 

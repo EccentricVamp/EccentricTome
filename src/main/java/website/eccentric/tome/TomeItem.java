@@ -3,6 +3,8 @@ package website.eccentric.tome;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -29,6 +31,9 @@ public class TomeItem extends Item {
     @Override
     public ActionResultType useOn(ItemUseContext context) {
         PlayerEntity player = context.getPlayer();
+        if (player == null)
+            return ActionResultType.PASS;
+
         Hand hand = context.getHand();
         World level = context.getLevel();
         BlockPos position = context.getClickedPos();
@@ -36,35 +41,39 @@ public class TomeItem extends Item {
         String mod = ModName.from(level.getBlockState(position));
         Map<String, List<ItemStack>> modsBooks = Tome.getModsBooks(tome);
 
-        if (!player.isShiftKeyDown() || !modsBooks.containsKey(mod)) return ActionResultType.PASS;
+        if (!player.isShiftKeyDown() || !modsBooks.containsKey(mod))
+            return ActionResultType.PASS;
 
         List<ItemStack> books = modsBooks.get(mod);
         ItemStack book = books.get(books.size() - 1);
-        
+
         player.setItemInHand(hand, Tome.convert(tome, book));
 
         return ActionResultType.SUCCESS;
     }
-    
+
     @Override
     public ActionResult<ItemStack> use(World level, PlayerEntity player, Hand hand) {
         ItemStack tome = player.getItemInHand(hand);
 
-        if (level.isClientSide) MinecraftForge.EVENT_BUS.post(new OpenTomeEvent(tome));
+        if (level.isClientSide)
+            MinecraftForge.EVENT_BUS.post(new OpenTomeEvent(tome));
 
         return ActionResult.sidedSuccess(tome, level.isClientSide);
     }
 
     @Override
-    public void appendHoverText(ItemStack tome, World level, List<ITextComponent> tooltip, ITooltipFlag advanced) {
+    public void appendHoverText(ItemStack tome, @Nullable World level, List<ITextComponent> tooltip,
+            ITooltipFlag advanced) {
         Map<String, List<ItemStack>> modsBooks = Tome.getModsBooks(tome);
-        
+
         for (String mod : modsBooks.keySet()) {
             tooltip.add(new StringTextComponent(ModName.name(mod)));
             List<ItemStack> books = modsBooks.get(mod);
-            
+
             for (ItemStack book : books) {
-                if (book.getItem() == Items.AIR) continue;
+                if (book.getItem() == Items.AIR)
+                    continue;
                 String name = book.getHoverName().getString();
                 tooltip.add(new StringTextComponent("  " + TextFormatting.GRAY + name));
             }
