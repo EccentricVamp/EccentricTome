@@ -21,7 +21,11 @@ public class ModName {
     }
 
     public static String from(BlockState state) {
-        return orAlias(state.getBlock().getRegistryName().getNamespace());
+        var location = state.getBlock().getRegistryName();
+        if (location == null)
+            return MINECRAFT;
+
+        return orAlias(location.getNamespace());
     }
 
     public static String from(ItemStack stack) {
@@ -29,6 +33,9 @@ public class ModName {
             return MINECRAFT;
 
         var mod = stack.getItem().getCreatorModId(stack);
+        if (mod == null)
+            return MINECRAFT;
+
         if (mod.equals(PATCHOULI)) {
             var tag = stack.getTag();
             if (tag == null)

@@ -31,7 +31,7 @@ public class ConvertMessage {
             var player = context.get().getSender();
             var hand = Tome.inHand(player);
 
-            if (hand != null) {
+            if (player != null && hand != null) {
                 var tome = player.getItemInHand(hand);
                 player.setItemInHand(hand, Tome.convert(tome, message.book));
             }

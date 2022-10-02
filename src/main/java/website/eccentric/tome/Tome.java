@@ -18,7 +18,13 @@ public class Tome {
         var mod = ModName.from(book);
         var books = modsBooks.get(mod);
         var registry = book.getItem().getRegistryName();
-        books.removeIf(b -> b.getItem().getRegistryName().equals(registry));
+        books.removeIf(b -> {
+            var location = b.getItem().getRegistryName();
+            if (location == null)
+                return false;
+
+            return location.equals(registry);
+        });
 
         setModsBooks(book, modsBooks);
         Migration.setVersion(book);
