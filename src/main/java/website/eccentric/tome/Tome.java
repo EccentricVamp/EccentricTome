@@ -21,7 +21,13 @@ public class Tome {
         String mod = ModName.from(book);
         List<ItemStack> books = modsBooks.get(mod);
         ResourceLocation registry = book.getItem().getRegistryName();
-        books.removeIf(b -> b.getItem().getRegistryName().equals(registry));
+        books.removeIf(b -> {
+            ResourceLocation location = b.getItem().getRegistryName();
+            if (location == null)
+                return false;
+
+            return location.equals(registry);
+        });
 
         setModsBooks(book, modsBooks);
         Migration.setVersion(book);

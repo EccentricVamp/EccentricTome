@@ -29,7 +29,7 @@ public class RevertMessage {
             ServerPlayerEntity player = context.get().getSender();
             Hand hand = Tome.inHand(player);
 
-            if (hand != null) {
+            if (player != null && hand != null) {
                 ItemStack stack = player.getItemInHand(hand);
                 ItemStack tome = Tome.revert(stack);
                 player.setItemInHand(hand, Tome.attach(tome, stack));

@@ -23,7 +23,11 @@ public class ModName {
     }
 
     public static String from(BlockState state) {
-        return orAlias(state.getBlock().getRegistryName().getNamespace());
+        ResourceLocation location = state.getBlock().getRegistryName();
+        if (location == null)
+            return MINECRAFT;
+
+        return orAlias(location.getNamespace());
     }
 
     public static String from(ItemStack stack) {
@@ -31,6 +35,9 @@ public class ModName {
             return MINECRAFT;
 
         String mod = stack.getItem().getCreatorModId(stack);
+        if (mod == null)
+            return MINECRAFT;
+
         if (mod.equals(PATCHOULI)) {
             CompoundNBT tag = stack.getTag();
             if (tag == null)

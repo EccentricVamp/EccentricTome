@@ -33,7 +33,7 @@ public class ConvertMessage {
             ServerPlayerEntity player = context.get().getSender();
             Hand hand = Tome.inHand(player);
 
-            if (hand != null) {
+            if (player != null && hand != null) {
                 ItemStack tome = player.getItemInHand(hand);
                 player.setItemInHand(hand, Tome.convert(tome, message.book));
             }
