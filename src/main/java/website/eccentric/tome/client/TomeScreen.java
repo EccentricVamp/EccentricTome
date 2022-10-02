@@ -35,7 +35,7 @@ public class TomeScreen extends Screen {
 
         EccentricTome.CHANNEL.sendToServer(new ConvertMessage(book));
 
-        this.minecraft.setScreen(null);
+        this.onClose();
         return true;
     }
 
