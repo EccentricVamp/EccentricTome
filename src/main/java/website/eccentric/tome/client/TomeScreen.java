@@ -9,6 +9,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.util.InputMappings;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.text.StringTextComponent;
@@ -41,8 +42,8 @@ public class TomeScreen extends Screen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        var minecraft = this.minecraft;
-        var key = InputConstants.getKey(keyCode, scanCode);
+        Minecraft minecraft = this.minecraft;
+        InputMappings.Input key = InputMappings.getKey(keyCode, scanCode);
         if (super.keyPressed(keyCode, scanCode, modifiers)) {
             return true;
         } else if (minecraft != null && minecraft.options.keyInventory.isActiveAndMatches(key)) {
