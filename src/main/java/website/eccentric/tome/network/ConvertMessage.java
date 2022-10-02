@@ -35,7 +35,7 @@ public class ConvertMessage {
                 var tome = player.getItemInHand(hand);
                 player.setItemInHand(hand, Tome.convert(tome, message.book));
             }
-    
+
             context.get().setPacketHandled(true);
         });
     }

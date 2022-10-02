@@ -30,7 +30,8 @@ public class Tag {
                 booksTag.put(key, bookTag);
             }
 
-            if (!booksList.isEmpty()) tag.put(mod, booksTag);
+            if (!booksList.isEmpty())
+                tag.put(mod, booksTag);
         }
 
         return tag;
@@ -46,7 +47,7 @@ public class Tag {
             for (var book : booksTag.getAllKeys()) {
                 books.add(ItemStack.of(booksTag.getCompound(book)));
             }
-            
+
             modsBooks.put(mod, books);
         }
 

@@ -25,7 +25,8 @@ public class ModName {
     }
 
     public static String from(ItemStack stack) {
-        if (stack.isEmpty()) return MINECRAFT;
+        if (stack.isEmpty())
+            return MINECRAFT;
 
         var mod = stack.getItem().getCreatorModId(stack);
         if (mod.equals(PATCHOULI)) {

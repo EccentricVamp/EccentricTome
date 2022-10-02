@@ -25,21 +25,23 @@ public class AttachmentRecipe extends CustomRecipe {
 
         for (var i = 0; i < crafting.getContainerSize(); i++) {
             var stack = crafting.getItem(i);
-            if (stack.isEmpty()) continue;
+            if (stack.isEmpty())
+                continue;
 
             var item = stack.getItem();
             if (item instanceof BlockItem) {
                 return false;
-            }            
+            }
             if (item instanceof TomeItem) {
-                if (foundTome) return false;
+                if (foundTome)
+                    return false;
                 foundTome = true;
-            }
-            else if (isTarget(stack)) {
-                if (foundTarget) return false;
+            } else if (isTarget(stack)) {
+                if (foundTarget)
+                    return false;
                 foundTarget = true;
-            }
-            else return false;
+            } else
+                return false;
         }
 
         return foundTome && foundTarget;
@@ -52,10 +54,13 @@ public class AttachmentRecipe extends CustomRecipe {
 
         for (var i = 0; i < crafting.getContainerSize(); i++) {
             var stack = crafting.getItem(i);
-            if (stack.isEmpty()) continue;
-            
-            if (stack.getItem() instanceof TomeItem) tome = stack;
-            else target = stack;
+            if (stack.isEmpty())
+                continue;
+
+            if (stack.getItem() instanceof TomeItem)
+                tome = stack;
+            else
+                target = stack;
         }
 
         tome = tome.copy();
@@ -70,25 +75,31 @@ public class AttachmentRecipe extends CustomRecipe {
 
     public boolean isTarget(ItemStack stack) {
         var mod = ModName.from(stack);
-        if (mod.equals("minecraft")) return false;
+        if (mod.equals("minecraft"))
+            return false;
 
-        if (Configuration.ALL_ITEMS.get()) return true;
+        if (Configuration.ALL_ITEMS.get())
+            return true;
 
-        if (Configuration.EXCLUDE.get().contains(mod)) return false;
+        if (Configuration.EXCLUDE.get().contains(mod))
+            return false;
 
         var location = ForgeRegistries.ITEMS.getKey(stack.getItem());
         var locationString = location.toString();
         var locationDamage = locationString + ":" + stack.getDamageValue();
 
         var excludeItems = Configuration.EXCLUDE_ITEMS.get();
-        if (excludeItems.contains(locationString) || excludeItems.contains(locationDamage)) return false;
+        if (excludeItems.contains(locationString) || excludeItems.contains(locationDamage))
+            return false;
 
         var items = Configuration.ITEMS.get();
-        if (items.contains(locationString) || items.contains(locationDamage)) return true;
+        if (items.contains(locationString) || items.contains(locationDamage))
+            return true;
 
         var path = location.getPath();
         for (var name : Configuration.NAMES.get()) {
-            if (path.contains(name)) return true;
+            if (path.contains(name))
+                return true;
         }
 
         return false;

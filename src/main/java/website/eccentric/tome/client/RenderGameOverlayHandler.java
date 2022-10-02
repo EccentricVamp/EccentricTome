@@ -21,31 +21,39 @@ public class RenderGameOverlayHandler {
 		var minecraft = Minecraft.getInstance();
 
 		var player = minecraft.player;
-		if (player == null) return;
+		if (player == null)
+			return;
 
 		var level = minecraft.level;
-		if (level == null) return;
+		if (level == null)
+			return;
 
 		var hit = minecraft.hitResult;
-		if (!(hit instanceof BlockHitResult)) return;
+		if (!(hit instanceof BlockHitResult))
+			return;
 
-		var blockHit = (BlockHitResult)hit;
+		var blockHit = (BlockHitResult) hit;
 
 		var hand = Tome.inHand(minecraft.player);
-		if (hand == null) return;
+		if (hand == null)
+			return;
 
 		var state = level.getBlockState(blockHit.getBlockPos());
-		if (state.isAir()) return;
+		if (state.isAir())
+			return;
 
 		var tome = player.getItemInHand(hand);
-		if (!(tome.getItem() instanceof TomeItem)) return;
+		if (!(tome.getItem() instanceof TomeItem))
+			return;
 
 		var mod = ModName.from(state);
 		var modsBooks = Tome.getModsBooks(tome);
-		if (!modsBooks.containsKey(mod)) return;
+		if (!modsBooks.containsKey(mod))
+			return;
 
 		var books = modsBooks.get(mod);
-		if (books.isEmpty()) return;
+		if (books.isEmpty())
+			return;
 
 		var book = books.get(books.size() - 1);
 		var hoverName = book.getHoverName();
