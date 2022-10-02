@@ -2,6 +2,8 @@ package website.eccentric.tome;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -28,6 +30,9 @@ public class TomeItem extends Item {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         var player = context.getPlayer();
+        if (player == null)
+            return InteractionResult.PASS;
+
         var hand = context.getHand();
         var position = context.getClickedPos();
         var tome = context.getItemInHand();
@@ -54,7 +59,7 @@ public class TomeItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack tome, Level level, List<Component> tooltip, TooltipFlag advanced) {
+    public void appendHoverText(ItemStack tome, @Nullable Level level, List<Component> tooltip, TooltipFlag advanced) {
         var modsBooks = Tome.getModsBooks(tome);
         
         for (var mod : modsBooks.keySet()) {

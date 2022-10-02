@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -12,8 +14,6 @@ import net.minecraft.world.item.ItemStack;
 
 public class Tome {
     public static ItemStack convert(ItemStack tome, ItemStack book) {
-        EccentricTome.LOGGER.debug("Converting. Tag: " + tome.getTag().toString());
-
         var modsBooks = getModsBooks(tome);
         var mod = ModName.from(book);
         var books = modsBooks.get(mod);
@@ -22,15 +22,13 @@ public class Tome {
 
         setModsBooks(book, modsBooks);
         Migration.setVersion(book);
-        book.getTag().putBoolean(Tag.IS_TOME, true);
+        book.getOrCreateTag().putBoolean(Tag.IS_TOME, true);
         setHoverName(book);
         
         return book;
     }
 
     public static ItemStack revert(ItemStack book) {
-        EccentricTome.LOGGER.debug("Reverting. Tag: " + book.getTag().toString());
-
         Migration.apply(book);
 
         var tome = new ItemStack(EccentricTome.TOME.get());
@@ -62,11 +60,20 @@ public class Tome {
     }
 
     public static boolean isTome(ItemStack stack) {
-        if (stack.isEmpty()) return false;
-        else if (stack.getItem() instanceof TomeItem) return true;
-        else return stack.hasTag() && stack.getTag().getBoolean(Tag.IS_TOME);
+        if (stack.isEmpty())
+            return false;
+        else if (stack.getItem() instanceof TomeItem)
+            return true;
+        else {
+            var tag = stack.getTag();
+            if (tag == null)
+                return false;
+
+            return tag.getBoolean(Tag.IS_TOME);
+        }
     }
 
+    @Nullable
     public static InteractionHand inHand(Player player) {
         var hand = InteractionHand.MAIN_HAND;
         var stack = player.getItemInHand(hand);
@@ -86,6 +93,9 @@ public class Tome {
 
     private static void clear(ItemStack stack) {
         var tag = stack.getTag();
+        if (tag == null)
+            return;
+
         tag.remove(Tag.MODS);
         tag.remove(Tag.IS_TOME);
         tag.remove(Tag.VERSION);

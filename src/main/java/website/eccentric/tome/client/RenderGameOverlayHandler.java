@@ -19,6 +19,13 @@ public class RenderGameOverlayHandler {
 		if (event.getType() != ElementType.ALL) return;
 
 		var minecraft = Minecraft.getInstance();
+
+		var player = minecraft.player;
+		if (player == null) return;
+
+		var level = minecraft.level;
+		if (level == null) return;
+
 		var hit = minecraft.hitResult;
 		if (!(hit instanceof BlockHitResult)) return;
 
@@ -27,10 +34,10 @@ public class RenderGameOverlayHandler {
 		var hand = Tome.inHand(minecraft.player);
 		if (hand == null) return;
 
-		var state = minecraft.level.getBlockState(blockHit.getBlockPos());
+		var state = level.getBlockState(blockHit.getBlockPos());
 		if (state.isAir()) return;
 
-		var tome = minecraft.player.getItemInHand(hand);
+		var tome = player.getItemInHand(hand);
 		if (!(tome.getItem() instanceof TomeItem)) return;
 
 		var mod = ModName.from(state);
