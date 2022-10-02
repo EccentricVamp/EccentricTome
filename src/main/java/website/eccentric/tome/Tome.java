@@ -25,7 +25,7 @@ public class Tome {
         Migration.setVersion(book);
         book.getOrCreateTag().putBoolean(Tag.IS_TOME, true);
         setHoverName(book);
-        
+
         return book;
     }
 
@@ -47,7 +47,7 @@ public class Tome {
         var books = modsBooks.getOrDefault(mod, new ArrayList<ItemStack>());
         books.add(book);
         modsBooks.put(mod, books);
-        
+
         setModsBooks(tome, modsBooks);
         return tome;
     }
@@ -78,11 +78,13 @@ public class Tome {
     public static InteractionHand inHand(Player player) {
         var hand = InteractionHand.MAIN_HAND;
         var stack = player.getItemInHand(hand);
-        if (isTome(stack)) return hand;
-        
+        if (isTome(stack))
+            return hand;
+
         hand = InteractionHand.OFF_HAND;
         stack = player.getItemInHand(hand);
-        if (isTome(stack)) return hand;
+        if (isTome(stack))
+            return hand;
 
         return null;
     }

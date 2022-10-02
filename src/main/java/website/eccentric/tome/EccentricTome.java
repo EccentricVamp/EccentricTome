@@ -29,14 +29,15 @@ import website.eccentric.tome.network.TomeChannel;
 
 @Mod(EccentricTome.ID)
 public class EccentricTome {
-    
     public static final String ID = "eccentrictome";
     public static final Logger LOGGER = LogManager.getLogger(ID);
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ID);
-    public static final DeferredRegister<RecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, ID);
+    public static final DeferredRegister<RecipeSerializer<?>> RECIPES = DeferredRegister
+            .create(ForgeRegistries.RECIPE_SERIALIZERS, ID);
 
-    public static final RegistryObject<RecipeSerializer<?>> ATTACHMENT = RECIPES.register("attachment", EccentricTome::registerSerializer);
+    public static final RegistryObject<RecipeSerializer<?>> ATTACHMENT = RECIPES.register("attachment",
+            EccentricTome::registerSerializer);
     public static final RegistryObject<Item> TOME = ITEMS.register("tome", TomeItem::new);
 
     public static SimpleChannel CHANNEL;

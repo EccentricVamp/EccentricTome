@@ -22,7 +22,8 @@ public class Migration {
         if (tag == null)
             return 0;
 
-        if (!tag.contains(Tag.VERSION)) return 0;
+        if (!tag.contains(Tag.VERSION))
+            return 0;
 
         return tag.getInt(Tag.VERSION);
     }
@@ -37,8 +38,7 @@ public class Migration {
     }
 
     public static Map<Integer, Consumer<ItemStack>> steps = Map.of(
-        Integer.valueOf(1), Migration::one
-    );
+            Integer.valueOf(1), Migration::one);
 
     public static void one(ItemStack stack) {
         var tag = stack.getOrCreateTag();
@@ -50,7 +50,8 @@ public class Migration {
         // Get old mods (books) tag
         var books = Tag.key("books");
         var oldMods = tag.getCompound(books);
-        if (oldMods == null) oldMods = new CompoundTag();
+        if (oldMods == null)
+            oldMods = new CompoundTag();
         tag.remove(books);
 
         // Convert to new format and preserve existing books

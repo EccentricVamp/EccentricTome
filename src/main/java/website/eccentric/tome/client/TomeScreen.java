@@ -3,6 +3,7 @@ package website.eccentric.tome.client;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.gui.screens.Screen;
@@ -14,11 +15,10 @@ import website.eccentric.tome.Tome;
 import website.eccentric.tome.network.ConvertMessage;
 
 public class TomeScreen extends Screen {
-    
     private static final int LEFT_CLICK = 0;
 
     private final ItemStack tome;
-    
+
     private ItemStack book;
 
     public TomeScreen(ItemStack tome) {
@@ -28,7 +28,8 @@ public class TomeScreen extends Screen {
 
     @Override
     public boolean mouseClicked(double x, double y, int button) {
-        if (button != LEFT_CLICK || book == null) return super.mouseClicked(x, y, button);
+        if (button != LEFT_CLICK || book == null)
+            return super.mouseClicked(x, y, button);
 
         EccentricTome.CHANNEL.sendToServer(new ConvertMessage(book));
         
@@ -50,8 +51,8 @@ public class TomeScreen extends Screen {
         super.render(poseStack, mouseX, mouseY, ticks);
 
         var books = Tome.getModsBooks(tome).values().stream()
-            .flatMap(Collection::stream)
-            .collect(Collectors.toList());
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
 
         var window = minecraft.getWindow();
         var booksPerRow = 6;
@@ -60,12 +61,14 @@ public class TomeScreen extends Screen {
         var startX = window.getGuiScaledWidth() / 2 - booksPerRow * iconSize / 2;
         var startY = window.getGuiScaledHeight() / 2 - rows * iconSize + 45;
         var padding = 4;
-        fill(poseStack, startX - padding, startY - padding, startX + iconSize * booksPerRow + padding, startY + iconSize * rows + padding, 0x22000000);
+        fill(poseStack, startX - padding, startY - padding, startX + iconSize * booksPerRow + padding,
+                startY + iconSize * rows + padding, 0x22000000);
 
         this.book = null;
         var index = 0;
         for (var book : books) {
-            if (book.is(Items.AIR)) continue;
+            if (book.is(Items.AIR))
+                continue;
 
             var stackX = startX + (index % booksPerRow) * iconSize;
             var stackY = startY + (index / booksPerRow) * iconSize;
