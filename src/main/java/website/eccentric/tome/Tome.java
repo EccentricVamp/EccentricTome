@@ -90,8 +90,8 @@ public class Tome {
     }
 
     private static void copyMods(ItemStack source, ItemStack target) {
-        var targetTag = target.getOrCreateTag();
-        targetTag.put(Tag.MODS, source.getTagElement(Tag.MODS));
+        var tag = target.getOrCreateTag();
+        tag.put(Tag.MODS, source.getTagElement(Tag.MODS));
     }
 
     private static void clear(ItemStack stack) {
