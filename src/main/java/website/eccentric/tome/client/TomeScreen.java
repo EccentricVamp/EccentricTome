@@ -40,6 +40,20 @@ public class TomeScreen extends Screen {
     }
 
     @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        var minecraft = this.minecraft;
+        var key = InputConstants.getKey(keyCode, scanCode);
+        if (super.keyPressed(keyCode, scanCode, modifiers)) {
+            return true;
+        } else if (minecraft != null && minecraft.options.keyInventory.isActiveAndMatches(key)) {
+            this.onClose();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     public boolean isPauseScreen() {
         return false;
     }
