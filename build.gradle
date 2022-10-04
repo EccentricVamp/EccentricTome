@@ -104,6 +104,9 @@ dependencies {
     // runtimeOnly fg.deobf('curse.maven:placebo-283644:3725741')
     // runtimeOnly fg.deobf('curse.maven:apotheosis-313970:3717791')
 
+    // runtimeOnly fg.deobf('curse.maven:mantle-74924:3829975')
+    // runtimeOnly fg.deobf('curse.maven:tinkers-construct-74072:3998764')
+
     // compileOnly fg.deobf("org.cyclops.cyclopscore:cyclopscore:${minecraft_version}-${cyclopscore_version}")
     // compileOnly fg.deobf("org.cyclops.evilcraft:evilcraft:${minecraft_version}-${evilcraft_version}")
 }
