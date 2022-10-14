@@ -123,6 +123,7 @@ public class CommonConfiguration {
                     "apotheosis:scrap_tome",
                     "apotheosis:weapon_tome",
                     "ars_nouveau:annotated_codex",
+                    "blue_skies:blue_journal",
                     "darkutils:tome_enchanting",
                     "darkutils:tome_illager",
                     "darkutils:tome_pigpen",
