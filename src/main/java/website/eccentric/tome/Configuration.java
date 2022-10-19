@@ -120,6 +120,7 @@ public class Configuration {
                                                                 "apotheosis:scrap_tome",
                                                                 "apotheosis:weapon_tome",
                                                                 "ars_nouveau:annotated_codex",
+                                                                "blue_skies:blue_journal",
                                                                 "darkutils:book_galactic",
                                                                 "darkutils:book_runelic",
                                                                 "darkutils:book_restore",
