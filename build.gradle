@@ -27,14 +27,14 @@ minecraft {
     mappings channel: 'official', version: minecraft_version
     runs {
         client {
-            taskName "Client"
+            taskName 'Client'
             workingDirectory file('run')
             // properties mixinProperties
             mods baseMods
         }
 
         server {
-            taskName "Server"
+            taskName 'Server'
             workingDirectory file('run')
             // properties mixinProperties
             mods baseMods
