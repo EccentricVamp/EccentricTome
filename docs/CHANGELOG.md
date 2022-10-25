@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Close tome screen using inventory key (#28)
 
+Thanks [NyanMC](https://github.com/NyanMC) for the following additions to the default config
+
 Blacklisted items
 
 - Blue Skies Trader Journal
