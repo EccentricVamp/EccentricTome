@@ -1,26 +1,17 @@
 pluginManagement {
-    resolutionStrategy {
-        eachPlugin {
-            if (requested.id.namespace == 'net.minecraftforge') {
-                useModule "net.minecraftforge.gradle:ForgeGradle:${requested.version}"
-            }
-            else if (requested.id.namespace == 'org.spongepowered') {
-                useModule "org.spongepowered:mixingradle:${requested.version}"
-            }
-        }
-    }
     repositories {
         maven {
-            name 'Gradle plugins'
-            url 'https://plugins.gradle.org/m2/'
+            name 'Architectury'
+            url 'https://maven.architectury.dev'
+        }
+        maven {
+            name 'Fabric'
+            url 'https://maven.fabricmc.net'
         }
         maven {
             name 'Forge'
             url 'https://maven.minecraftforge.net'
         }
-        maven {
-            name 'Sponge / Mixin'
-            url 'https://repo.spongepowered.org/maven'
-        }
+        gradlePluginPortal()
     }
 }

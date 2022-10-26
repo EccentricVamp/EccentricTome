@@ -5,9 +5,9 @@ issueTrackerURL = "https://github.com/EccentricVamp/EccentricTome/issues"
 
 [[mods]]
 modId = "eccentrictome"
-version = "${file.jarVersion}"
+version = "${version}"
 displayName = "Eccentric Tome"
-displayURL="https://github.com/EccentricVamp/EccentricTome"
+displayURL = "https://github.com/EccentricVamp/EccentricTome"
 authors = "EccentricVamp"
 description = '''This mod adds a single item: the Eccentric Tome.
 
