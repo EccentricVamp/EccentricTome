@@ -13,7 +13,6 @@ import net.minecraftforge.fml.loading.moddiscovery.ModInfo;
 public class ModName {
     private static final Map<String, String> modNames = new HashMap<>();
 
-    public static final String MINECRAFT = "minecraft";
     public static final String PATCHOULI = "patchouli";
 
     static {
@@ -31,13 +30,7 @@ public class ModName {
     }
 
     public static String from(ItemStack stack) {
-        if (stack.isEmpty())
-            return MINECRAFT;
-
         String mod = stack.getItem().getCreatorModId(stack);
-        if (mod == null)
-            return MINECRAFT;
-
         if (mod.equals(PATCHOULI)) {
             CompoundNBT tag = stack.getTag();
             if (tag == null)

@@ -75,9 +75,10 @@ public class AttachmentRecipe extends SpecialRecipe {
     }
 
     public boolean isTarget(ItemStack stack) {
-        String mod = ModName.from(stack);
-        if (mod.equals("minecraft"))
+        if (stack.isEmpty())
             return false;
+
+        String mod = ModName.from(stack);
 
         if (Configuration.ALL_ITEMS.get())
             return true;
