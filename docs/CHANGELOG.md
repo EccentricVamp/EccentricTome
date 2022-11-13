@@ -16,6 +16,10 @@ Blacklisted items
 
 - Blue Skies Trader Journal
 
+### Removed
+
+- Checking for Minecraft items when determining which items can be attached to the Tome (#30)
+
 ## [1.9.0-beta] - 2022-09-17
 
 ### Added
