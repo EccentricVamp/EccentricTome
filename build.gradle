@@ -108,6 +108,15 @@ dependencies {
     // compileOnly fg.deobf("org.cyclops.evilcraft:evilcraft:${minecraft_version}-${evilcraft_version}")
 }
 
+processResources {
+    filesMatching('META-INF/mods.toml') {
+        expand([
+            minecraft_version: project.minecraft_version,
+            mod_version: project.mod_version,
+        ])
+    }
+}
+
 jar.manifest.attributes = [
     'Specification-Title'     : mod_id,
     'Specification-Vendor'    : mod_author,
