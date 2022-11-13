@@ -11,7 +11,6 @@ import net.minecraftforge.fml.ModList;
 public class ModName {
     private static final Map<String, String> modNames = new HashMap<>();
 
-    public static final String MINECRAFT = "minecraft";
     public static final String PATCHOULI = "patchouli";
 
     static {
@@ -29,9 +28,6 @@ public class ModName {
     }
 
     public static String from(ItemStack stack) {
-        if (stack.isEmpty())
-            return MINECRAFT;
-
         var mod = stack.getItem().getCreatorModId(stack);
         if (mod == null)
             return MINECRAFT;
