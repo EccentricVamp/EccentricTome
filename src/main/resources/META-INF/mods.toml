@@ -5,9 +5,9 @@ issueTrackerURL = "https://github.com/EccentricVamp/EccentricTome/issues"
 
 [[mods]]
 modId = "eccentrictome"
-version = "${file.jarVersion}"
+version = "${minecraft_version}-${mod_version}"
 displayName = "Eccentric Tome"
-displayURL="https://github.com/EccentricVamp/EccentricTome"
+displayURL = "https://github.com/EccentricVamp/EccentricTome"
 authors = "EccentricVamp"
 description = '''This mod adds a single item: the Eccentric Tome.
 
@@ -15,6 +15,7 @@ The Tome solves a single problem: managing all of your guide books.
 
 The Tome allows many (infinite?) books to be combined into a single item, and enables them to be retrieved when needed.'''
 credits = "Vazkii for the original idea"
+updateJSONURL = "https://api.modrinth.com/updates/eccentric-tome/forge_updates.json"
 
 [[dependencies.eccentrictome]]
 modId = "forge"
