@@ -22,11 +22,7 @@ public class ModName {
     }
 
     public static String from(BlockState state) {
-        ResourceLocation location = state.getBlock().getRegistryName();
-        if (location == null)
-            return MINECRAFT;
-
-        return orAlias(location.getNamespace());
+        return orAlias(state.getBlock().getRegistryName().getNamespace());
     }
 
     public static String from(ItemStack stack) {
