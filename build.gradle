@@ -101,8 +101,8 @@ dependencies {
     // compileOnly fg.deobf("net.blay09.mods:balm:${balm_version}")
     // compileOnly fg.deobf("net.blay09.mods:cookingforblockheads-forge:${cfb_version}")
 
-    // runtimeOnly fg.deobf('curse.maven:placebo-283644:3725741')
-    // runtimeOnly fg.deobf('curse.maven:apotheosis-313970:3717791')
+    // runtimeOnly fg.deobf('curse.maven:placebo-283644:4036338')
+    // runtimeOnly fg.deobf('curse.maven:apotheosis-313970:4048780')
 
     // compileOnly fg.deobf("org.cyclops.cyclopscore:cyclopscore:${minecraft_version}-${cyclopscore_version}")
     // compileOnly fg.deobf("org.cyclops.evilcraft:evilcraft:${minecraft_version}-${evilcraft_version}")
