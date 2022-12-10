@@ -5,17 +5,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class AttachmentRecipe extends CustomRecipe {
-    public static SimpleRecipeSerializer<AttachmentRecipe> SERIALIZER;
-
-    public AttachmentRecipe(ResourceLocation location) {
-        super(location);
+    public AttachmentRecipe(ResourceLocation location, CraftingBookCategory category) {
+        super(location, category);
     }
 
     @Override
