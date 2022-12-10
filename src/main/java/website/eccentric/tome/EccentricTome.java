@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -37,7 +37,7 @@ public class EccentricTome {
             .create(ForgeRegistries.RECIPE_SERIALIZERS, ID);
 
     public static final RegistryObject<RecipeSerializer<?>> ATTACHMENT = RECIPES.register("attachment",
-            EccentricTome::registerSerializer);
+            () -> new SimpleCraftingRecipeSerializer<>(AttachmentRecipe::new));
     public static final RegistryObject<Item> TOME = ITEMS.register("tome", TomeItem::new);
 
     public static SimpleChannel CHANNEL;
@@ -101,10 +101,5 @@ public class EccentricTome {
 
             entity.setItem(stack);
         }
-    }
-
-    private static RecipeSerializer<?> registerSerializer() {
-        AttachmentRecipe.SERIALIZER = new SimpleRecipeSerializer<>(AttachmentRecipe::new);
-        return AttachmentRecipe.SERIALIZER;
     }
 }

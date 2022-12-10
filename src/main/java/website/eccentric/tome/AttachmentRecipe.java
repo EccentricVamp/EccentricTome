@@ -116,6 +116,6 @@ public class AttachmentRecipe extends CustomRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return SERIALIZER;
+        return EccentricTome.ATTACHMENT.get();
     }
 }
