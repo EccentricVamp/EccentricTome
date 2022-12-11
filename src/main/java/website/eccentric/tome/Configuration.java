@@ -53,7 +53,8 @@ public class Configuration {
                                 "draconicevolution:info_tablet",
                                 "iceandfire:bestiary",
                                 "rootsclassic:runic_tablet",
-                                "enigmaticlegacy:the_acknowledgment"),
+                                "enigmaticlegacy:the_acknowledgment",
+                                "ad_astra:astrodux"),
                         Validator::isStringResource);
 
         NAMES = BUILDER
