@@ -1,5 +1,5 @@
 # Eccentric Tome
-[![Modrinth](https://img.shields.io/badge/dynamic/json?color=1bd96a&label=modrinth&query=downloads&url=https://api.modrinth.com/api/v1/mod/ZtdULK5c&logo=data:image/svg%2bxml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBmaWxsPSIjMWJkOTZhIiBkPSJNNTEyIDI1NmMwIDE4LTIgMzYtNiA1M2wtNjMtMjJhMTkwIDE5MCAwIDAgMC0zNzUtNjRIM2EyNTYgMjU2IDAgMCAxIDUxMCAzM1pNMjU2IDUxMkMxMjYgNTEyIDE4IDQxNSAyIDI4OWg2N2MyIDEyIDUgMjMgOSAzNGw3NS00Ni0yMi02MCA3MS03MiA5MC0yMCAyNiAzMi00MiA0Mi0zNiAxMS0yNiAyNiAxNCAzNSAyNCAyNyAzNy05IDI2LTI5IDU2LTE3IDE3IDM3LTU4IDcxLTk4IDMxLTQzLTQ5LTc3IDQ3YTE5MCAxOTAgMCAwIDAgMzA5LTMwbDYzIDIyYTI1NiAyNTYgMCAwIDEtMjI4IDE0MFoiLz48L3N2Zz4=)](https://modrinth.com/mod/eccentric-tome)
+[![Modrinth](https://img.shields.io/modrinth/dt/eccentric-tome?color=00AF5C&label=modrinth&logo=modrinth)](https://modrinth.com/mod/eccentric-tome)
 [![Curse Forge](http://cf.way2muchnoise.eu/597522.svg)](https://www.curseforge.com/minecraft/mc-mods/eccentric-tome)
 [![Curse Forge](http://cf.way2muchnoise.eu/versions/597522.svg)](https://www.curseforge.com/minecraft/mc-mods/eccentric-tome)
 [![LGPL-3.0](https://img.shields.io/github/license/EccentricVamp/EccentricTome)](https://www.gnu.org/licenses/lgpl-3.0)
