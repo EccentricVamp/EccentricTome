@@ -57,23 +57,23 @@ minecraft {
 //         }
 //     }
 //     maven {
-//         url 'https://maven.pkg.github.com/ModdingForBlockheads/Balm'
+//         url 'https://maven.blakesmods.com'
 //         content {
-//             includeGroup 'net.blay09.mods'
-//         }
-//         credentials {
-//             username System.getenv('GITHUB_ACTOR')
-//             password System.getenv('GITHUB_TOKEN')
+//             includeGroup 'com.blakebr0.cucumber'
+//             includeGroup 'com.blakebr0.mysticalagriculture'
 //         }
 //     }
 //     maven {
-//         url 'https://maven.pkg.github.com/ModdingForBlockheads/CookingForBlockheads'
+//         url 'https://nexus.twelveiterations.com/repository/maven-public'
 //         content {
 //             includeGroup 'net.blay09.mods'
 //         }
-//         credentials {
-//             username System.getenv('GITHUB_ACTOR')
-//             password System.getenv('GITHUB_TOKEN')
+//     }
+//     maven {
+//         url 'https://dvs1.progwml6.com/files/maven'
+//         content {
+//             includeGroup 'slimeknights.mantle'
+//             includeGroup 'slimeknights.tconstruct'
 //         }
 //     }
 //     maven {
@@ -95,17 +95,17 @@ dependencies {
     // Testing
     // runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
 
-    // runtimeOnly fg.deobf('curse.maven:cucumber-272335:3686400')
-    // runtimeOnly fg.deobf('curse.maven:mystical-agriculture-246640:3686412')
+    // runtimeOnly fg.deobf("com.blakebr0.cucumber:Cucumber:${minecraft_version}-${cucumber_version}")
+    // runtimeOnly fg.deobf("com.blakebr0.mysticalagriculture:MysticalAgriculture:${minecraft_version}-${mystical_agriculture_version}")
 
-    // compileOnly fg.deobf("net.blay09.mods:balm:${balm_version}")
-    // compileOnly fg.deobf("net.blay09.mods:cookingforblockheads-forge:${cfb_version}")
+    // runtimeOnly fg.deobf("net.blay09.mods:balm-forge:${balm_version}+${minecraft_version}")
+    // runtimeOnly fg.deobf('curse.maven:cfb-283644:3725741')
 
-    // runtimeOnly fg.deobf('curse.maven:placebo-283644:3725741')
-    // runtimeOnly fg.deobf('curse.maven:apotheosis-313970:3717791')
+    // runtimeOnly fg.deobf('curse.maven:placebo-283644:4500363')
+    // runtimeOnly fg.deobf('curse.maven:apotheosis-313970:4132196')
 
-    // runtimeOnly fg.deobf('curse.maven:mantle-74924:3829975')
-    // runtimeOnly fg.deobf('curse.maven:tinkers-construct-74072:3998764')
+    // runtimeOnly fg.deobf("slimeknights.mantle:Mantle:${minecraft_version}-${mantle_version}")
+    // runtimeOnly fg.deobf("slimeknights.tconstruct:TConstruct:${minecraft_version}-${tconstruct_version}")
 
     // compileOnly fg.deobf("org.cyclops.cyclopscore:cyclopscore:${minecraft_version}-${cyclopscore_version}")
     // compileOnly fg.deobf("org.cyclops.evilcraft:evilcraft:${minecraft_version}-${evilcraft_version}")
