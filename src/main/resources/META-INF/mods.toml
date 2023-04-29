@@ -20,6 +20,6 @@ updateJSONURL = "https://api.modrinth.com/updates/eccentric-tome/forge_updates.j
 [[dependencies.eccentrictome]]
 modId = "forge"
 mandatory = true
-versionRange = "[43.0.4,)"
+versionRange = "[44.1.0,)"
 ordering = "NONE"
 side = "BOTH"
