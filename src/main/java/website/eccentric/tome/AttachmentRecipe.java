@@ -2,6 +2,7 @@ package website.eccentric.tome;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -94,6 +95,12 @@ public class AttachmentRecipe extends CustomRecipe {
         var items = Configuration.ITEMS.get();
         if (items.contains(locationString) || items.contains(locationDamage))
             return true;
+
+        for (var tag : Configuration.INCLUDE_ITEM_TAGS.get()) {
+            var itemTag = ForgeRegistries.ITEMS.tags().getTag(ItemTags.create(new ResourceLocation(tag)));
+            if (itemTag.contains(stack.getItem()))
+                return true;
+        }
 
         var path = location.getPath();
         for (var name : Configuration.NAMES.get()) {
