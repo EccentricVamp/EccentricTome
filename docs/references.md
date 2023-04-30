@@ -48,7 +48,7 @@ https://github.com/orgs/CyclopsMC/packages?repo_name=packages
 
 ### Apotheosis
 
-https://www.curseforge.com/minecraft/mc-mods/apotheosis
+https://www.curseforge.com/minecraft/mc-mods/placebo
 
 https://github.com/Shadows-of-Fire/Placebo
 
