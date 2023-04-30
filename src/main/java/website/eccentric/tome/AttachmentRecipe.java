@@ -8,6 +8,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.SpecialRecipe;
+import net.minecraft.tags.ITag;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -100,6 +102,12 @@ public class AttachmentRecipe extends SpecialRecipe {
         List<? extends String> items = Configuration.ITEMS.get();
         if (items.contains(locationString) || items.contains(locationDamage))
             return true;
+
+        for (String tag : Configuration.INCLUDE_ITEM_TAGS.get()) {
+            ITag<Item> itemTag = ItemTags.getAllTags().getTag(new ResourceLocation(tag));
+            if (itemTag != null && itemTag.contains(stack.getItem()))
+                return true;
+        }
 
         String path = location.getPath();
         for (String name : Configuration.NAMES.get()) {

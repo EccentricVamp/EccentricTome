@@ -17,6 +17,7 @@ public class Configuration {
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> ALIASES;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> EXCLUDE;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> EXCLUDE_ITEMS;
+    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> INCLUDE_ITEM_TAGS;
 
     public static final HashMap<String, String> ALIAS_MAP = new HashMap<>();
 
@@ -152,6 +153,13 @@ public class Configuration {
                                 "tombstone:book_of_recycling",
                                 "tombstone:book_of_repairing",
                                 "tombstone:book_of_magic_impregnation"),
+                        Validator::isString);
+
+        INCLUDE_ITEM_TAGS = BUILDER
+                .comment("Whitelisted item tags")
+                .defineListAllowEmpty(
+                        Lists.newArrayList("include_item_tags"),
+                        ArrayList<String>::new,
                         Validator::isString);
 
         BUILDER.pop();
