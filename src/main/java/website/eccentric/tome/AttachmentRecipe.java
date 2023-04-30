@@ -1,6 +1,7 @@
 package website.eccentric.tome;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -47,7 +48,7 @@ public class AttachmentRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer crafting) {
+    public ItemStack assemble(CraftingContainer crafting, RegistryAccess access) {
         var tome = ItemStack.EMPTY;
         var target = ItemStack.EMPTY;
 
@@ -112,7 +113,7 @@ public class AttachmentRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess access) {
         return ItemStack.EMPTY;
     }
 

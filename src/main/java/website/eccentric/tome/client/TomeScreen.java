@@ -91,7 +91,7 @@ public class TomeScreen extends Screen {
                 this.book = book;
             }
 
-            minecraft.getItemRenderer().renderAndDecorateItem(book, stackX, stackY);
+            minecraft.getItemRenderer().renderAndDecorateItem(poseStack, book, stackX, stackY);
             index++;
         }
 

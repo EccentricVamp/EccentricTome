@@ -83,7 +83,7 @@ minecraft {
 // }
 
 dependencies {
-    minecraft('net.minecraftforge:forge') { version { strictly "${minecraft_version}-${forge_version}" } }
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
     // Testing
     // runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")

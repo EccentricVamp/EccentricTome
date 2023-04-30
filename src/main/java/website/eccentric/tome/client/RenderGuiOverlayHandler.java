@@ -63,8 +63,9 @@ public class RenderGuiOverlayHandler {
 		var x = window.getGuiScaledWidth() / 2 - 17;
 		var y = window.getGuiScaledHeight() / 2 + 2;
 
-		minecraft.getItemRenderer().renderGuiItem(book, x, y);
-		minecraft.font.drawShadow(event.getPoseStack(), hoverName, x + 20, y + 4, 0xFFFFFFFF);
-		minecraft.font.drawShadow(event.getPoseStack(), ChatFormatting.GRAY + convert, x + 25, y + 14, 0xFFFFFFFF);
+		var pose = event.getPoseStack();
+		minecraft.getItemRenderer().renderGuiItem(pose, book, x, y);
+		minecraft.font.drawShadow(pose, hoverName, x + 20, y + 4, 0xFFFFFFFF);
+		minecraft.font.drawShadow(pose, ChatFormatting.GRAY + convert, x + 25, y + 14, 0xFFFFFFFF);
 	}
 }
