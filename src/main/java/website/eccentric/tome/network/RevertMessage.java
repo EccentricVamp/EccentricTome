@@ -24,6 +24,7 @@ public class RevertMessage {
 
         context.get().enqueueWork(() -> {
             var player = context.get().getSender();
+            var direction = context.get().getDirection();
             var hand = Tome.inHand(player);
 
             if (hand != null) {
@@ -31,7 +32,7 @@ public class RevertMessage {
                 var tome = Tome.revert(stack);
                 player.setItemInHand(hand, Tome.attach(tome, stack));
 
-                if (player.level.isClientSide) {
+                if (direction.getReceptionSide().isClient()) {
                     Minecraft.getInstance().gameRenderer.itemInHandRenderer.itemUsed(hand);
                 }
             }

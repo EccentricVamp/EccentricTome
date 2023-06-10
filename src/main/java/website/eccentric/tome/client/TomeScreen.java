@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.blaze3d.vertex.PoseStack;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -57,12 +57,12 @@ public class TomeScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float ticks) {
+    public void render(GuiGraphics gui, int mouseX, int mouseY, float ticks) {
         var minecraft = this.minecraft;
         if (minecraft == null)
             return;
 
-        super.render(poseStack, mouseX, mouseY, ticks);
+        super.render(gui, mouseX, mouseY, ticks);
 
         var books = Tome.getModsBooks(tome).values().stream()
                 .flatMap(Collection::stream)
@@ -75,7 +75,8 @@ public class TomeScreen extends Screen {
         var startX = window.getGuiScaledWidth() / 2 - booksPerRow * iconSize / 2;
         var startY = window.getGuiScaledHeight() / 2 - rows * iconSize + 45;
         var padding = 4;
-        fill(poseStack, startX - padding, startY - padding, startX + iconSize * booksPerRow + padding,
+        gui.fill(startX - padding, startY - padding,
+                startX + iconSize * booksPerRow + padding,
                 startY + iconSize * rows + padding, 0x22000000);
 
         this.book = null;
@@ -91,12 +92,13 @@ public class TomeScreen extends Screen {
                 this.book = book;
             }
 
-            minecraft.getItemRenderer().renderAndDecorateItem(poseStack, book, stackX, stackY);
+            gui.renderItem(book, stackX, stackY);
+            gui.renderItemDecorations(font, book, mouseX, mouseY);
             index++;
         }
 
         if (this.book != null) {
-            renderComponentTooltip(poseStack, getTooltipFromItem(this.book), mouseX, mouseY);
+            gui.renderComponentTooltip(this.font, getTooltipFromItem(minecraft, this.book), mouseX, mouseY);
         }
     }
 }
