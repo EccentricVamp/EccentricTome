@@ -1,6 +1,6 @@
 plugins {
     id 'eclipse'
-    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id 'com.matthewprenger.cursegradle' version '1.4.0'
     id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
     id 'com.modrinth.minotaur' version '2.+'
@@ -10,34 +10,32 @@ java.toolchain.languageVersion = JavaLanguageVersion.of java_version
 
 version = "${minecraft_version}-${mod_version}"
 group = mod_group
-archivesBaseName = mod_id
-
-// def mixinProperties = [
-//     'mixin.env.remapRefMap'        : 'true',
-//     'mixin.env.refMapRemappingFile': file('build/createSrgToMcp/output.srg')
-// ]
-
-def baseMods = {
-    "${mod_id}" {
-        source sourceSets.main
-    }
-}
+base.archivesName = mod_id
 
 minecraft {
-    mappings channel: 'official', version: minecraft_version
+    mappings channel: mapping_channel, version: mapping_version
+    copyIdeResources = true
     runs {
+        configureEach {
+            workingDirectory project.file('run')
+
+            mods {
+                "${mod_id}" {
+                    source sourceSets.main
+                }
+            }
+
+            properties = [
+                'mixin.env.remapRefMap'        : 'true',
+                'mixin.env.refMapRemappingFile': project.file('build/createSrgToMcp/output.srg')
+            ]
+        }
         client {
             taskName 'Client'
-            workingDirectory file('run')
-            // properties mixinProperties
-            mods baseMods
         }
 
         server {
             taskName 'Server'
-            workingDirectory file('run')
-            // properties mixinProperties
-            mods baseMods
         }
     }
 }
@@ -102,11 +100,25 @@ dependencies {
 }
 
 processResources {
-    filesMatching('META-INF/mods.toml') {
-        expand([
-            minecraft_version: project.minecraft_version,
-            mod_version: project.mod_version,
-        ])
+    var replaceProperties = [
+            minecraft_version       : minecraft_version,
+            minecraft_version_range : minecraft_version_range,
+            forge_version           : forge_version,
+            forge_version_range     : forge_version_range,
+            loader_version_range    : loader_version_range,
+            mod_id                  : mod_id,
+            mod_name                : mod_name,
+            mod_license             : mod_license,
+            mod_version             : mod_version,
+            mod_author              : mod_author,
+            mod_description         : mod_description,
+            pack_format             : pack_format,
+    ]
+
+    inputs.properties replaceProperties
+
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+        expand replaceProperties + [project: project]
     }
 }
 
