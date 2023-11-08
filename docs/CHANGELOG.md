@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Tome missing from creative mode and JEI search (#42)
+- Stacks of items being attached to Tome (#40)
 
 ### Blacklisted Items
 
