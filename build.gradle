@@ -46,6 +46,7 @@ minecraft {
 //         url 'https://maven.blamejared.com'
 //         content {
 //             includeGroup 'vazkii.patchouli'
+//             includeGroup 'mezz.jei'
 //         }
 //     }
 //     maven {
@@ -97,6 +98,11 @@ dependencies {
 
     // runtimeOnly fg.deobf('curse.maven:placebo-283644:4036338')
     // runtimeOnly fg.deobf('curse.maven:apotheosis-313970:4048780')
+
+    // Compile against the JEI API but do not include it at runtime
+    // compileOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"))
+    // compileOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"))
+    // runtimeOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}"))
 }
 
 processResources {
