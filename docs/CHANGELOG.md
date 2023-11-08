@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Stacks of items being attached to Tome (#40)
+
 ### Blacklisted Items
 
 - Minecraft book (#40)
