@@ -133,6 +133,7 @@ public class Configuration {
                                 "darkutils:tome_sga",
                                 "darkutils:tome_shadows",
                                 "minecolonies:ancienttome",
+                                "minecraft:book",
                                 "minecraft:enchanted_book",
                                 "occultism:book_of_binding_afrit",
                                 "occultism:book_of_binding_bound_afrit",
