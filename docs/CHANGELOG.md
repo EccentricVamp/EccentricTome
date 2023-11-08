@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Tome missing from creative mode and JEI search (#42)
 
+### Blacklisted Items
+
+- Minecraft book (#40)
+
 ## [1.10.1] - 2023-06-11
 
 ### Added
