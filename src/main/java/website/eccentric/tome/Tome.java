@@ -53,6 +53,8 @@ public class Tome {
         Map<String, List<ItemStack>> modsBooks = getModsBooks(tome);
 
         List<ItemStack> books = modsBooks.getOrDefault(mod, new ArrayList<ItemStack>());
+        book = book.copy();
+        book.setCount(1);
         books.add(book);
         modsBooks.put(mod, books);
 
