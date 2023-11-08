@@ -45,6 +45,8 @@ public class Tome {
         var modsBooks = getModsBooks(tome);
 
         var books = modsBooks.getOrDefault(mod, new ArrayList<ItemStack>());
+        book = book.copy();
+        book.setCount(1);
         books.add(book);
         modsBooks.put(mod, books);
 
