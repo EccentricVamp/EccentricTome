@@ -4,10 +4,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -51,6 +53,7 @@ public class EccentricTome {
         modEvent.addListener(this::onClientSetup);
         modEvent.addListener(this::onCommonSetup);
         modEvent.addListener(this::onModConfig);
+        modEvent.addListener(this::onBuildCreativeModeTabContents);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Configuration.SPEC);
 
@@ -100,6 +103,12 @@ public class EccentricTome {
             }
 
             entity.setItem(stack);
+        }
+    }
+
+    private void onBuildCreativeModeTabContents(final BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey().equals(CreativeModeTabs.TOOLS_AND_UTILITIES)) {
+            event.accept(TOME);
         }
     }
 }
