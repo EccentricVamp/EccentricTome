@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> This mod is now being maintained by Porting Dead Mods. If you're submitting issues or looking for updated code check out [their repository](https://github.com/Porting-Dead-Mods/EccentricTome-Updated)
+
 # Eccentric Tome
 [![Modrinth](https://img.shields.io/modrinth/dt/eccentric-tome?color=00AF5C&label=modrinth&logo=modrinth)](https://modrinth.com/mod/eccentric-tome)
 [![Curse Forge](http://cf.way2muchnoise.eu/597522.svg)](https://www.curseforge.com/minecraft/mc-mods/eccentric-tome)
